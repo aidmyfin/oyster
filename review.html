@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - Oyster Personal Finance</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #e74c3c;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .mobile-nav-menu {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-menu a:hover {
+            color: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .mobile-nav-menu i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 3rem 0;
+        }
+
+        .hero-reviews {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero-reviews h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-reviews p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Rating Summary */
+        .rating-summary {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .summary-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overall-rating {
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .rating-number {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .rating-stars {
+            color: #f39c12;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating-text {
+            color: #666;
+        }
+
+        .rating-bars {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .rating-bar {
+            margin-bottom: 1rem;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .bar-stars {
+            color: #666;
+        }
+
+        .bar-count {
+            color: #666;
+        }
+
+        .bar-container {
+            height: 10px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #f39c12;
+            border-radius: 5px;
+            transition: width 1.5s ease-out;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            padding: 2rem 0;
+            background: #f8f9fa;
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        .filter-btn:hover:not(.active) {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        /* Reviews Grid */
+        .reviews-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .review-card:hover {
+            transform: perspective(1000px) rotateX(-5deg) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .reviewer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e74c3c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .reviewer-info h3 {
+            margin-bottom: 0.3rem;
+            color: #2c3e50;
+        }
+
+        .reviewer-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .review-stars {
+            color: #f39c12;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .review-loan-type {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .verified-badge {
+            background: #27ae60;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+
+        /* Load More Button */
+        .load-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .load-more-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .load-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Write Review Section */
+        .write-review-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+        }
+
+        .write-review-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .write-review-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .write-review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .write-review-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e74c3c;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-group select option {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .star-rating-container {
+            margin-bottom: 2rem;
+        }
+
+        .star-rating-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .star-rating i {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .star-rating i:hover,
+        .star-rating i.active {
+            color: #f39c12;
+        }
+
+        .submit-review-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .submit-review-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #e74c3c;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #e74c3c;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #27ae60;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: none;
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .hero-reviews h1 {
+                font-size: 2rem;
+            }
+
+            .summary-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .write-review-card {
+                padding: 2rem;
+            }
+
+            .main-content {
+                padding-bottom: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="/placeholder.svg?height=40&width=40" alt="Oyster Personal Finance Logo">
+                <span>Oyster Personal Finance</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="apply.html">Apply</a></li>
+                <li><a href="review.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <ul class="mobile-nav-menu">
+            <li><a href="home.html"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i>About</a></li>
+            <li><a href="apply.html"><i class="fas fa-file-alt"></i>Apply</a></li>
+            <li><a href="review.html"><i class="fas fa-star"></i>Reviews</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone"></i>Contact</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i>Profile</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-reviews">
+            <div class="container">
+                <h1>Real Stories, Real Satisfaction</h1>
+                <p>We're proud to help thousands of South Africans achieve their goals. Here's what some of our happy customers have to say.</p>
+            </div>
+        </section>
+
+        <!-- Rating Summary -->
+        <section class="rating-summary">
+            <div class="container">
+                <div class="summary-container">
+                    <div class="overall-rating">
+                        <div class="rating-number">4.8</div>
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="rating-text">Based on 1,248 reviews</div>
+                    </div>
+                    <div class="rating-bars">
+                        <div class="rating-bar">
+                            <div class="bar-label">
+                                <div class="bar-stars">5 stars</div>
+                                <div class="bar-count">1,024</div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 0%;" data-width="82%"></div>
+                            </div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="bar-label">
+                                <div class="bar-stars">4 stars</div>
+                                <div class="bar-count">156</div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 0%;" data-width="12%"></div>
+                            </div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="bar-label">
+                                <div class="bar-stars">3 stars</div>
+                                <div class="bar-count">43</div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 0%;" data-width="3%"></div>
+                            </div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="bar-label">
+                                <div class="bar-stars">2 stars</div>
+                                <div class="bar-count">15</div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 0%;" data-width="1%"></div>
+                            </div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="bar-label">
+                                <div class="bar-stars">1 star</div>
+                                <div class="bar-count">10</div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 0%;" data-width="0.8%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="container">
+                <div class="filter-container">
+                    <button class="filter-btn active" data-filter="all">All Reviews</button>
+                    <button class="filter-btn" data-filter="personal">Personal Loans</button>
+                    <button class="filter-btn" data-filter="business">Business Loans</button>
+                    <button class="filter-btn" data-filter="home">Home Loans</button>
+                    <button class="filter-btn" data-filter="vehicle">Vehicle Loans</button>
+                    <button class="filter-btn" data-filter="5-star">5 Star Reviews</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Grid -->
+        <section class="reviews-section">
+            <div class="container">
+                <div class="reviews-grid">
+                    <!-- Review 1 -->
+                    <div class="review-card" data-category="personal" data-stars="5">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">NA</div>
+                            <div class="reviewer-info">
+                                <h3>Nkosi A.</h3>
+                                <div class="reviewer-date">15 May 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-text">
+                            "Fast, efficient, and stress-free! I got my loan approved within hours and the money was in my account the next day. The customer service team was incredibly helpful throughout the process. I'll definitely be using Oyster Finance again in the future."
+                        </div>
+                        <div>
+                            <span class="review-loan-type">Personal Loan</span>
+                            <span class="verified-badge"><i class="fas fa-check"></i> Verified Customer</span>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="review-card" data-category="business" data-stars="5">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">BO</div>
+                            <div class="reviewer-info">
+                                <h3>Bella O.</h3>
+                                <div class="reviewer-date">2 May 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-text">
+                            "They helped me grow my salon business when traditional banks wouldn't give me a chance. The application process was simple and the staff were very helpful throughout. The interest rates are fair and the repayment terms are flexible. My business is thriving now thanks to Oyster Finance!"
+                        </div>
+                        <div>
+                            <span class="review-loan-type">Business Loan</span>
+                            <span class="verified-badge"><i class="fas fa-check"></i> Verified Customer</span>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="review-card" data-category="personal" data-stars="4">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">VI</div>
+                            <div class="reviewer-info">
+                                <h3>Van Wyk I.</h3>
+                                <div class="reviewer-date">28 April 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <div class="review-text">
+                            "Reliable and transparent service with no hidden fees. The application process was straightforward and I received my funds quickly. The only reason I'm not giving 5 stars is because the online portal was a bit slow at times, but overall a great experience."
+                        </div>
+                        <div>
+                            <span class="review-loan-type">Personal Loan</span>
+                            <span class="verified-badge"><i class="fas fa-check"></i> Verified Customer</span>
+                        </div>
+                    </div>
+
+                    <!-- Review 4 -->
+                    <div class="review-card" data-category="home" data-stars="5">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">TM</div>
+                            <div class="reviewer-info">
+                                <h3>Thabo M.</h3>
+                                <div class="reviewer-date">15 April 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-text">
+                            "I never thought I'd be able to own my own home, but Oyster Finance made it possible. They offered me a competitive interest rate and guided me through every step of the process. The staff were knowledgeable and patient with all my questions. I'm now a proud homeowner thanks to them!"
+                        </div>
+                        <div>
+                            <span class="review-loan-type">Home Loan</span>
+                            <span class="verified-badge"><i class="fas fa-check"></i> Verified Customer</span>
+                        </div>
+                    </div>
+
+                    <!-- Review 5 -->
+                    <div class="review-card" data-category="vehicle" data-stars="5">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">LN</div>
+                            <div class="reviewer-info">
+                                <h3>Lerato N.</h3>
+                                <div class="reviewer-date">10 April 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-text">
+                            "I needed a car urgently for my new job, and Oyster Finance came through for me when I needed it most. The application was approved within hours, and I was able to purchase my car the next day. The interest rate was better than what the dealership offered me. Excellent service!"
+                        </div>
+                        <div>
+                            <span class="review-loan-type">Vehicle Loan</span>
+                            <span class="verified-badge"><i class="fas fa-check"></i> Verified Customer</span>
+                        </div>
+                    </div>
+
+                    <!-- Review 6 -->
+                    <div class="review-card" data-category="personal" data-stars="4">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">JD</div>
+                            <div class="reviewer-info">
+                                <h3>John D.</h3>
+                                <div class="reviewer-date">5 April 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <div class="review-text">
+                            "I had an unexpected medical emergency and needed funds quickly. Oyster Finance processed my application promptly and I received the money within 24 hours. The only reason for 4 stars instead of 5 is that I had to call to follow up on my application status."
+                        </div>
+                        <div>
+                            <span class="review-loan-type">Personal Loan</span>
+                            <span class="verified-badge"><i class="fas fa-check"></i> Verified Customer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="load-more">
+                    <button class="load-more-btn">Load More Reviews</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Write Review Section -->
+        <section class="write-review-section">
+            <div class="container">
+                <div class="write-review-container">
+                    <div class="write-review-card">
+                        <h2 class="write-review-title">Share Your Experience</h2>
+                        <div class="success-message" id="successMessage">
+                            <i class="fas fa-check-circle"></i> Thank you for your review! It has been submitted successfully.
+                        </div>
+                        <form id="reviewForm">
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanType">Loan Type *</label>
+                                <select id="loanType" name="loanType" required>
+                                    <option value="">Select loan type</option>
+                                    <option value="personal">Personal Loan</option>
+                                    <option value="business">Business Loan</option>
+                                    <option value="home">Home Loan</option>
+                                    <option value="vehicle">Vehicle Loan</option>
+                                    <option value="emergency">Emergency Loan</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="star-rating-container">
+                                <label class="star-rating-label">Your Rating *</label>
+                                <div class="star-rating" id="starRating">
+                                    <i class="far fa-star" data-rating="1"></i>
+                                    <i class="far fa-star" data-rating="2"></i>
+                                    <i class="far fa-star" data-rating="3"></i>
+                                    <i class="far fa-star" data-rating="4"></i>
+                                    <i class="far fa-star" data-rating="5"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reviewText">Your Review *</label>
+                                <textarea id="reviewText" name="reviewText" placeholder="Tell us about your experience with Oyster Personal Finance..." required></textarea>
+                            </div>
+                            <button type="submit" class="submit-review-btn">
+                                <i class="fas fa-paper-plane"></i> Submit Review
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Oyster Personal Finance</h3>
+                <p>NCRCP11356</p>
+                <p>Based in South Africa</p>
+                <p>Empowering financial freedom through innovative lending solutions.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="home.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="apply.html">Apply</a>
+                <a href="review.html">Reviews</a>
+                <a href="contact.html">Contact</a>
+                <a href="profile.html">Profile</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-envelope"></i> info@oysterpf.co.za</p>
+                <p><i class="fas fa-phone"></i> +27 11 234 5678</p>
+                <p><i class="fas fa-map-marker-alt"></i> Johannesburg, South Africa</p>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Responsible Lending</a>
+                <a href="#">Complaints Procedure</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Oyster Personal Finance. All Rights Reserved. NCRCP11356</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animate rating bars on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelectorAll('.bar-fill').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+            }, 500);
+        });
+
+        // Star rating functionality
+        const starRating = document.getElementById('starRating');
+        let selectedRating = 0;
+
+        if (starRating) {
+            starRating.addEventListener('click', function(e) {
+                if (e.target.tagName === 'I') {
+                    const rating = parseInt(e.target.getAttribute('data-rating'));
+                    selectedRating = rating;
+                    
+                    // Update stars
+                    document.querySelectorAll('#starRating i').forEach(star => {
+                        const starValue = parseInt(star.getAttribute('data-rating'));
+                        if (starValue <= rating) {
+                            star.className = 'fas fa-star active';
+                        } else {
+                            star.className = 'far fa-star';
+                        }
+                    });
+                }
+            });
+
+            // Hover effect
+            starRating.addEventListener('mouseover', function(e) {
+                if (e.target.tagName === 'I') {
+                    const rating = parseInt(e.target.getAttribute('data-rating'));
+                    
+                    document.querySelectorAll('#starRating i').forEach(star => {
+                        const starValue = parseInt(star.getAttribute('data-rating'));
+                        if (starValue <= rating) {
+                            star.className = 'fas fa-star';
+                        } else {
+                            star.className = 'far fa-star';
+                        }
+                    });
+                }
+            });
+
+            starRating.addEventListener('mouseout', function() {
+                document.querySelectorAll('#starRating i').forEach(star => {
+                    const starValue = parseInt(star.getAttribute('data-rating'));
+                    if (starValue <= selectedRating) {
+                        star.className = 'fas fa-star active';
+                    } else {
+                        star.className = 'far fa-star';
+                    }
+                });
+            });
+        }
+
+        // Review form submission
+        const reviewForm = document.getElementById('reviewForm');
+        if (reviewForm) {
+            reviewForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (selectedRating === 0) {
+                    alert('Please select a rating');
+                    return;
+                }
+                
+                // Get form data
+                const formData = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    loanType: document.getElementById('loanType').value,
+                    rating: selectedRating,
+                    reviewText: document.getElementById('reviewText').value,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Save to localStorage
+                const reviews = JSON.parse(localStorage.getItem('reviewSubmissions') || '[]');
+                reviews.push(formData);
+                localStorage.setItem('reviewSubmissions', JSON.stringify(reviews));
+
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                this.reset();
+                selectedRating = 0;
+                document.querySelectorAll('#starRating i').forEach(star => {
+                    star.className = 'far fa-star';
+                });
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+
+                // Scroll to success message
+                document.getElementById('successMessage').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            });
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                // Filter reviews
+                document.querySelectorAll('.review-card').forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else if (filter === '5-star') {
+                        if (card.getAttribute('data-stars') === '5') {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    } else {
+                        if (card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Load more reviews (simulation)
+        document.querySelector('.load-more-btn').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            
+            setTimeout(() => {
+                this.innerHTML = 'No More Reviews';
+                this.disabled = true;
+                this.style.opacity = '0.7';
+            }, 2000);
+        });
+
+        // 3D card hover effects
+        document.querySelectorAll('.review-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'perspective(1000px) rotateX(-5deg) translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0px)';
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

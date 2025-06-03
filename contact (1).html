@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Oyster Personal Finance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a5c36;
+            --secondary: #e63946;
+            --accent: #f1c40f;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* 3D Effects */
+        .card, .btn, .contact-card, .form-container {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: perspective(1000px) translateZ(0);
+        }
+
+        .card:hover, .btn:hover, .contact-card:hover, .form-container:hover {
+            transform: perspective(1000px) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 25%;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .contact-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(10, 92, 54, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+
+        .contact-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .contact-card p {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .contact-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Form */
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .form-container {
+            flex: 2;
+            min-width: 400px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .form-container h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-control {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #074428;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        /* Map Container */
+        .map-container {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gray);
+            font-size: 1.2rem;
+        }
+
+        /* Office Hours */
+        .office-hours {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .office-hours h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .hours-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 200px;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .hours-item .day {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .hours-item .time {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark);
+            background-color: white;
+            transition: background-color 0.3s;
+        }
+
+        .faq-question:hover {
+            background-color: #f8f9fa;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 200px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .footer-column ul li a i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: #444;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            color: #bbb;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: space-around;
+        }
+
+        .mobile-nav ul li {
+            flex: 1;
+            text-align: center;
+        }
+
+        .mobile-nav ul li a {
+            display: block;
+            padding: 15px 0;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .mobile-nav ul li a.active {
+            color: var(--primary);
+        }
+
+        .mobile-nav ul li a i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        /* Success Message */
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .contact-content {
+                flex-direction: column;
+            }
+
+            .form-container {
+                min-width: auto;
+            }
+
+            .hours-list {
+                flex-direction: column;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            body {
+                padding-bottom: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Oyster Personal Finance Logo">
+            <h1>Oyster Finance</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="review.html">Reviews</a></li>
+                <li><a href="apply.html" class="btn btn-primary">Apply Now</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Contact Us</h1>
+        <p>Let's Talk - We're here to help with all your loan needs</p>
+    </section>
+
+    <!-- Contact Info -->
+    <section class="section">
+        <div class="contact-info">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Our Office</h3>
+                <p>123 Finance Street<br>Johannesburg, 2001<br>South Africa</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Call Us</h3>
+                <p><a href="tel:+27123456789">+27 12 345 6789</a></p>
+                <p><a href="tel:+27876543210">+27 87 654 3210</a></p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email Us</h3>
+                <p><a href="mailto:info@oysterfinance.co.za">info@oysterfinance.co.za</a></p>
+                <p><a href="mailto:support@oysterfinance.co.za">support@oysterfinance.co.za</a></p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Business Hours</h3>
+                <p>Monday - Friday<br>8:00 AM - 5:00 PM</p>
+                <p>Saturday: 9:00 AM - 1:00 PM</p>
+            </div>
+        </div>
+
+        <!-- Contact Form & Map -->
+        <div class="contact-content">
+            <div class="form-container">
+                <h3>Send Us a Message</h3>
+                <div id="success-message" class="success-message">
+                    Thank you for your message! We'll get back to you within 24 hours.
+                </div>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="full-name">Full Name *</label>
+                        <input type="text" id="full-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" class="form-control" required>
+                            <option value="">Select a subject</option>
+                            <option value="loan-inquiry">Loan Inquiry</option>
+                            <option value="application-status">Application Status</option>
+                            <option value="technical-support">Technical Support</option>
+                            <option value="complaint">Complaint</option>
+                            <option value="general">General Question</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" class="form-control" placeholder="Please describe how we can help you..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                    <br>Interactive Map Coming Soon
+                </div>
+            </div>
+        </div>
+
+        <!-- Office Hours -->
+        <div class="office-hours">
+            <h3>Detailed Office Hours</h3>
+            <div class="hours-list">
+                <div class="hours-item">
+                    <span class="day">Monday</span>
+                    <span class="time">8:00 AM - 5:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Tuesday</span>
+                    <span class="time">8:00 AM - 5:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Wednesday</span>
+                    <span class="time">8:00 AM - 5:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Thursday</span>
+                    <span class="time">8:00 AM - 5:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Friday</span>
+                    <span class="time">8:00 AM - 5:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Saturday</span>
+                    <span class="time">9:00 AM - 1:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Sunday</span>
+                    <span class="time">Closed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Quick answers to common questions</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    How can I check my application status? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can check your application status by visiting our Profile page and entering your email and PIN, or by calling our customer service line at +27 12 345 6789.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What documents do I need for a loan application? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You'll need a valid ID or passport, proof of income (payslips or bank statements), and proof of residence. Additional documents may be required depending on the loan type.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    How long does the approval process take? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our approval process typically takes 24-48 hours. Once approved, funds are usually transferred within the same business day or the next business day.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I apply for multiple loans at once? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We recommend completing one loan application at a time. Once your current loan is processed, you can apply for additional loans if needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Oyster Finance</h3>
+                <p>Oyster Personal Finance is a trusted provider of personal and business loan solutions for South Africans. We are committed to simplifying credit access and supporting economic growth.</p>
+                <p>NCRCP11356</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    <li><a href="review.html"><i class="fas fa-chevron-right"></i> Reviews</a></li>
+                    <li><a href="apply.html"><i class="fas fa-chevron-right"></i> Apply Now</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Loan Types</h3>
+                <ul>
+                    <li><a href="apply.html"><i class="fas fa-chevron-right"></i> Home Loans</a></li>
+                    <li><a href="apply.html"><i class="fas fa-chevron-right"></i> Personal Loans</a></li>
+                    <li><a href="apply.html"><i class="fas fa-chevron-right"></i> Business Loans</a></li>
+                    <li><a href="apply.html"><i class="fas fa-chevron-right"></i> Vehicle Loans</a></li>
+                    <li><a href="apply.html"><i class="fas fa-chevron-right"></i> Emergency Loans</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Finance Street, Johannesburg, South Africa</a></li>
+                    <li><a href="tel:+27123456789"><i class="fas fa-phone"></i> +27 12 345 6789</a></li>
+                    <li><a href="mailto:info@oysterfinance.co.za"><i class="fas fa-envelope"></i> info@oysterfinance.co.za</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 5:00 PM</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Oyster Personal Finance. All Rights Reserved. NCRCP11356</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <ul>
+            <li>
+                <a href="home.html">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="about.html">
+                    <i class="fas fa-info-circle"></i>
+                    About
+                </a>
+            </li>
+            <li>
+                <a href="apply.html">
+                    <i class="fas fa-edit"></i>
+                    Apply
+                </a>
+            </li>
+            <li>
+                <a href="review.html">
+                    <i class="fas fa-star"></i>
+                    Reviews
+                </a>
+            </li>
+            <li>
+                <a href="contact.html" class="active">
+                    <i class="fas fa-phone"></i>
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        // Contact Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                fullName: document.getElementById('full-name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Save to localStorage (in a real app, this would be sent to a server)
+            const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+            contacts.push(formData);
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+            
+            // Show success message
+            document.getElementById('success-message').classList.add('show');
+            
+            // Reset form
+            this.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('success-message').classList.remove('show');
+            }, 5000);
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Mobile Menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const nav = document.querySelector('nav ul');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // 3D Effect on Scroll
+        window.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.contact-card, .form-container, .faq-item');
+            
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const cardBottom = card.getBoundingClientRect().bottom;
+                const windowHeight = window.innerHeight;
+                
+                if (cardTop < windowHeight && cardBottom > 0) {
+                    const scrollPosition = window.scrollY;
+                    const cardPosition = card.offsetTop;
+                    const distance = scrollPosition - cardPosition;
+                    
+                    // Apply subtle 3D rotation based on scroll position
+                    const rotateX = Math.min(Math.max(distance / 100, -5), 5);
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) translateZ(10px)`;
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.contact-card, .faq-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
