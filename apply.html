@@ -71,7 +71,7 @@
         }
 
         .nav-menu a:hover {
-            color: #e74c3c;
+            color: #ED1C24;
             transform: translateY(-2px);
         }
 
@@ -82,7 +82,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #e74c3c;
+            background: #ED1C24;
             transition: width 0.3s ease;
         }
 
@@ -121,7 +121,7 @@
         }
 
         .mobile-nav-menu a:hover {
-            color: #e74c3c;
+            color: #ED1C24;
             transform: translateY(-2px);
         }
 
@@ -132,12 +132,12 @@
 
         /* Main Content */
         .main-content {
-            margin-top: 80px;
-            padding: 3rem 0;
+            margin-top: 0px;
+            padding: 2rem 0;
         }
 
         .hero-apply {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            background: linear-gradient(135deg, #1C75BC, #1C75BC);
             color: white;
             padding: 5rem 0;
             text-align: center;
@@ -145,7 +145,7 @@
 
         .hero-apply h1 {
             font-size: 3rem;
-            margin-bottom: 1rem;
+            margin-bottom: rem;
             animation: fadeInUp 1s ease-out;
         }
 
@@ -159,17 +159,17 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 rem;
         }
 
         /* Application Form */
         .application-section {
-            padding: 4rem 0;
+            padding: 1rem 0;
         }
 
         .application-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 10 auto;
             background: white;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
@@ -247,11 +247,11 @@
         }
 
         .progress-step.active {
-            background: #e74c3c;
+            background: #ED1C24;
         }
 
         .progress-step.completed {
-            background: #27ae60;
+            background: #0abf46;
         }
 
         .application-body {
@@ -416,7 +416,7 @@
         }
 
         .btn-next {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            background: linear-gradient(45deg, #ED1C24, #ED1C24);
             color: white;
             box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
         }
@@ -427,7 +427,7 @@
         }
 
         .btn-submit {
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            background: linear-gradient(45deg, #0abf46, #0abf46);
             color: white;
             box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
         }
@@ -945,7 +945,7 @@
                 <span>Oyster Personal Finance</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="home.html">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="apply.html">Apply</a></li>
                 <li><a href="review.html">Reviews</a></li>
@@ -958,7 +958,7 @@
     <!-- Mobile Navigation -->
     <nav class="mobile-nav">
         <ul class="mobile-nav-menu">
-            <li><a href="home.html"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
             <li><a href="about.html"><i class="fas fa-info-circle"></i>About</a></li>
             <li><a href="apply.html"><i class="fas fa-file-alt"></i>Apply</a></li>
             <li><a href="review.html"><i class="fas fa-star"></i>Reviews</a></li>
@@ -1252,7 +1252,7 @@
                                 </div>
                             </div>
 
-                            <!-- Step 5: Documents & Confirmation -->
+                          <!-- Step 5: Documents & Confirmation -->
                             <div class="form-step" data-step="5">
                                 <h3 class="step-title">Step 5: Documents & Confirmation</h3>
                                 <div class="form-group">
@@ -1282,21 +1282,7 @@
                                     <div class="file-upload">
                                         <label for="proofOfAddress" class="file-upload-label">
                                             <i class="fas fa-upload"></i>
-                                            <span>Upload Utility Bill or Lease Agreement (PDF, JPG, PNG)</span>
-                                        </label>
-                                        <input type="file" id="proofOfAddress" name="proofOfAddress" accept=".pdf,.jpg,.jpeg,.png" required>
-                                    </div>
-                                    <div class="file-name" id="proofOfAddressName"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="signature" class="required-field">Digital Signature</label>
-                                    <div class="signature-pad-container">
-                                        <canvas id="signaturePad"></canvas>
-                                    </div>
-                                    <div class="signature-buttons">
-                                        <button type="button" class="signature-btn clear-signature" id="clearSignature">Clear Signature</button>
-                                    </div>
-                                    <p class="form-note">Please sign above using your mouse or finger on touch devices.</p>
+                                           
                                 </div>
                                 <div class="checkbox-group">
                                     <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
@@ -1323,7 +1309,7 @@
                             <p class="success-text">We will review your application and contact you within 24 hours. You can check the status of your application in your profile.</p>
                             <div class="success-buttons">
                                 <a href="profile.html" class="btn btn-next">Go to Profile</a>
-                                <a href="home.html" class="btn btn-prev">Back to Home</a>
+                                <a href="index.html" class="btn btn-prev">Back to Home</a>
                             </div>
                         </div>
                     </div>
@@ -1347,32 +1333,32 @@
                     <tbody>
                         <tr>
                             <td>Personal Loan</td>
-                            <td>R1,000 - R250,000</td>
-                            <td>12 - 84 months</td>
-                            <td>3% - 15% p.a.</td>
+                            <td>R5,000 - R1,000,000</td>
+                            <td>12-160 months</td>
+                            <td>3%  p.a.</td>
                         </tr>
                         <tr>
                             <td>Business Loan</td>
                             <td>R10,000 - R2,000,000</td>
-                            <td>12 - 84 months</td>
+                            <td>12-160 months</td>
                             <td>3% - 12% p.a.</td>
                         </tr>
                         <tr>
                             <td>Home Loan</td>
                             <td>R100,000 - R5,000,000</td>
-                            <td>60 - 360 months</td>
+                            <td>60-360 months</td>
                             <td>10% - 13% p.a.</td>
                         </tr>
                         <tr>
                             <td>Vehicle Loan</td>
                             <td>R10,000 - R1,000,000</td>
-                            <td>12 - 72 months</td>
+                            <td>12-120 months</td>
                             <td>9% - 15% p.a.</td>
                         </tr>
                         <tr>
-                            <td>Emergency Loan</td>
-                            <td>R1,000 - R50,000</td>
-                            <td>3 - 36 months</td>
+                            <td>Consolidation Loan</td>
+                            <td>R5,000 - R5,000,000</td>
+                            <td>3-336 months</td>
                             <td>12% - 18% p.a.</td>
                         </tr>
                     </tbody>
@@ -1392,7 +1378,7 @@
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
-                <a href="home.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="apply.html">Apply</a>
                 <a href="review.html">Reviews</a>
@@ -1460,7 +1446,7 @@
                 <a href="profile.html" class="popup-btn popup-btn-primary">
                     <i class="fas fa-chart-line"></i> Track Application
                 </a>
-                <a href="home.html" class="popup-btn popup-btn-secondary">
+                <a href="index.html" class="popup-btn popup-btn-secondary">
                     <i class="fas fa-home"></i> Back to Home
                 </a>
             </div>
