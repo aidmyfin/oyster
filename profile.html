@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0a5c36;
+            --primary: #d61313;
             --secondary: #e63946;
             --accent: #f1c40f;
-            --light: #f8f9fa;
+            --light: #ffffff;
             --dark: #212529;
             --gray: #6c757d;
             --success: #28a745;
@@ -18,8 +18,8 @@
             --warning: #ffc107;
             --danger: #dc3545;
             --orange: #ff5722;
-            --gradient-primary: linear-gradient(135deg, #0a5c36 0%, #28a745 100%);
-            --gradient-secondary: linear-gradient(135deg, #e63946 0%, #ff5722 100%);
+            --gradient-primary: linear-gradient(135deg, #00AEEF 0%, #1C75BC 100%);
+            --gradient-secondary: linear-gradient(135deg, #e63946 0%, #d61313 100%);
             --gradient-accent: linear-gradient(135deg, #f1c40f 0%, #ffc107 100%);
         }
 
@@ -195,23 +195,26 @@
         }
 
         .hero-content {
-            width: 60%;
-            padding: 0 5%;
+            width: 100%;
+            padding:  5%;
             color: white;
-            position: relative;
+            position: center;
             z-index: 1;
+             justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
+    text-align: center;
             animation: heroContentSlide 1.5s ease-out;
         }
 
         .hero-content h1 {
             font-size: 4rem;
             margin-bottom: 25px;
-            font-weight: 800;
+            font-weight: 900;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
             line-height: 1.2;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
+            background: linear-gradient(45deg, #ffffff, #ffffff);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-text-fill-color: ;
             background-clip: text;
         }
 
@@ -219,7 +222,7 @@
             font-size: 1.4rem;
             margin-bottom: 35px;
             text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-            line-height: 1.6;
+            line-height: ;
         }
 
         .btn {
@@ -282,76 +285,67 @@
             box-shadow: 0 15px 30px rgba(241, 196, 15, 0.4);
         }
 
-        /* FEATURES SECTION - MAINTAINS EXACT LAYOUT ON ALL SCREEN SIZES */
-        .features-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 60px 5% 40px;
-            position: relative;
-            margin-top: -50px;
-            z-index: 1;
-        }
+       
+/* Feature Icons Section */
+.feature-icons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: -10px 20px 30px;
+    position: relative;
+    z-index: 10;
+}
 
-        .features-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            gap: 30px;
-        }
+.feature-icon-item {
+    background: white;
+    border-radius: 15px;
+    padding: 15px 10px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s;
+}
 
-        .features-row {
-            display: grid;
-            gap: 20px;
-        }
+.feature-icon-item:active {
+    transform: scale(0.97);
+}
 
-        /* ALWAYS 4 COLUMNS FOR TOP ROW */
-        .features-row.top {
-            grid-template-columns: repeat(4, 1fr);
-        }
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+}
 
-        /* ALWAYS 3 COLUMNS FOR BOTTOM ROW */
-        .features-row.bottom {
-            grid-template-columns: repeat(3, 1fr);
-            max-width: 900px;
-            margin: 0 auto;
-        }
+.icon-blue {
+    background: #1C75BC;
+    box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
+}
 
-        .feature-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+.icon-red {
+    background: #ED1C24;
+    box-shadow: 0 5px 15px rgba(230, 0, 35, 0.2);
+}
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
+.icon-green {
+    background: #27b33c;
+    box-shadow: 0 5px 15px rgba(0, 204, 102, 0.2);
+}
 
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            flex-shrink: 0;
-        }
+.icon-yellow {
+    background: #dede18;
+    box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2);
+}
 
-        .feature-icon i {
-            font-size: 24px;
-            color: white;
-        }
+.feature-icon-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-dark);
+}
 
         /* Specific icon colors */
         .feature-card.fast .feature-icon {
@@ -383,12 +377,13 @@
         }
 
         .feature-title {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #333;
             margin: 0;
             line-height: 1.3;
             text-align: center;
+            
         }
 
         .feature-subtitle {
@@ -410,78 +405,137 @@
         }
 
         /* MOBILE RESPONSIVE - SCALE DOWN PROPORTIONALLY */
-        
+        .stats-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 10px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,249,250,0.98));
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.3);
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.stats-box {
+    flex: 0 0 calc(33.33% - 10px);
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 10px;
+    text-align: center;
+    border: 2px solid rgba(10, 92, 54, 0.1);
+    position: relative;
+    min-width: 110px;
+}
+
+.stats-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background: #ED1C24;
+    border-radius: 14px 14px 0 0;
+}
+
+.icon-container img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 8px;
+}
+
+.stats-box h3 {
+    font-size: 16px;
+    color: #0077b6;
+    margin: 6px 0 4px;
+}
+
+.stats-box p {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #666;
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .counter-text {
+        font-size: 1px;
+    }
+
+    .label-text {
+        font-size: 1px;
+    }
+}
+
 
         /* ENHANCED STATS COUNTER WITH PREMIUM STYLING - MOVED DOWN */
-        .stats-container {
-            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,0.98) 100%);
-            backdrop-filter: blur(30px);
-            padding: 50px 5%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-            position: relative;
-            z-index: 2;
-            border-radius: 30px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-            border: 2px solid rgba(255,255,255,0.4);
-        }
+        
+        
+        .icon-container {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .stats-box {
-            text-align: center;
-            padding: 40px 30px;
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            border-radius: 25px;
-            border: 2px solid rgba(10, 92, 54, 0.1);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+.icon-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 
-        .stats-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: var(--gradient-primary);
-            border-radius: 25px 25px 0 0;
-        }
+.bottom-feature-bar {
+    width: 100%;
+    background: #fff;
+    border-radius: 16px;
+    padding: 3px 5%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    box-sizing: border-box;
+        margin: 0px 0px 20px 0px;
 
-        .stats-box::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(10, 92, 54, 0.05) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
+}
 
-        .stats-box:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 30px 60px rgba(10, 92, 54, 0.25);
-            border-color: var(--primary);
-        }
+.bottom-feature-bar .feature-item {
+    flex: 1 1 30%;
+    min-width: 10px;
+    margin: 1px 0;
+}
 
-        .stats-box:hover::after {
-            opacity: 1;
-        }
+.bottom-feature-bar .feature-item img {
+    max-width: 40px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.bottom-feature-bar .stars img {
+    width: 18px;
+    margin: 0 1px;
+}
+
+.bottom-feature-bar p {
+    margin: 0;
+    font-weight: 700;
+    font-size: 12px;
+    color: #1c1c1c;
+}
 
         /* Premium Icon Container */
         .stats-box .icon-container {
             width: 100px;
             height: 100px;
             margin: 0 auto 25px;
-            background: var(--gradient-primary);
+            background: var(--gradient-primar);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -498,7 +552,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: , transparent);
             animation: rotate 4s linear infinite;
         }
 
@@ -506,7 +560,7 @@
             content: '';
             position: absolute;
             inset: 4px;
-            background: var(--gradient-primary);
+            background: var(--gradient-primar);
             border-radius: 50%;
             z-index: 1;
         }
@@ -1242,7 +1296,7 @@
         .business-loan-icon::before { content: '\f0b1'; } /* fa-briefcase */
 
         .loan-card-header h3 {
-            font-size: 1.8rem;
+            font-size: 1rem;
             font-weight: 700;
             position: relative;
             z-index: 1;
@@ -1258,8 +1312,8 @@
         .loan-card-body p {
             margin-bottom: 20px;
             color: var(--gray);
-            line-height: 1.6;
-            font-size: 1.1rem;
+            line-height: 1;
+            font-size: 1rem;
         }
 
         .loan-card-body ul {
@@ -1278,19 +1332,19 @@
 
         .loan-card-body ul li:hover {
             padding-left: 10px;
-            color: var(--primary);
+            color: #ED1C24;
         }
 
         .loan-card-body ul li i {
-            color: var(--success);
+            color: #ED1C24;
             margin-right: 15px;
             font-size: 1.2rem;
         }
 
         .loan-card-body .rate {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
+            font-size: 1rem;
+            font-weight: 400;
+            background: #ED1C24;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1325,7 +1379,7 @@
             left: 0;
             width: 100%;
             height: 6px;
-            background: var(--gradient-primary);
+            background: #ED1C24;
             border-radius: 30px 30px 0 0;
         }
 
@@ -1613,7 +1667,7 @@
 
         /* CTA */
         .cta {
-            background: var(--gradient-primary);
+            background: #1C75BC;
             color: white;
             text-align: center;
             padding: 80px 5%;
@@ -1638,7 +1692,7 @@
         }
 
         .btn-light:hover {
-            background-color: #f1f1f1;
+            background-color: #c62b38;
         }
 
         /* Footer */
@@ -2955,7 +3009,7 @@
     <header>
         <div class="logo">
             <img src="/placeholder.svg?height=50&width=50" alt="Oyster Personal Finance Logo">
-            <h1>Oyster Finance</h1>
+            <h1></h1>
         </div>
         <nav>
             <ul>
@@ -2987,92 +3041,116 @@
         </div>
     </section>
 
-    <!-- FEATURES SECTION - MAINTAINS EXACT LAYOUT ON ALL SCREEN SIZES -->
-    <section class="features-section">
-        <div class="features-container">
-            <!-- Top Row - 4 Features -->
-            <div class="features-row top">
-                <div class="feature-card fast">
-                    <div class="feature-icon">
+    
+            <div class="feature-icons">
+                <div class="feature-icon-item">
+                    <div class="feature-icon icon-blue">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3 class="feature-title">Fast Approval</h3>
+                    <div class="feature-icon-title">Fast Approval</div>
                 </div>
-                <div class="feature-card secure">
-                    <div class="feature-icon">
+                <div class="feature-icon-item">
+                    <div class="feature-icon icon-red">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="feature-title">Secure</h3>
+                    <div class="feature-icon-title">Secure</div>
                 </div>
-                <div class="feature-card flexible">
-                    <div class="feature-icon">
-                        <i class="fas fa-download"></i>
+                <div class="feature-icon-item">
+                    <div class="feature-icon icon-green">
+                        <i class="fas fa-hand-holding-usd"></i>
                     </div>
-                    <h3 class="feature-title">Flexible</h3>
+                    <div class="feature-icon-title">Flexible</div>
                 </div>
-                <div class="feature-card low-rates">
-                    <div class="feature-icon">
+                <div class="feature-icon-item">
+                    <div class="feature-icon icon-yellow">
                         <i class="fas fa-percentage"></i>
                     </div>
-                    <h3 class="feature-title">Low Rates</h3>
+                    <div class="feature-icon-title">Low Rates</div>
                 </div>
             </div>
 
-            <!-- Bottom Row - 3 Features -->
-            <div class="features-row bottom">
-                <div class="feature-card ncr">
-                    <div class="feature-icon">
-                        <i class="fas fa-certificate"></i>
+
+    <!-- Bottom Row - Full Width Section Without Grid -->
+<div class="bottom-feature-bar">
+    <div class="feature-item">
+        <img src="your-icon-url-1.png" alt="NCR Registered">
+        <p>NCR Registered</p>
+    </div>
+    <div class="feature-item">
+        <div class="stars">
+            <img src="star-icon.png" alt="Star">
+        </div>
+        <p>4.8/5 Rating</p>
+    </div>
+    <div class="feature-item">
+        <img src="your-icon-url-3.png" alt="256-bit Secure">
+        <p>256-bit Secure</p>
+    </div>
+</div>        
+
+<!-- Why Choose Oyster Finance Section -->
+    <section class="why-choose">
+        <div class="container">
+            <h2>Why Choose Oyster Finance?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-content">
+                        <h3>100% Online</h3>
+                        <p>With Oyster Finance, you can apply online 24/7 from anywhere in South Africa. It's fast, secure, and built for your convenience.</p>
+                        
+                        <h3>Fast</h3>
+                        <p>Our streamlined process ensures you can apply and receive approval in just minutes. We're committed to efficiency, knowing that time is often of the essence in financial matters.</p>
                     </div>
-                    <h3 class="feature-title">NCR Registered</h3>
+                    <div class="benefit-image online"></div>
                 </div>
-                <div class="feature-card rating">
-                    <div class="rating-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                
+                <div class="benefit-item">
+                    <div class="benefit-image safe"></div>
+                    <div class="benefit-content">
+                        <h3>Convenient</h3>
+                        <p>Oyster Finance makes it easy to compare loan offers from over 19 banks with one quick online application. Check rates, terms, and benefits, all in one place.</p>
+                        
+                        <h3>Safe</h3>
+                        <p>We take your privacy seriously. That's why we use top-level encryption and strong data protection to keep your personal info secure. From the moment you apply to after you get your loan offer, your data is protected. Our system is always updated to block any threats.</p>
+                        
+                        <h3>Non-binding</h3>
+                        <p>Compare loan offers from over 19 banks with one easy application. You're free to accept or decline—no obligations, no pressure. Review and choose the option that suits your budget and goals. It's your choice, on your terms.</p>
                     </div>
-                    <h3 class="feature-title">4.8/5 Rating</h3>
                 </div>
-                <div class="feature-card security">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3 class="feature-title">256-bit Secure</h3>
-                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#" class="btn btn-orange">Apply Now</a>
             </div>
         </div>
     </section>
-
+    
     <!-- ENHANCED STATS COUNTER WITH PREMIUM STYLING - MOVED DOWN -->
-    <div class="stats-container">
-        <div class="stats-box">
-            <div class="particles"></div>
-            <div class="icon-container">
-                <i class="fas fa-users-line"></i>
-            </div>
-            <h3 id="users-counter">0</h3>
-            <p>Users Online</p>
+   <div class="stats-container">
+    <div class="stats-box">
+        <div class="particles"></div>
+        <div class="icon-container">
+            <img src="your-icon-url-1.png" alt="Users Icon">
         </div>
-        <div class="stats-box">
-            <div class="particles"></div>
-            <div class="icon-container">
-                <i class="fas fa-check-double"></i>
-            </div>
-            <h3 id="loans-counter">0</h3>
-            <p>Loans Approved</p>
-        </div>
-        <div class="stats-box">
-            <div class="particles"></div>
-            <div class="icon-container">
-                <i class="fas fa-coins"></i>
-            </div>
-            <h3 id="amount-counter">R0</h3>
-            <p>Total Paid Out</p>
-        </div>
+        <h3 id="users-counter">0</h3>
+        <p>Users Online</p>
     </div>
+    <div class="stats-box">
+        <div class="particles"></div>
+        <div class="icon-container">
+            <img src="your-icon-url-2.png" alt="Loans Approved Icon">
+        </div>
+        <h3 id="loans-counter">0</h3>
+        <p>Loans Approved</p>
+    </div>
+    <div class="stats-box">
+        <div class="particles"></div>
+        <div class="icon-container">
+            <img src="your-icon-url-3.png" alt="Total Paid Out Icon">
+        </div>
+        <h3 id="amount-counter">R0</h3>
+        <p>Total Paid Out</p>
+    </div>
+</div>
 
     <!-- Enhanced How It Works -->
     <section class="how-it-works">
@@ -3101,7 +3179,79 @@
         </div>
     </section>
 
-    <!-- ENHANCED LOAN TYPES SECTION WITH BETTER ICONS -->
+    
+
+    <!-- ADVANCED CALCULATOR DESIGN -->
+    <section class="calculator-section">
+        <div class="section-title">
+            <h2>Loan Calculator</h2>
+            <p>Estimate your monthly repayments with our advanced calculator</p>
+        </div>
+        <div class="calculator">
+            <h3>Calculate Your Repayments</h3>
+            <div class="calculator-grid">
+                <div class="form-group">
+                    <label for="loan-amount">Loan Amount (R)</label>
+                    <input type="number" id="loan-amount" class="form-control" placeholder="Enter loan amount" min="1000" max="5000000">
+                </div>
+                <div class="form-group">
+                    <label for="loan-type">Loan Type</label>
+                    <select id="loan-type" class="form-control">
+                        <option value="10">Home Loan (10%)</option>
+                        <option value="3">Personal Loan (3%)</option>
+                        <option value="3">Business Loan (3%)</option>
+                        <option value="9">Vehicle Loan (9%)</option>
+                        <option value="12">Emergency Loan (12%)</option>
+                        <option value="3">Cash Loan (3%)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="loan-term">Repayment Term (Months)</label>
+                <select id="loan-term" class="form-control">
+                    <option value="3">3 months</option>
+<option value="6">6 months</option>
+<option value="9">9 months</option>
+<option value="12">1 year</option>
+<option value="24">2 years</option>
+<option value="36">3 years</option>
+<option value="48">4 years</option>
+<option value="60">5 years</option>
+<option value="72">6 years</option>
+<option value="84">7 years</option>
+<option value="96">8 years</option>
+<option value="108">9 years</option>
+<option value="120">10 years</option>
+<option value="132">11 years</option>
+<option value="144">12 years</option>
+<option value="156">13 years</option>
+<option value="168">14 years</option>
+<option value="180">15 years</option>
+                </select>
+            </div>
+            <button id="calculate-btn" class="btn btn-primary calculate-btn">Calculate Repayment</button>
+            <div id="result" class="result">
+                <h4>Estimated Monthly Repayment</h4>
+                <p id="monthly-payment">R0</p>
+                <div class="result-details">
+                    <div class="result-item">
+                        <span>Total Interest</span>
+                        <strong id="total-interest">R0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Total Amount</span>
+                        <strong id="total-amount">R0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Interest Rate</span>
+                        <strong id="interest-rate">0%</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- ENHANCED LOAN TYPES SECTION WITH BETTER ICONS -->
     <section class="loan-types-section">
         <div class="section-title">
             <h2>Our Loan Types</h2>
@@ -3167,66 +3317,7 @@
             </div>
         </div>
     </section>
-
-    <!-- ADVANCED CALCULATOR DESIGN -->
-    <section class="calculator-section">
-        <div class="section-title">
-            <h2>Loan Calculator</h2>
-            <p>Estimate your monthly repayments with our advanced calculator</p>
-        </div>
-        <div class="calculator">
-            <h3>Calculate Your Repayments</h3>
-            <div class="calculator-grid">
-                <div class="form-group">
-                    <label for="loan-amount">Loan Amount (R)</label>
-                    <input type="number" id="loan-amount" class="form-control" placeholder="Enter loan amount" min="1000" max="5000000">
-                </div>
-                <div class="form-group">
-                    <label for="loan-type">Loan Type</label>
-                    <select id="loan-type" class="form-control">
-                        <option value="10">Home Loan (10%)</option>
-                        <option value="3">Personal Loan (3%)</option>
-                        <option value="3">Business Loan (3%)</option>
-                        <option value="9">Vehicle Loan (9%)</option>
-                        <option value="12">Emergency Loan (12%)</option>
-                        <option value="3">Cash Loan (3%)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="loan-term">Repayment Term (Months)</label>
-                <select id="loan-term" class="form-control">
-                    <option value="12">12 months</option>
-                    <option value="24">24 months</option>
-                    <option value="36">36 months</option>
-                    <option value="48">48 months</option>
-                    <option value="60">60 months</option>
-                    <option value="72">72 months</option>
-                    <option value="84">84 months</option>
-                </select>
-            </div>
-            <button id="calculate-btn" class="btn btn-primary calculate-btn">Calculate Repayment</button>
-            <div id="result" class="result">
-                <h4>Estimated Monthly Repayment</h4>
-                <p id="monthly-payment">R0</p>
-                <div class="result-details">
-                    <div class="result-item">
-                        <span>Total Interest</span>
-                        <strong id="total-interest">R0</strong>
-                    </div>
-                    <div class="result-item">
-                        <span>Total Amount</span>
-                        <strong id="total-amount">R0</strong>
-                    </div>
-                    <div class="result-item">
-                        <span>Interest Rate</span>
-                        <strong id="interest-rate">0%</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- Enhanced Types of Online Loans Section with Popup -->
     <section class="loan-types-new">
         <div class="container">
@@ -3237,7 +3328,7 @@
                     <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="loan-type-content">
                         <h3>Same day loans</h3>
-                        <p><a href="#">Same day loans</a> provide fast access to cash, often paid out within hours, making them ideal for emergencies or urgent bills.</p>
+                        <p><a href="#">Click to Learn More</a> Same day Loan provide fast access to cash, often paid out within hours, making them ideal for emergencies or urgent bills.</p>
                     </div>
                 </div>
                 
@@ -3245,7 +3336,7 @@
                     <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="loan-type-content">
                         <h3>Short-term loans</h3>
-                        <p><a href="#">Short-term loans in South Africa</a> are ideal for covering unexpected expenses, offering quick access to cash but usually with higher interest rates.</p>
+                        <p><a href="#">Click to Learn More</a> Short-term loans in South Africa are ideal for covering unexpected expenses, offering quick access to cash but usually with higher interest rates.</p>
                     </div>
                 </div>
                 
@@ -3253,7 +3344,7 @@
                     <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="loan-type-content">
                         <h3>Instant loans</h3>
-                        <p><a href="#">Instant loans</a> are designed for speed, with online applications approved within minutes and funds transferred shortly after.</p>
+                        <p><a href="#">Click to Learn More</a> Instant loans are designed for speed, with online applications approved within minutes and funds transferred shortly after.</p>
                     </div>
                 </div>
                 
@@ -3261,7 +3352,7 @@
                     <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="loan-type-content">
                         <h3>Cash loans</h3>
-                        <p><a href="#">Cash loans</a> provide quick access to money, often paid out directly into your bank account to help cover short-term financial gaps.</p>
+                        <p><a href="#">Click to Learn More</a> Cash loans provide quick access to money, often paid out directly into your bank account to help cover short-term financial gaps.</p>
                     </div>
                 </div>
                 
@@ -3269,7 +3360,7 @@
                     <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="loan-type-content">
                         <h3>Personal loans</h3>
-                        <p><a href="#">Personal loans</a> offer flexible financing for various needs, from home improvements to debt consolidation, with fixed repayment terms and competitive interest rates.</p>
+                        <p><a href="#">Click to Learn More</a> Personal loans offer flexible financing for various needs, from home improvements to debt consolidation, with fixed repayment terms and competitive interest rates.</p>
                     </div>
                 </div>
                 
@@ -3277,7 +3368,7 @@
                     <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="loan-type-content">
                         <h3>Payday loans</h3>
-                        <p><a href="#">Payday loans</a> are short-term loans meant to tide you over until your next salary, offering quick cash for urgent expenses.</p>
+                        <p><a href="#">Click to Learn More</a> Payday Loans are short-term loans meant to tide you over until your next salary, offering quick cash for urgent expenses.</p>
                     </div>
                 </div>
             </div>
@@ -3299,41 +3390,7 @@
         </div>
     </div>
 
-    <!-- Why Choose Oyster Finance Section -->
-    <section class="why-choose">
-        <div class="container">
-            <h2>Why Choose Oyster Finance?</h2>
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-content">
-                        <h3>100% Online</h3>
-                        <p>With Oyster Finance, you can apply online 24/7 from anywhere in South Africa. It's fast, secure, and built for your convenience.</p>
-                        
-                        <h3>Fast</h3>
-                        <p>Our streamlined process ensures you can apply and receive approval in just minutes. We're committed to efficiency, knowing that time is often of the essence in financial matters.</p>
-                    </div>
-                    <div class="benefit-image online"></div>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-image safe"></div>
-                    <div class="benefit-content">
-                        <h3>Convenient</h3>
-                        <p>Oyster Finance makes it easy to compare loan offers from over 19 banks with one quick online application. Check rates, terms, and benefits, all in one place.</p>
-                        
-                        <h3>Safe</h3>
-                        <p>We take your privacy seriously. That's why we use top-level encryption and strong data protection to keep your personal info secure. From the moment you apply to after you get your loan offer, your data is protected. Our system is always updated to block any threats.</p>
-                        
-                        <h3>Non-binding</h3>
-                        <p>Compare loan offers from over 19 banks with one easy application. You're free to accept or decline—no obligations, no pressure. Review and choose the option that suits your budget and goals. It's your choice, on your terms.</p>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 50px;">
-                <a href="#" class="btn btn-orange">Apply Now</a>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- As Seen On Section -->
     <section class="as-seen-on">
