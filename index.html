@@ -1095,6 +1095,14 @@
             text-align: center;
             margin-top: 30px;
         }
+        
+        .woman-image {
+            width: 100%;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') no-repeat center;
+            background-size: cover;
+            border-radius: 20px;
+        }
 
         /* Enhanced How It Works */
         .how-it-works {
@@ -3140,7 +3148,7 @@
     <div class="stats-box">
         <div class="particles"></div>
         <div class="icon-container">
-            <img src="your-icon-url-1.png" alt="Users Icon">
+            <img src="image/consultation.png" alt="Users Icon">
         </div>
         <h3 id="users-counter">0</h3>
         <p>Users Online</p>
@@ -3148,7 +3156,7 @@
     <div class="stats-box">
         <div class="particles"></div>
         <div class="icon-container">
-            <img src="your-icon-url-2.png" alt="Loans Approved Icon">
+            <img src="image/customs-clearance.png" alt="Loans Approved Icon">
         </div>
         <h3 id="loans-counter">0</h3>
         <p>Loans Approved</p>
@@ -3156,7 +3164,7 @@
     <div class="stats-box">
         <div class="particles"></div>
         <div class="icon-container">
-            <img src="your-icon-url-3.png" alt="Total Paid Out Icon">
+            <img src="image/money.png" alt="Total Paid Out Icon">
         </div>
         <h3 id="amount-counter">R0</h3>
         <p>Total Paid Out</p>
@@ -3722,7 +3730,7 @@ Whether you're starting out or scaling up, tailored loan options support your go
                         // Start counter animations when stats come into view
                         animateCounter('users-counter', 0, 21, 2000);
                         animateCounter('loans-counter', 0, 25000, 2500);
-                        animateCounter('amount-counter', 0, 600, 2000, 'R');
+                        animateCounter('amount-counter', 0, 25000, 2500, '');
                     }
                     
                     // Add animation classes
