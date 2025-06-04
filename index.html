@@ -166,22 +166,22 @@
         /* Enhanced Hero Backgrounds with Beautiful Images */
         .hero-slide:nth-child(1) {
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                             url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1926&q=80');
+                             url('image/pexels-rdne-8293744.jpg');
         }
 
         .hero-slide:nth-child(2) {
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                             url('https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1926&q=80');
+                             url('image/pexels-rdne-8292854.jpg');
         }
 
         .hero-slide:nth-child(3) {
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                             url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1926&q=80');
+                             url('image/pexels-olly-3760067.jpg');
         }
 
         .hero-slide:nth-child(4) {
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                             url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1926&q=80');
+                             url('image/pexels-rdne-8292888.jpg');
         }
 
         .hero-overlay {
@@ -730,13 +730,23 @@
             margin-bottom: 30px;
         }
 
-        .woman-image {
-            width: 100%;
-            height: 400px;
-            background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') no-repeat center;
-            background-size: cover;
-            border-radius: 20px;
-        }
+        .benefit-image.online {
+  background-image: url('image/pexels-rufaro-15049135.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; /* or 'contain' if needed */
+  width: 600px;
+  height: 400px;
+}
+
+.benefit-image.safe {
+  background-image: url('image/pexels-rufaro-15049135.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 600px;
+  height: 400px;
+}
 
         /* As Seen On Section */
         .as-seen-on {
@@ -3325,7 +3335,7 @@
             <p class="subtitle">Discover the perfect loan solution for your financial needs with our comprehensive comparison platform</p>
             <div class="loan-grid">
                 <div class="loan-type-card" data-loan="same-day">
-                    <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="loan-type-image" style="background-image: url('image/pexels-ivan-samkov-8962686.jpg');"></div>
                     <div class="loan-type-content">
                         <h3>Same day loans</h3>
                         <p><a href="#">Click to Learn More</a> Same day Loan provide fast access to cash, often paid out within hours, making them ideal for emergencies or urgent bills.</p>
@@ -3333,10 +3343,11 @@
                 </div>
                 
                 <div class="loan-type-card" data-loan="short-term">
-                    <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="loan-type-image" style="image/pexels-kindelmedia-7578968.jpg');"></div>
                     <div class="loan-type-content">
-                        <h3>Short-term loans</h3>
-                        <p><a href="#">Click to Learn More</a> Short-term loans in South Africa are ideal for covering unexpected expenses, offering quick access to cash but usually with higher interest rates.</p>
+                        <h3>Business loans</h3>
+                        <p><a href="#">Click to Learn More</a> Business loans provide funding to help companies grow, manage cash flow, or invest in new opportunities.
+Whether you're starting out or scaling up, tailored loan options support your goals.</p>
                     </div>
                 </div>
                 
@@ -3349,7 +3360,7 @@
                 </div>
                 
                 <div class="loan-type-card" data-loan="cash">
-                    <div class="loan-type-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="loan-type-image" style="image/pexels-rufaro-15049135.jpg');"></div>
                     <div class="loan-type-content">
                         <h3>Cash loans</h3>
                         <p><a href="#">Click to Learn More</a> Cash loans provide quick access to money, often paid out directly into your bank account to help cover short-term financial gaps.</p>
@@ -3591,10 +3602,10 @@
                 ]
             },
             'short-term': {
-                title: 'Short-term Loans',
-                description: 'Short-term loans in South Africa are ideal for covering unexpected expenses, offering quick access to cash but usually with higher interest rates. Perfect for bridging financial gaps.',
+                title: 'Business Loans',
+                description: 'Business Loans provide funding to help companies grow, manage cash flow, or invest in new opportunities.Whether you are starting out or scaling up, tailored loan options support your goals.',
                 features: [
-                    'Loan terms from 1-12 months',
+                    'Loan terms ',
                     'Quick application process',
                     'Flexible repayment options',
                     'No long-term commitment',
