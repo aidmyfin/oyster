@@ -410,7 +410,7 @@
     justify-content: space-between;
     align-items: stretch;
     flex-wrap: nowrap;
-    gap: 10px;
+    gap: 1px;
     padding: 10px;
     background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,249,250,0.98));
     border-radius: 20px;
@@ -428,7 +428,7 @@
     text-align: center;
     border: 2px solid rgba(10, 92, 54, 0.1);
     position: relative;
-    min-width: 110px;
+    min-width: 10px;
 }
 
 .stats-box::before {
@@ -449,13 +449,13 @@
 }
 
 .stats-box h3 {
-    font-size: 16px;
+    font-size: 1px;
     color: #0077b6;
     margin: 6px 0 4px;
 }
 
 .stats-box p {
-    font-size: 10px;
+    font-size: 1px;
     text-transform: uppercase;
     color: #666;
     margin: 0;
@@ -3563,39 +3563,15 @@
         </div>
     </footer>
 
-    <!-- Mobile Navigation -->
+     <!-- Mobile Navigation -->
     <nav class="mobile-nav">
-        <ul>
-            <li>
-                <a href="#" class="active">
-                    <i class="fas fa-home"></i>
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-info-circle"></i>
-                    About
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-edit"></i>
-                    Apply
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-star"></i>
-                    Reviews
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-phone"></i>
-                    Contact
-                </a>
-            </li>
+        <ul class="mobile-nav-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i>About</a></li>
+            <li><a href="apply.html"><i class="fas fa-file-alt"></i>Apply</a></li>
+            <li><a href="review.html"><i class="fas fa-star"></i>Reviews</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone"></i>Contact</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i>Profile</a></li>
         </ul>
     </nav>
 
