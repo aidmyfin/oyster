@@ -2992,10 +2992,10 @@ function loadDocuments(applications) {
                 <h3 class="document-title">Loan Approval Letter</h3>
                 <p class="document-date">Generated on ${formatDate(new Date())}</p>
                 <div class="document-actions">
-                    <button class="doc-btn btn-view-doc" onclick="viewApprovalLetter('${app.referenceNumber}')">
+                    <button class="doc-btn btn-view-doc" onclick="window.location.href='approval.html'">
                         <i class="fas fa-eye"></i> View
                     </button>
-                    <button class="doc-btn btn-download" onclick="downloadDocument('approval_letter_${app.referenceNumber}')">
+                    <button class="doc-btn btn-download" onclick="window.location.href='approval.html'">
                         <i class="fas fa-download"></i> Download
                     </button>
                 </div>
@@ -3169,10 +3169,10 @@ window.trackApplication = function(referenceNumber) {
     alert(`Tracking application: ${referenceNumber}`);
 };
 
-// Add function to view approval letter
+// Modified function to view approval letter - now redirects to approval.html
 window.viewApprovalLetter = function(referenceNumber) {
-    // Redirect to www.bn.com
-    window.open('https://www.bn.com', '_blank');
+    // Redirect to approval.html
+    window.location.href = 'approval.html';
 };
 
 // Close modal handlers
@@ -3295,7 +3295,7 @@ document.getElementById('downloadLetterBtn').addEventListener('click', function(
 });
 
 document.getElementById('viewApprovalLetterBtn').addEventListener('click', function() {
-    window.open('https://www.bn.com', '_blank');
+    window.location.href = 'approval.html';
 });
 </script>
 </body>
