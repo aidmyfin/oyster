@@ -884,13 +884,436 @@
         }
     </style>
 </head>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #1C75BC, #1C75BC);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1C75BC;
+            background: white;
+            box-shadow: 0 5px 15px rgba(28, 117, 188, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .required-field::after {
+            content: ' *';
+            color: #e74c3c;
+        }
+
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            border-color: #1C75BC;
+            background: #fff;
+        }
+
+        .file-upload-label i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #666;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-name {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-submit {
+            background: linear-gradient(45deg, #1C75BC, #1C75BC);
+            color: white;
+            box-shadow: 0 4px 15px rgba(28, 117, 188, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(28, 117, 188, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #1C75BC;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Message */
+        .error-message {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Debug Message */
+        .debug-message {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1976d2;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .debug-message.show {
+            display: block;
+        }
+
+        /* Success Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            transform: scale(0.8) translateY(30px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .popup-overlay.show .popup-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .popup-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #1C75BC, #1C75BC);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: popupIconPulse 2s infinite;
+        }
+
+        .popup-icon i {
+            font-size: 2.5rem;
+            color: white;
+            animation: popupIconBounce 1s ease-out;
+        }
+
+        .popup-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .popup-message {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .popup-reference {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #1C75BC;
+        }
+
+        .popup-reference strong {
+            color: #1C75BC;
+            font-size: 1.1rem;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .popup-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .popup-btn-primary {
+            background: linear-gradient(45deg, #1C75BC, #1C75BC);
+            color: white;
+            box-shadow: 0 4px 15px rgba(28, 117, 188, 0.3);
+        }
+
+        .popup-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(28, 117, 188, 0.4);
+        }
+
+        .popup-btn-secondary {
+            background: #f8f9fa;
+            color: #2c3e50;
+            border: 2px solid #ddd;
+        }
+
+        .popup-btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+
+            .form-body {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .popup-container {
+                padding: 1.5rem;
+                margin: 1rem;
+                max-width: 95%;
+            }
+            
+            .popup-buttons {
+                flex-direction: column;
+            }
+            
+            .popup-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-header {
+                padding: 1.5rem 1rem;
+            }
+
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-body {
+                padding: 1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+    </style>
+</head>
 <body>
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
     </div>
-
-    <!-- Header -->
+<!-- Header -->
     <header class="header">
         <nav class="nav-container">
             <div class="logo">
@@ -919,413 +1342,530 @@
             <li><a href="profile.html"><i class="fas fa-user"></i>Profile</a></li>
         </ul>
     </nav>
-    
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero-apply">
-            <div class="container">
-                <h1>Apply for Your Loan in Minutes</h1>
-                <p>Fill out the form below to apply for a personal or business loan. We'll review your details and contact you shortly.</p>
-            </div>
-        </section>
+    <div class="container">
+        <div class="form-header">
+            <h1>Apply for Your Loan</h1>
+            <p>Complete the form below to apply for a personal or business loan. Fields marked with * are required.</p>
+        </div>
+        
+        <div class="form-body">
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage"></div>
+            
+            <!-- Debug Message -->
+            <div class="debug-message" id="debugMessage"></div>
 
-        <!-- Application Form -->
-        <section class="application-section">
-            <div class="container">
-                <div class="application-container">
-                    <div class="application-header">
-                        <h2>Loan Application</h2>
-                        <p>Complete all steps to submit your application. Fields marked with * are required.</p>
-                        <div class="application-progress">
-                            <div class="progress-bar" id="progressBar"></div>
-                            <div class="progress-step active" data-step="1">1</div>
-                            <div class="progress-step" data-step="2">2</div>
-                            <div class="progress-step" data-step="3">3</div>
-                            <div class="progress-step" data-step="4">4</div>
-                            <div class="progress-step" data-step="5">5</div>
+            <form id="loanApplicationForm">
+                <div class="form-group">
+                    <label for="loanType" class="required-field">Loan Type</label>
+                    <select id="loanType" name="loanType" required>
+                        <option value="">Select loan type</option>
+                        <option value="Personal Loan">Personal Loan</option>
+                        <option value="Business Loan">Business Loan</option>
+                        <option value="Home Loan">Home Loan</option>
+                        <option value="Vehicle Loan">Vehicle Loan</option>
+                        <option value="Emergency Loan">Emergency Loan</option>
+                        <option value="Cash Loan">Cash Loan</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loanAmount" class="required-field">Loan Amount (R)</label>
+                    <input type="number" id="loanAmount" name="loanAmount" min="10000" max="5000000" placeholder="Enter amount between R10,000 and R5,000,000" required>
+                    <p class="form-note">Minimum loan amount: R10,000</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loanPurpose" class="required-field">Loan Purpose</label>
+                    <select id="loanPurpose" name="loanPurpose" required>
+                        <option value="">Select purpose</option>
+                        <option value="debt-consolidation">Debt Consolidation</option>
+                        <option value="home-improvement">Home Improvement</option>
+                        <option value="business-expansion">Business Expansion</option>
+                        <option value="education">Education</option>
+                        <option value="medical">Medical Expenses</option>
+                        <option value="vehicle">Vehicle Purchase</option>
+                        <option value="wedding">Wedding</option>
+                        <option value="travel">Travel</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="otherPurposeGroup" style="display: none;">
+                    <label for="otherPurpose" class="required-field">Specify Other Purpose</label>
+                    <input type="text" id="otherPurpose" name="otherPurpose" placeholder="Please specify the purpose of your loan">
+                </div>
+                
+                <div class="form-group">
+                    <label for="loanTerm" class="required-field">Loan Term</label>
+                    <select id="loanTerm" name="loanTerm" required>
+                        <option value="">Select term</option>
+                        <option value="3">3 months</option>
+                        <option value="6">6 months</option>
+                        <option value="12">1 year</option>
+                        <option value="24">2 years</option>
+                        <option value="36">3 years</option>
+                        <option value="48">4 years</option>
+                        <option value="60">5 years</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="firstName" class="required-field">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
                         </div>
                     </div>
-                    <div class="application-body">
-                        <!-- Messages -->
-                        <div class="message error-message" id="errorMessage"></div>
-                        <div class="message duplicate-warning" id="duplicateWarning">
-                            <strong>⚠️ Duplicate Application Detected</strong><br>
-                            We found an existing application with this email or ID number. Please contact us if you need to update your application.
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="lastName" class="required-field">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
                         </div>
-                        <div class="message success-message-inline" id="successMessageInline"></div>
-
-                        <form id="loanApplicationForm">
-                            <!-- Step 1: Loan Details -->
-                            <div class="form-step active" data-step="1">
-                                <h3 class="step-title">Step 1: Loan Details</h3>
-                                <div class="form-group">
-                                    <label for="loanType" class="required-field">Loan Type</label>
-                                    <select id="loanType" name="loanType" required>
-                                        <option value="">Select loan type</option>
-                                        <option value="Personal Loan">Personal Loan</option>
-                                        <option value="Business Loan">Business Loan</option>
-                                        <option value="Home Loan">Home Loan</option>
-                                        <option value="Vehicle Loan">Vehicle Loan</option>
-                                        <option value="Emergency Loan">Emergency Loan</option>
-                                        <option value="Cash Loan">Cash Loan</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="loanAmount" class="required-field">Loan Amount (R)</label>
-                                    <input type="number" id="loanAmount" name="loanAmount" min="10000" max="5000000" placeholder="Enter amount between R10,000 and R5,000,000" required>
-                                    <p class="form-note">Minimum loan amount: R10,000</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="loanPurpose" class="required-field">Loan Purpose</label>
-                                    <select id="loanPurpose" name="loanPurpose" required>
-                                        <option value="">Select purpose</option>
-                                        <option value="debt-consolidation">Debt Consolidation</option>
-                                        <option value="home-improvement">Home Improvement</option>
-                                        <option value="business-expansion">Business Expansion</option>
-                                        <option value="education">Education</option>
-                                        <option value="medical">Medical Expenses</option>
-                                        <option value="vehicle">Vehicle Purchase</option>
-                                        <option value="wedding">Wedding</option>
-                                        <option value="travel">Travel</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="otherPurposeGroup" style="display: none;">
-                                    <label for="otherPurpose" class="required-field">Specify Other Purpose</label>
-                                    <input type="text" id="otherPurpose" name="otherPurpose" placeholder="Please specify the purpose of your loan">
-                                </div>
-                                <div class="form-group">
-                                    <label for="loanTerm" class="required-field">Loan Term</label>
-                                    <select id="loanTerm" name="loanTerm" required>
-                                        <option value="">Select term</option>
-                                        <option value="3">3 months</option>
-                                        <option value="6">6 months</option>
-                                        <option value="9">9 months</option>
-                                        <option value="12">1 year</option>
-                                        <option value="24">2 years</option>
-                                        <option value="36">3 years</option>
-                                        <option value="48">4 years</option>
-                                        <option value="60">5 years</option>
-                                        <option value="72">6 years</option>
-                                        <option value="84">7 years</option>
-                                        <option value="96">8 years</option>
-                                        <option value="108">9 years</option>
-                                        <option value="120">10 years</option>
-                                        <option value="132">11 years</option>
-                                        <option value="144">12 years</option>
-                                        <option value="156">13 years</option>
-                                        <option value="168">14 years</option>
-                                        <option value="180">15 years</option>
-                                    </select>
-                                </div>
-                                <div class="form-buttons">
-                                    <div></div> <!-- Empty div for spacing -->
-                                    <button type="button" class="btn btn-next" data-next="2">Next Step</button>
-                                </div>
-                            </div>
-
-                            <!-- Step 2: Personal Information -->
-                            <div class="form-step" data-step="2">
-                                <h3 class="step-title">Step 2: Personal Information</h3>
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="firstName" class="required-field">First Name</label>
-                                            <input type="text" id="firstName" name="firstName" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="lastName" class="required-field">Last Name</label>
-                                            <input type="text" id="lastName" name="lastName" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="idNumber" class="required-field">ID Number</label>
-                                    <input type="text" id="idNumber" name="idNumber" placeholder="Enter your ID number (any length accepted)" required>
-                                    <p class="form-note">Enter your national ID number or passport number</p>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="dateOfBirth" class="required-field">Date of Birth</label>
-                                            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="gender" class="required-field">Gender</label>
-                                            <select id="gender" name="gender" required>
-                                                <option value="">Select gender</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                                <option value="other">Other</option>
-                                                <option value="prefer-not-to-say">Prefer not to say</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="maritalStatus" class="required-field">Marital Status</label>
-                                    <select id="maritalStatus" name="maritalStatus" required>
-                                        <option value="">Select marital status</option>
-                                        <option value="single">Single</option>
-                                        <option value="married">Married</option>
-                                        <option value="divorced">Divorced</option>
-                                        <option value="widowed">Widowed</option>
-                                    </select>
-                                </div>
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-prev" data-prev="1">Previous</button>
-                                    <button type="button" class="btn btn-next" data-next="3">Next Step</button>
-                                </div>
-                            </div>
-
-                            <!-- Step 3: Contact Information -->
-                            <div class="form-step" data-step="3">
-                                <h3 class="step-title">Step 3: Contact Information</h3>
-                                <div class="form-group">
-                                    <label for="email" class="required-field">Email Address</label>
-                                    <input type="email" id="email" name="email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone" class="required-field">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone" placeholder="e.g. 071 234 5678" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="address" class="required-field">Physical Address</label>
-                                    <input type="text" id="address" name="address" placeholder="Street address" required>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="city" class="required-field">City</label>
-                                            <input type="text" id="city" name="city" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="postalCode" class="required-field">Postal Code</label>
-                                            <input type="text" id="postalCode" name="postalCode" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="province" class="required-field">Province</label>
-                                    <select id="province" name="province" required>
-                                        <option value="">Select province</option>
-                                        <option value="eastern-cape">Eastern Cape</option>
-                                        <option value="free-state">Free State</option>
-                                        <option value="gauteng">Gauteng</option>
-                                        <option value="kwazulu-natal">KwaZulu-Natal</option>
-                                        <option value="limpopo">Limpopo</option>
-                                        <option value="mpumalanga">Mpumalanga</option>
-                                        <option value="northern-cape">Northern Cape</option>
-                                        <option value="north-west">North West</option>
-                                        <option value="western-cape">Western Cape</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="residentialStatus" class="required-field">Residential Status</label>
-                                    <select id="residentialStatus" name="residentialStatus" required>
-                                        <option value="">Select status</option>
-                                        <option value="own">Own (No Mortgage)</option>
-                                        <option value="mortgage">Own (With Mortgage)</option>
-                                        <option value="rent">Renting</option>
-                                        <option value="living-with-parents">Living with Parents</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-prev" data-prev="2">Previous</button>
-                                    <button type="button" class="btn btn-next" data-next="4">Next Step</button>
-                                </div>
-                            </div>
-
-                            <!-- Step 4: Employment & Financial Information -->
-                            <div class="form-step" data-step="4">
-                                <h3 class="step-title">Step 4: Employment & Financial Information</h3>
-                                <div class="form-group">
-                                    <label for="employmentStatus" class="required-field">Employment Status</label>
-                                    <select id="employmentStatus" name="employmentStatus" required>
-                                        <option value="">Select status</option>
-                                        <option value="full-time">Full-time Employed</option>
-                                        <option value="part-time">Part-time Employed</option>
-                                        <option value="self-employed">Self-Employed</option>
-                                        <option value="unemployed">Unemployed</option>
-                                        <option value="retired">Retired</option>
-                                        <option value="student">Student</option>
-                                    </select>
-                                </div>
-                                <div id="employmentDetails">
-                                    <div class="form-group">
-                                        <label for="employerName" class="required-field">Employer Name</label>
-                                        <input type="text" id="employerName" name="employerName">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-col">
-                                            <div class="form-group">
-                                                <label for="jobTitle" class="required-field">Job Title</label>
-                                                <input type="text" id="jobTitle" name="jobTitle">
-                                            </div>
-                                        </div>
-                                        <div class="form-col">
-                                            <div class="form-group">
-                                                <label for="yearsEmployed" class="required-field">Years at Current Employer</label>
-                                                <input type="number" id="yearsEmployed" name="yearsEmployed" min="0" step="0.1">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="employerPhone">Employer Phone Number</label>
-                                        <input type="tel" id="employerPhone" name="employerPhone">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="monthlyIncome" class="required-field">Monthly Income (R)</label>
-                                            <input type="number" id="monthlyIncome" name="monthlyIncome" min="0" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-col">
-                                        <div class="form-group">
-                                            <label for="monthlyExpenses" class="required-field">Monthly Expenses (R)</label>
-                                            <input type="number" id="monthlyExpenses" name="monthlyExpenses" min="0" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="bankName" class="required-field">Bank Name</label>
-                                    <select id="bankName" name="bankName" required>
-                                        <option value="">Select bank</option>
-                                        <option value="absa">ABSA</option>
-                                        <option value="capitec">Capitec</option>
-                                        <option value="fnb">FNB</option>
-                                        <option value="nedbank">Nedbank</option>
-                                        <option value="standard-bank">Standard Bank</option>
-                                        <option value="african-bank">African Bank</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accountType" class="required-field">Account Type</label>
-                                    <select id="accountType" name="accountType" required>
-                                        <option value="">Select account type</option>
-                                        <option value="savings">Savings Account</option>
-                                        <option value="cheque">Cheque Account</option>
-                                        <option value="credit">Credit Account</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-prev" data-prev="3">Previous</button>
-                                    <button type="button" class="btn btn-next" data-next="5">Next Step</button>
-                                </div>
-                            </div>
-
-                            <!-- Step 5: Documents & Confirmation -->
-                            <div class="form-step" data-step="5">
-                                <h3 class="step-title">Step 5: Documents & Confirmation</h3>
-                                <div class="form-group">
-                                    <label for="idDocument" class="required-field">ID Document</label>
-                                    <div class="file-upload">
-                                        <label for="idDocument" class="file-upload-label">
-                                            <i class="fas fa-upload"></i>
-                                            <span>Upload ID Document (PDF, JPG, PNG)</span>
-                                        </label>
-                                        <input type="file" id="idDocument" name="idDocument" accept=".pdf,.jpg,.jpeg,.png" required>
-                                    </div>
-                                    <div class="file-name" id="idDocumentName"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="proofOfIncome" class="required-field">Proof of Income</label>
-                                    <div class="file-upload">
-                                        <label for="proofOfIncome" class="file-upload-label">
-                                            <i class="fas fa-upload"></i>
-                                            <span>Upload Payslip or Bank Statement (PDF, JPG, PNG)</span>
-                                        </label>
-                                        <input type="file" id="proofOfIncome" name="proofOfIncome" accept=".pdf,.jpg,.jpeg,.png" required>
-                                    </div>
-                                    <div class="file-name" id="proofOfIncomeName"></div>
-                                </div>
-                                
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
-                                    <label for="termsAgreement">I agree to the <a href="#" target="_blank">Terms and Conditions</a> and <a href="#" target="_blank">Privacy Policy</a>. I confirm that all information provided is accurate and complete.</label>
-                                </div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="creditCheck" name="creditCheck" required>
-                                    <label for="creditCheck">I authorize Oyster Personal Finance to conduct a credit check and verify my information with relevant third parties.</label>
-                                </div>
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-prev" data-prev="4">Previous</button>
-                                    <button type="submit" class="btn btn-submit" id="submitButton">Submit Application</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
-            </div>
-        </section>
+                
+                <div class="form-group">
+                    <label for="idNumber" class="required-field">ID Number</label>
+                    <input type="text" id="idNumber" name="idNumber" placeholder="13-digit South African ID number" required>
+                    <p class="form-note">Format: YYMMDD SSSSC Z</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="required-field">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone" class="required-field">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="e.g. 071 234 5678" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="employmentStatus" class="required-field">Employment Status</label>
+                    <select id="employmentStatus" name="employmentStatus" required>
+                        <option value="">Select status</option>
+                        <option value="full-time">Full-time Employed</option>
+                        <option value="part-time">Part-time Employed</option>
+                        <option value="self-employed">Self-Employed</option>
+                        <option value="unemployed">Unemployed</option>
+                        <option value="retired">Retired</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+                
+                <div id="employmentDetails">
+                    <div class="form-group">
+                        <label for="employerName" class="required-field">Employer Name</label>
+                        <input type="text" id="employerName" name="employerName">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jobTitle" class="required-field">Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="monthlyIncome" class="required-field">Monthly Income (R)</label>
+                    <input type="number" id="monthlyIncome" name="monthlyIncome" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="idDocument" class="required-field">ID Document</label>
+                    <div class="file-upload">
+                        <label for="idDocument" class="file-upload-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload ID Document (PDF, JPG, PNG)</span>
+                        </label>
+                        <input type="file" id="idDocument" name="idDocument" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="file-name" id="idDocumentName"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="proofOfIncome" class="required-field">Proof of Income</label>
+                    <div class="file-upload">
+                        <label for="proofOfIncome" class="file-upload-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Payslip or Bank Statement (PDF, JPG, PNG)</span>
+                        </label>
+                        <input type="file" id="proofOfIncome" name="proofOfIncome" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="file-name" id="proofOfIncomeName"></div>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                    <label for="termsAgreement">I agree to the Terms and Conditions and Privacy Policy. I confirm that all information provided is accurate and complete.</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="creditCheck" name="creditCheck" required>
+                    <label for="creditCheck">I authorize Oyster Personal Finance to conduct a credit check and verify my information with relevant third parties.</label>
+                </div>
+                
+                <button type="submit" class="btn btn-submit" id="submitBtn">Submit Application</button>
+            </form>
+        </div>
+    </div>
 
-        <!-- Loan Types Section -->
-        <section class="loan-types-section">
-            <div class="container">
-                <h2 class="section-title">Our Loan Types & Interest Rates</h2>
-                <table class="loan-types-table">
-                    <thead>
-                        <tr>
-                            <th>Loan Type</th>
-                            <th>Amount Range</th>
-                            <th>Term Range</th>
-                            <th>Interest Rate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Personal Loan</td>
-                            <td>R10,000 - R1,000,000</td>
-                            <td>12-160 months</td>
-                            <td>3% p.a.</td>
-                        </tr>
-                        <tr>
-                            <td>Business Loan</td>
-                            <td>R10,000 - R2,000,000</td>
-                            <td>12-160 months</td>
-                            <td>3% p.a.</td>
-                        </tr>
-                        <tr>
-                            <td>Home Loan</td>
-                            <td>R100,000 - R5,000,000</td>
-                            <td>60-360 months</td>
-                            <td>10% p.a.</td>
-                        </tr>
-                        <tr>
-                            <td>Vehicle Loan</td>
-                            <td>R10,000 - R1,000,000</td>
-                            <td>12-120 months</td>
-                            <td>9% p.a.</td>
-                        </tr>
-                        <tr>
-                            <td>Emergency Loan</td>
-                            <td>R10,000 - R500,000</td>
-                            <td>3-60 months</td>
-                            <td>12% p.a.</td>
-                        </tr>
-                        <tr>
-                            <td>Cash Loan</td>
-                            <td>R10,000 - R100,000</td>
-                            <td>3-24 months</td>
-                            <td>3% p.a.</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <!-- Success Popup -->
+    <div class="popup-overlay" id="successPopup">
+        <div class="popup-container">
+            <div class="popup-icon">
+                <i class="fas fa-check"></i>
             </div>
-        </section>
-    </main>
+            
+            <h2 class="popup-title">Application Submitted!</h2>
+            
+            <p class="popup-message">
+                Thank you for applying with Oyster Personal Finance. Your loan application has been successfully submitted and is now being processed.
+            </p>
+            
+            <div class="popup-reference">
+                <p><strong>Reference Number:</strong></p>
+                <p><strong id="popupReferenceNumber">OPF-12345</strong></p>
+            </div>
+            
+            <p class="popup-message">
+                 You can track your application status by clicking track my application below.
+            </p>
+            
+            <div class="popup-buttons">
+                <a href="#" class="popup-btn popup-btn-primary">
+                    <i class="fas fa-chart-line"></i> Track My Application
+                </a>
+                <a href="#" class="popup-btn popup-btn-secondary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Baserow API Configuration
+        const BASEROW_API_URL = 'https://api.baserow.io/api/database/rows/table/561419/';
+        const BASEROW_API_KEY = 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL';
+        const BASEROW_FILE_UPLOAD_URL = 'https://api.baserow.io/api/user-files/upload-file/';
+
+        // Show/hide error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => {
+                errorDiv.classList.remove('show');
+            }, 10000);
+        }
+
+        // Show debug message
+        function showDebug(message) {
+            const debugDiv = document.getElementById('debugMessage');
+            debugDiv.innerHTML = message;
+            debugDiv.classList.add('show');
+            console.log('DEBUG:', message);
+        }
+
+        // Hide error message
+        function hideError() {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.classList.remove('show');
+            const debugDiv = document.getElementById('debugMessage');
+            debugDiv.classList.remove('show');
+        }
+
+        // Show/hide other purpose field
+        document.getElementById('loanPurpose').addEventListener('change', function() {
+            const otherPurposeGroup = document.getElementById('otherPurposeGroup');
+            if (this.value === 'other') {
+                otherPurposeGroup.style.display = 'block';
+                document.getElementById('otherPurpose').setAttribute('required', 'required');
+            } else {
+                otherPurposeGroup.style.display = 'none';
+                document.getElementById('otherPurpose').removeAttribute('required');
+            }
+        });
+
+        // Show/hide employment details
+        document.getElementById('employmentStatus').addEventListener('change', function() {
+            const employmentDetails = document.getElementById('employmentDetails');
+            const employmentFields = employmentDetails.querySelectorAll('input');
+            
+            if (this.value === 'unemployed' || this.value === 'retired' || this.value === 'student') {
+                employmentDetails.style.display = 'none';
+                employmentFields.forEach(field => {
+                    field.removeAttribute('required');
+                });
+            } else {
+                employmentDetails.style.display = 'block';
+                employmentFields.forEach(field => {
+                    if (field.id === 'employerName' || field.id === 'jobTitle') {
+                        field.setAttribute('required', 'required');
+                    }
+                });
+            }
+        });
+
+        // File upload handling
+        document.getElementById('idDocument').addEventListener('change', function() {
+            document.getElementById('idDocumentName').textContent = this.files[0] ? this.files[0].name : '';
+        });
+
+        document.getElementById('proofOfIncome').addEventListener('change', function() {
+            document.getElementById('proofOfIncomeName').textContent = this.files[0] ? this.files[0].name : '';
+        });
+
+        // Upload file to Baserow
+        async function uploadFileToBaserow(file) {
+            try {
+                console.log('Uploading file:', file.name, 'Size:', file.size);
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                const response = await fetch(BASEROW_FILE_UPLOAD_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Token ${BASEROW_API_KEY}`
+                    },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('File upload error response:', errorText);
+                    throw new Error(`File upload failed: ${response.status} ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                console.log('File upload successful:', result);
+                
+                return {
+                    url: result.url,
+                    name: result.name || file.name,
+                    size: result.size || file.size,
+                    mime_type: result.mime_type || file.type
+                };
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                return null;
+            }
+        }
+
+        // Generate reference number
+        function generateReferenceNumber() {
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `OPF-${timestamp}${random}`;
+        }
+
+        // Show success popup
+        function showSuccessPopup(referenceNumber) {
+            document.getElementById('popupReferenceNumber').textContent = referenceNumber;
+            const popup = document.getElementById('successPopup');
+            popup.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Form validation
+        function validateForm() {
+            const form = document.getElementById('loanApplicationForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            let isValid = true;
+            let firstInvalidField = null;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim() && field.type !== 'checkbox' || 
+                    (field.type === 'checkbox' && !field.checked)) {
+                    field.style.borderColor = '#e74c3c';
+                    if (!firstInvalidField) {
+                        firstInvalidField = field;
+                    }
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#e9ecef';
+                }
+            });
+
+            // Special validation for loan amount minimum
+            const loanAmount = document.getElementById('loanAmount');
+            if (loanAmount.value && parseInt(loanAmount.value) < 10000) {
+                loanAmount.style.borderColor = '#e74c3c';
+                showError('Minimum loan amount is R10,000.');
+                loanAmount.focus();
+                return false;
+            }
+            
+            if (!isValid && firstInvalidField) {
+                firstInvalidField.focus();
+                showError('Please fill in all required fields.');
+            }
+            
+            return isValid;
+        }
+
+        // Form submission with Baserow API integration
+        document.getElementById('loanApplicationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Show loading overlay
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            // Show loading state on submit button
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Generate reference number
+                const referenceNumber = generateReferenceNumber();
+                
+                // Get form data
+                const formData = new FormData(this);
+                
+                console.log('Starting form submission process...');
+                
+                // Prepare data for Baserow
+                const baserowData = {
+                    // Use field IDs instead of field names
+                    "field_4502384": formData.get('loanType') || '',                    // Loan Type
+                    "field_4501398": parseInt(formData.get('loanAmount')) || 0,         // Loan Amount (R)
+                    "field_4502388": formData.get('loanPurpose') === 'other' ?          // Loan Purpose
+                        (formData.get('otherPurpose') || '') : (formData.get('loanPurpose') || ''),
+                    "field_4502389": parseInt(formData.get('loanTerm')) || 0,           // Loan Term
+                    "field_4501396": formData.get('firstName') || '',                   // First Name
+                    "field_4501397": formData.get('lastName') || '',                    // Last Name
+                    "field_4502424": formData.get('idNumber') || '',                    // ID Number
+                    "field_4502368": formData.get('email') || '',                       // Email Address
+                    "field_4502370": formData.get('phone') || '',                       // Phone Number
+                    "field_4502375": formData.get('employmentStatus') || '',            // Employment Status
+                    "field_4502376": parseInt(formData.get('monthlyIncome')) || 0       // Monthly Income (R)
+                };
+                
+                console.log('Prepared base data:', baserowData);
+                
+                // Submit basic data first
+                console.log('Submitting basic data to Baserow...');
+                
+                const response = await fetch(BASEROW_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Token ${BASEROW_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(baserowData)
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Baserow API Error Response:', errorText);
+                    throw new Error(`API Error: ${response.status} - ${errorText}`);
+                }
+                
+                const result = await response.json();
+                console.log('Basic submission successful:', result);
+                
+                // Now try to upload files and update the record
+                const idDocFile = formData.get('idDocument');
+                const proofOfIncomeFile = formData.get('proofOfIncome');
+                
+                if ((idDocFile && idDocFile.size > 0) || (proofOfIncomeFile && proofOfIncomeFile.size > 0)) {
+                    const updateData = {};
+                    
+                    // Upload ID document
+                    if (idDocFile && idDocFile.size > 0) {
+                        console.log('Uploading ID document...');
+                        const idDocUpload = await uploadFileToBaserow(idDocFile);
+                        if (idDocUpload) {
+                            updateData["field_4502373"] = [idDocUpload];  // ID Document
+                        }
+                    }
+                    
+                    // Upload proof of income
+                    if (proofOfIncomeFile && proofOfIncomeFile.size > 0) {
+                        console.log('Uploading proof of income...');
+                        const proofOfIncomeUpload = await uploadFileToBaserow(proofOfIncomeFile);
+                        if (proofOfIncomeUpload) {
+                            updateData["field_4502374"] = [proofOfIncomeUpload];  // Proof of Income
+                        }
+                    }
+                    
+                    // Update record with files if any were uploaded
+                    if (Object.keys(updateData).length > 0) {
+                        console.log('Updating record with files:', updateData);
+                        
+                        const updateResponse = await fetch(`${BASEROW_API_URL}${result.id}/`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Authorization': `Token ${BASEROW_API_KEY}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(updateData)
+                        });
+                        
+                        if (updateResponse.ok) {
+                            const updateResult = await updateResponse.json();
+                            console.log('Files updated successfully:', updateResult);
+                        } else {
+                            const updateError = await updateResponse.text();
+                            console.error('File update failed:', updateError);
+                        }
+                    }
+                }
+                
+                // Store application data locally as backup
+                const applicationData = {
+                    ...baserowData,
+                    baserowId: result.id,
+                    referenceNumber: referenceNumber,
+                    applicationDate: new Date().toISOString(),
+                    status: 'Pending',
+                    submissionSuccess: true
+                };
+                
+                const applications = JSON.parse(localStorage.getItem('loanApplications') || '[]');
+                applications.push(applicationData);
+                localStorage.setItem('loanApplications', JSON.stringify(applications));
+                
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').style.display = 'none';
+                
+                // Hide form and show success popup
+                document.querySelector('.form-body form').style.display = 'none';
+                showSuccessPopup(referenceNumber);
+                
+            } catch (error) {
+                console.error('Error submitting application:', error);
+                
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').style.display = 'none';
+                
+                // Reset submit button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Show error message
+                showError(`Submission failed: ${error.message}. Please try again or contact support.`);
+            }
+        });
+
+        // Close popup when clicking outside
+        document.getElementById('successPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+
 
     <!-- Footer -->
     <footer class="footer">
