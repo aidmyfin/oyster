@@ -2785,10 +2785,11 @@ async function fetchUserApplicationsFromBaserow(email) {
         
         const data = await response.json();
         
-        // Filter results by email
-        const userRecords = data.results.filter(result => 
-            result.Email && result.Email.toLowerCase().trim() === email.toLowerCase().trim()
-        );
+        // Filter results by email using field ID
+const userRecords = data.results.filter(result => 
+    result[`field_${BASEROW_EMAIL_FIELD_ID}`] &&
+    result[`field_${BASEROW_EMAIL_FIELD_ID}`].toLowerCase().trim() === email.toLowerCase().trim()
+);
         
         if (userRecords.length === 0) {
             return;
