@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            align-items: center            
         }
 
         body {
@@ -1496,60 +1497,118 @@ async function fetchUserApplicationsFromBaserow(email) {
         }
 
         // Application tracking
-        function startApplicationTracking(application) {
-            log(`Starting tracking for application: ${application.referenceNumber}`);
+        // Application tracking with continuous animation
+function startApplicationTracking(application) {
+    log(`Starting tracking for application: ${application.referenceNumber}`);
+    
+    const createdDate = new Date(application.applicationDate);
+    const now = new Date();
+    const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
+    const secondsPassed = Math.floor((now - createdDate) / 1000);
+    
+    const progressBar = document.getElementById('trackingProgressBar');
+    const progressPercentage = document.getElementById('progressPercentage');
+    const steps = document.querySelectorAll('.tracking-step');
+    const trackingMessage = document.getElementById('trackingMessage');
+    const trackingActions = document.getElementById('trackingActions');
+    
+    // Reset
+    steps.forEach(step => step.classList.remove('active', 'completed'));
+    trackingActions.style.display = 'none';
+    
+    let progress = 0;
+    let message = '';
+    let targetProgress = 0;
+    
+    // Calculate target progress based on time
+    if (minutesPassed < 1) {
+        targetProgress = Math.min(30, 10 + (secondsPassed * 0.3)); // Slowly build to 30%
+        steps[0].classList.add('active');
+        message = 'Your application has been submitted and is now being processed. Please wait...';
+    } else if (minutesPassed < 3) {
+        targetProgress = Math.min(65, 30 + ((minutesPassed - 1) * 17.5)); // 30% to 65%
+        steps[0].classList.add('completed');
+        steps[1].classList.add('active');
+        message = 'Your application is being reviewed by our underwriting team...';
+    } else if (minutesPassed < 5) {
+        targetProgress = Math.min(85, 65 + ((minutesPassed - 3) * 10)); // 65% to 85%
+        steps[0].classList.add('completed');
+        steps[1].classList.add('completed');
+        steps[2].classList.add('active');
+        const firstName = application.firstName || 'Applicant';
+        const amount = parseInt(application.loanAmount).toLocaleString();
+        message = `<strong>Great news ${firstName}!</strong> You have qualified for the R${amount} loan application. Final approval in progress...`;
+    } else if (minutesPassed < 7) {
+        // 5-7 minutes: Build to 99.1%
+        const progressInRange = (minutesPassed - 5) / 2; // 0 to 1 over 2 minutes
+        targetProgress = 85 + (progressInRange * 14.1); // 85% to 99.1%
+        steps[0].classList.add('completed');
+        steps[1].classList.add('completed');
+        steps[2].classList.add('completed');
+        steps[3].classList.add('active');
+        message = `<strong>Final Review Stage...</strong> Your application is being finalized. Almost complete!`;
+    } else {
+        // 7+ minutes: 100% and approved
+        targetProgress = 100;
+        steps.forEach(step => step.classList.add('completed'));
+        message = `
+            <strong>Congratulations!</strong> Your loan application has been <strong>APPROVED</strong>.<br><br>
+            <strong>⚠️ Flagged for Low Credit Issue</strong><br>
+            A credit improvement and cover will be needed.<br>
+            <small style="color: #e74c3c; font-weight: bold;">Do not worry, we have the solution for you!</small><br><br>
+            <strong>Your approval letter is ready!</strong>
+        `;
+        trackingActions.style.display = 'block';
+    }
+    
+    // Animate progress bar with continuous movement
+    let currentProgress = parseFloat(progressBar.style.width) || 0;
+    
+    function animateProgress() {
+        if (currentProgress < targetProgress) {
+            // Smooth increment
+            const increment = (targetProgress - currentProgress) * 0.02; // Smooth acceleration
+            currentProgress += Math.max(increment, 0.1); // Minimum increment for continuous movement
             
-            const createdDate = new Date(application.applicationDate);
-            const now = new Date();
-            const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
-            
-            const progressBar = document.getElementById('trackingProgressBar');
-            const progressPercentage = document.getElementById('progressPercentage');
-            const steps = document.querySelectorAll('.tracking-step');
-            const trackingMessage = document.getElementById('trackingMessage');
-            const trackingActions = document.getElementById('trackingActions');
-            
-            // Reset
-            steps.forEach(step => step.classList.remove('active', 'completed'));
-            trackingActions.style.display = 'none';
-            
-            let progress = 0;
-            let message = '';
-            
-            if (minutesPassed < 1) {
-                progress = 30;
-                steps[0].classList.add('active');
-                message = 'Your application has been submitted and is now being processed.';
-            } else if (minutesPassed < 5) {
-                progress = 75;
-                steps[0].classList.add('completed');
-                steps[1].classList.add('completed');
-                steps[2].classList.add('active');
-                const firstName = application.firstName || 'Applicant';
-                const amount = parseInt(application.loanAmount).toLocaleString();
-                message = `<strong>Congratulations ${firstName}!</strong> You have qualified for the R${amount} loan application.`;
-            } else {
-                progress = 100;
-                steps.forEach(step => step.classList.add('completed'));
-                message = `
-                    <strong>Congratulations!</strong> Your loan application has been <strong>APPROVED</strong>.<br>
-                    <strong>Flagged for Low Credit Issue</strong><br>
-                    A credit improvement and cover will be needed.<br>
-                    <small style="color: #e74c3c; font-weight: bold;">Do not worry, we have the solution for you!</small><br><br>
-                    <strong>Your approval letter is ready!</strong>
-                `;
-                trackingActions.style.display = 'block';
+            if (currentProgress > targetProgress) {
+                currentProgress = targetProgress;
             }
             
-            // Animate progress bar
-            progressBar.style.width = progress + '%';
-            progressPercentage.textContent = progress + '%';
-            progressPercentage.style.right = (100 - progress) + '%';
+            // Update progress bar
+            progressBar.style.width = currentProgress + '%';
+            progressPercentage.textContent = currentProgress.toFixed(1) + '%';
+            progressPercentage.style.right = (100 - currentProgress) + '%';
             
-            trackingMessage.innerHTML = message;
-            
-            log(`Tracking updated: ${progress}% progress`);
+            // Continue animation
+            requestAnimationFrame(animateProgress);
+        } else {
+            // Add subtle pulsing animation when at target
+            if (minutesPassed >= 5 && minutesPassed < 7) {
+                // Pulse between 99.0% and 99.2% for processing effect
+                const pulse = Math.sin(Date.now() * 0.005) * 0.1;
+                const pulseProgress = Math.max(99.0, Math.min(99.2, 99.1 + pulse));
+                progressBar.style.width = pulseProgress + '%';
+                progressPercentage.textContent = pulseProgress.toFixed(1) + '%';
+                requestAnimationFrame(animateProgress);
+            }
         }
+    }
+    
+    // Start animation
+    animateProgress();
+    
+    // Update message
+    trackingMessage.innerHTML = message;
+    
+    log(`Tracking updated: ${targetProgress.toFixed(1)}% progress`);
+    
+    // Auto-refresh every 10 seconds to update progress
+    setTimeout(() => {
+        if (document.getElementById('applicationTrackingSection').style.display !== 'none') {
+            startApplicationTracking(application);
+        }
+    }, 10000);
+}
 
         // Event handlers
         document.getElementById('emailForm').addEventListener('submit', async function(e) {
