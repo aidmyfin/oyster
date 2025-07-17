@@ -77,8 +77,8 @@
             padding: 0 2rem;
         }
 
-        /* Login Section */
-        .login-section {
+        /* Email Prompt Section */
+        .email-prompt-section {
             padding: 4rem 0;
             min-height: calc(100vh - 80px);
             display: flex;
@@ -86,7 +86,7 @@
             justify-content: center;
         }
 
-        .login-container {
+        .email-prompt-container {
             max-width: 500px;
             width: 100%;
             background: white;
@@ -95,19 +95,19 @@
             overflow: hidden;
         }
 
-        .login-header {
+        .email-prompt-header {
             background: linear-gradient(135deg, #1C75BC, #34495e);
             color: white;
             padding: 2rem;
             text-align: center;
         }
 
-        .login-header h2 {
+        .email-prompt-header h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
         }
 
-        .login-body {
+        .email-prompt-body {
             padding: 3rem;
         }
 
@@ -137,7 +137,7 @@
             box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1);
         }
 
-        .login-btn {
+        .action-btn-primary {
             background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
             padding: 1rem;
@@ -151,12 +151,12 @@
             box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
         }
 
-        .login-btn:hover:not(:disabled) {
+        .action-btn-primary:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
         }
 
-        .login-btn:disabled {
+        .action-btn-primary:disabled {
             opacity: 0.7;
             cursor: not-allowed;
         }
@@ -170,38 +170,11 @@
             text-align: center;
             display: none;
         }
-
-        .success-message {
-            background: #27ae60;
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            text-align: center;
-            display: none;
-        }
-
-        .form-note {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 0.5rem;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .register-link a {
-            color: #e74c3c;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
+        
         /* Dashboard Section */
         .dashboard-section {
             padding: 4rem 0;
-            display: none;
+            display: none; /* Initially hidden */
         }
 
         .dashboard-header {
@@ -603,36 +576,6 @@
             text-align: center;
         }
 
-        /* Debug Panel */
-        .debug-panel {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: transparent;
-            color: transparent;
-            padding: 1rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            max-width: 300px;
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 1001;
-            display: none;
-        }
-
-        .debug-toggle {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: transparent;
-            color: transparent;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1002;
-        }
-
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .dashboard-grid {
@@ -678,90 +621,172 @@
                 font-size: 1rem;
             }
         }
+         /* Header - Smaller for mobile */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .logo img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .nav-menu {
+            display: none; /* Hidden on mobile by default */
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #ED1C24;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ED1C24;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation - Always visible */
+        .mobile-nav {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .mobile-nav-menu {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+            padding: 0.3rem;
+        }
+
+        .mobile-nav-menu a:hover {
+            color: #ED1C24;
+            transform: translateY(-2px);
+        }
+
+        .mobile-nav-menu i {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Debug Toggle -->
-    <button class="debug-toggle" onclick="toggleDebug()">Debug</button>
-    <div class="debug-panel" id="debugPanel">
-        <h4>Debug Info</h4>
-        <div id="debugContent"></div>
-    </div>
-
     <!-- Header -->
     <header class="header">
         <nav class="nav-container">
             <div class="logo">
-                <span>🦪 Oyster Finance</span>
+                <img src="/placeholder.svg?height=30&width=30" alt="Oyster Personal Finance Logo">
+                <span>Oyster Finance</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="apply.html">Apply</a></li>
+                <li><a href="review.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="profile.html">Profile</a></li>
             </ul>
         </nav>
     </header>
 
+     <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <ul class="mobile-nav-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i>About</a></li>
+            <li><a href="apply.html"><i class="fas fa-file-alt"></i>Apply</a></li>
+            <li><a href="review.html"><i class="fas fa-star"></i>Reviews</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone"></i>Contact</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i>Profile</a></li>
+        </ul>
+    </nav>
+
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Login Section -->
-        <section class="login-section" id="loginSection">
+        <!-- Email Prompt Section -->
+        <section class="email-prompt-section" id="emailPromptSection">
             <div class="container">
-                <div class="login-container">
-                    <div class="login-header">
-                        <h2>Welcome Back</h2>
-                        <p>Sign in to access your account and track your loan applications</p>
+                <div class="email-prompt-container">
+                    <div class="email-prompt-header">
+                        <h2>View Your Profile</h2>
+                        <p>Enter your email to view your applications.</p>
                     </div>
-                    <div class="login-body">
+                    <div class="email-prompt-body">
                         <div class="error-message" id="errorMessage"></div>
-                        <div class="success-message" id="successMessage"></div>
-                        
-                        <!-- Email Form -->
-                        <form id="emailForm" style="display: block;">
+                        <form id="emailPromptForm">
                             <div class="form-group">
                                 <label for="email">Email Address</label>
                                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
                             </div>
-                            <button type="submit" class="login-btn" id="emailButton">
-                                <i class="fas fa-arrow-right"></i> Continue
+                            <button type="submit" class="action-btn-primary" id="loadDataButton">
+                                <i class="fas fa-arrow-right"></i> Load My Data
                             </button>
                         </form>
-
-                        <!-- PIN Form -->
-                        <form id="pinForm" style="display: none;">
-                            <div class="form-group">
-                                <label for="pin">Enter PIN</label>
-                                <input type="password" id="pin" name="pin" placeholder="Enter your 4-digit PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" required>
-                                <p class="form-note">Enter your 4-digit PIN to access your account.</p>
-                            </div>
-                            <button type="submit" class="login-btn" id="pinButton">
-                                <i class="fas fa-sign-in-alt"></i> Sign In
-                            </button>
-                            <button type="button" class="login-btn" id="backButton" style="margin-top: 10px; background: #f8f9fa; color: #333;">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                        </form>
-
-                        <!-- Create PIN Form -->
-                        <form id="createPinForm" style="display: none;">
-                            <div class="form-group">
-                                <label for="newPin">Create a 4-Digit PIN</label>
-                                <input type="password" id="newPin" name="newPin" placeholder="Enter 4-digit PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmPin">Confirm PIN</label>
-                                <input type="password" id="confirmPin" name="confirmPin" placeholder="Confirm your PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" required>
-                            </div>
-                            <p class="form-note">This PIN will be used for future logins along with your email.</p>
-                            <button type="submit" class="login-btn" id="createPinButton">
-                                <i class="fas fa-lock"></i> Create PIN
-                            </button>
-                        </form>
-
-                        <div class="register-link">
-                            <p>Don't have an account? <a href="apply.html">Apply for a loan to create one</a></p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -820,7 +845,7 @@
                         Your application has been submitted and is now being processed. We'll update you shortly.
                     </div>
                     <div class="tracking-actions" id="trackingActions" style="display: none;">
-                        <button class="login-btn" onclick="window.location.href='approval.html'">
+                        <button class="action-btn-primary" onclick="window.location.href='approval.html'">
                             <i class="fas fa-file-pdf"></i> View Approval Letter
                         </button>
                     </div>
@@ -859,23 +884,14 @@
                                 <div class="summary-card">
                                     <div class="summary-title">Total Applications</div>
                                     <div class="summary-value" id="totalApplications">0</div>
-                                    <div class="summary-change">
-                                        <i class="fas fa-arrow-up"></i> <span id="newApplications">0</span> new this month
-                                    </div>
                                 </div>
                                 <div class="summary-card">
                                     <div class="summary-title">Approved Applications</div>
                                     <div class="summary-value" id="approvedApplications">0</div>
-                                    <div class="summary-change">
-                                        <i class="fas fa-check-circle"></i> <span id="approvalRate">0</span>% approval rate
-                                    </div>
                                 </div>
                                 <div class="summary-card">
                                     <div class="summary-title">Pending Applications</div>
                                     <div class="summary-value" id="pendingApplications">0</div>
-                                    <div class="summary-change">
-                                        <i class="fas fa-clock"></i> Expected response: 30Mins
-                                    </div>
                                 </div>
                             </div>
                             <div class="applications-list" id="applicationsList">
@@ -930,64 +946,29 @@
             BASEROW_API_URL: 'https://api.baserow.io/api/database/rows/table/',
             BASEROW_API_KEY: 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL',
             BASEROW_TABLE_ID: '561419',
-            // Use field IDs instead of field names for exact matching
             FIELDS: {
-                EMAIL: '4502368',
+                NAME: '4501396',
                 LOAN_AMOUNT: '4501398',
+                EMAIL: '4502368',
+                INCOME: '4502376',
+                LOAN_TYPE: '4502384',
                 LOAN_PURPOSE: '4502388',
                 LOAN_TERM: '4502389',
-                INCOME: '4502376',
-                NAME: '4501396'
+                ID_NO: '4502424'
             }
         };
 
         // Global state
-        let currentUser = null;
         let userApplications = [];
-        let debugMode = false;
-
-        // Debug functions
-        function log(message, data = null) {
-            console.log(`[Oyster Finance] ${message}`, data || '');
-            if (debugMode) {
-                const debugContent = document.getElementById('debugContent');
-                const timestamp = new Date().toLocaleTimeString();
-                debugContent.innerHTML += `<div><strong>${timestamp}:</strong> ${message}</div>`;
-                if (data) {
-                    debugContent.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-                }
-                debugContent.scrollTop = debugContent.scrollHeight;
-            }
-        }
-
-        function toggleDebug() {
-            debugMode = !debugMode;
-            const debugPanel = document.getElementById('debugPanel');
-            debugPanel.style.display = debugMode ? 'block' : 'none';
-            if (debugMode) {
-                log('Debug mode enabled');
-            }
-        }
 
         // Utility functions
         function showError(message) {
-            log(`Error: ${message}`);
             const errorDiv = document.getElementById('errorMessage');
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
             setTimeout(() => {
                 errorDiv.style.display = 'none';
             }, 5000);
-        }
-
-        function showSuccess(message) {
-            log(`Success: ${message}`);
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            setTimeout(() => {
-                successDiv.style.display = 'none';
-            }, 3000);
         }
 
         function formatDate(date) {
@@ -1002,326 +983,114 @@
             return `OPF-${String(id).padStart(5, '0')}`;
         }
 
-        // Baserow API functions
-        async function checkEmailInBaserow(email) {
-    try {
-        log(`=== STARTING EMAIL CHECK ===`);
-        log(`Checking email in Baserow: ${email}`);
-        
-        const url = `${CONFIG.BASEROW_API_URL}${CONFIG.BASEROW_TABLE_ID}/`;
-        log(`API URL: ${url}`);
-        log(`API Key: ${CONFIG.BASEROW_API_KEY.substring(0, 10)}...`);
-        
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${CONFIG.BASEROW_API_KEY}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        
-        log(`API Response Status: ${response.status}`);
-        log(`API Response OK: ${response.ok}`);
-        
-        if (!response.ok) {
-            const errorText = await response.text();
-            log(`API Error Response: ${errorText}`);
-            return null;
-        }
-        
-        const data = await response.json();
-        log('=== FULL API RESPONSE ===');
-        log('Response structure:', {
-            hasResults: !!data.results,
-            resultsLength: data.results ? data.results.length : 0,
-            firstRecordKeys: data.results && data.results.length > 0 ? Object.keys(data.results[0]) : []
-        });
-        
-        if (!data.results || !Array.isArray(data.results)) {
-            log('Invalid API response structure - no results array');
-            return null;
-        }
-        
-        if (data.results.length === 0) {
-            log('No records found in database');
-            return null;
-        }
-        
-        // Log the first record to see all available fields
-        log('=== FIRST RECORD ANALYSIS ===');
-        const firstRecord = data.results[0];
-        log('All field keys in first record:', Object.keys(firstRecord));
-        
-        // Try different field ID formats
-        const possibleEmailFields = [
-            `field_${CONFIG.FIELDS.EMAIL}`,  // field_4502368
-            CONFIG.FIELDS.EMAIL,             // 4502368
-            'Email',                         // Field name
-            'email'                          // lowercase
-        ];
-        
-        log('Trying these email field variations:', possibleEmailFields);
-        
-        // Check what email values exist in the first record
-        possibleEmailFields.forEach(fieldKey => {
-            const value = firstRecord[fieldKey];
-            log(`Field "${fieldKey}": ${value}`);
-        });
-        
-        // Search through all records
-        log('=== SEARCHING ALL RECORDS ===');
-        let userRecord = null;
-        
-        for (let i = 0; i < data.results.length; i++) {
-            const record = data.results[i];
-            log(`--- Record ${i + 1} ---`);
-            
-            // Try each possible email field
-            for (const fieldKey of possibleEmailFields) {
-                const recordEmail = record[fieldKey];
-                
-                if (recordEmail) {
-                    log(`Found email in field "${fieldKey}": "${recordEmail}"`);
-                    
-                    // Clean and compare emails
-                    const cleanRecordEmail = recordEmail.toString().toLowerCase().trim();
-                    const cleanInputEmail = email.toLowerCase().trim();
-                    
-                    log(`Comparing: "${cleanRecordEmail}" === "${cleanInputEmail}"`);
-                    
-                    if (cleanRecordEmail === cleanInputEmail) {
-                        log(`✅ MATCH FOUND! Record ${i + 1}`);
-                        userRecord = record;
-                        break;
+        // Baserow API function
+        async function fetchUserApplicationsFromBaserow(email) {
+            try {
+                const response = await fetch(`${CONFIG.BASEROW_API_URL}${CONFIG.BASEROW_TABLE_ID}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Token ${CONFIG.BASEROW_API_KEY}`,
+                        'Content-Type': 'application/json'
                     }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
                 }
-            }
-            
-            if (userRecord) break;
-        }
-        
-        if (userRecord) {
-            log('=== USER FOUND ===');
-            log('Matched user record:', userRecord);
-            return userRecord;
-        }
-        
-        log('=== NO MATCH FOUND ===');
-        log(`Searched ${data.results.length} records for email: ${email}`);
-        
-        // Log all emails found in database for debugging
-        const allEmails = [];
-        data.results.forEach((record, index) => {
-            possibleEmailFields.forEach(fieldKey => {
-                const emailValue = record[fieldKey];
-                if (emailValue) {
-                    allEmails.push(`Record ${index + 1} (${fieldKey}): ${emailValue}`);
+
+                const data = await response.json();
+                
+                const emailFieldId = `field_${CONFIG.FIELDS.EMAIL}`;
+                
+                const userRecords = data.results.filter(result => {
+                    const recordEmail = result[emailFieldId];
+                    return recordEmail && recordEmail.toLowerCase().trim() === email.toLowerCase().trim();
+                });
+
+                if (userRecords.length === 0) {
+                    return [];
                 }
-            });
-        });
-        
-        log('All emails found in database:', allEmails);
-        
-        return null;
-        
-    } catch (error) {
-        log('=== ERROR IN EMAIL CHECK ===');
-        log('Error details:', error);
-        log('Error message:', error.message);
-        log('Error stack:', error.stack);
-        return null;
-    }
-}
 
-async function fetchUserApplicationsFromBaserow(email) {
-    try {
-        log(`Fetching user applications for: ${email}`);
-        
-        const response = await fetch(`${CONFIG.BASEROW_API_URL}${CONFIG.BASEROW_TABLE_ID}/`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${CONFIG.BASEROW_API_KEY}`,
-                'Content-Type': 'application/json'
+                userApplications = userRecords.map(result => {
+                    const createdDate = new Date(result.created_on);
+                    const now = new Date();
+                    const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
+
+                    let status = 'Pending';
+                    if (minutesPassed >= 10) status = 'Approved';
+                    else if (minutesPassed >= 1) status = 'Processing';
+
+                    const loanAmount = parseFloat(result[`field_${CONFIG.FIELDS.LOAN_AMOUNT}`]) || 0;
+                    const loanTerm = parseInt(result[`field_${CONFIG.FIELDS.LOAN_TERM}`]) || 1;
+                    const monthlyInstallment = loanTerm > 0 ? (loanAmount * 1.03) / loanTerm : 0;
+                    const name = result[`field_${CONFIG.FIELDS.NAME}`] || 'User';
+
+                    return {
+                        id: result.id,
+                        referenceNumber: generateReferenceNumber(result.id),
+                        name: name,
+                        firstName: name.split(' ')[0],
+                        email: result[emailFieldId] || email,
+                        idNumber: result[`field_${CONFIG.FIELDS.ID_NO}`] || 'N/A',
+                        loanAmount: loanAmount,
+                        loanType: result[`field_${CONFIG.FIELDS.LOAN_TYPE}`]?.value || 'Personal Loan',
+                        loanPurpose: result[`field_${CONFIG.FIELDS.LOAN_PURPOSE}`]?.value || 'General',
+                        loanTerm: loanTerm,
+                        monthlyIncome: parseFloat(result[`field_${CONFIG.FIELDS.INCOME}`]) || 0,
+                        monthlyInstallment: monthlyInstallment.toFixed(2),
+                        applicationDate: result.created_on || new Date().toISOString(),
+                        status: status
+                    };
+                });
+
+                localStorage.setItem('loanApplications', JSON.stringify(userApplications));
+                return userApplications;
+
+            } catch (error) {
+                console.error('Error fetching applications:', error);
+                const storedApps = localStorage.getItem('loanApplications');
+                if (storedApps) {
+                    userApplications = JSON.parse(storedApps);
+                    return userApplications;
+                }
+                return [];
             }
-        });
-        
-        if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
         }
         
-        const data = await response.json();
-        log('Fetched data from Baserow:', data);
-        
-        // Use field IDs for exact matching
-        const emailFieldId = `field_${CONFIG.FIELDS.EMAIL}`;
-        const loanAmountFieldId = `field_${CONFIG.FIELDS.LOAN_AMOUNT}`;
-        const loanPurposeFieldId = `field_${CONFIG.FIELDS.LOAN_PURPOSE}`;
-        const loanTermFieldId = `field_${CONFIG.FIELDS.LOAN_TERM}`;
-        const incomeFieldId = `field_${CONFIG.FIELDS.INCOME}`;
-        const nameFieldId = `field_${CONFIG.FIELDS.NAME}`;
-        
-        log('Using field IDs:', {
-            email: emailFieldId,
-            loanAmount: loanAmountFieldId,
-            loanPurpose: loanPurposeFieldId,
-            loanTerm: loanTermFieldId,
-            income: incomeFieldId,
-            name: nameFieldId
-        });
-        
-        // Filter records by email using field ID
-        const userRecords = data.results.filter(result => {
-            const recordEmail = result[emailFieldId];
-            if (!recordEmail) return false;
-            
-            const cleanRecordEmail = recordEmail.toString().toLowerCase().trim();
-            const cleanInputEmail = email.toLowerCase().trim();
-            
-            return cleanRecordEmail === cleanInputEmail;
-        });
-        
-        log(`Found ${userRecords.length} records for user`);
-        
-        if (userRecords.length === 0) {
-            userApplications = [];
-            return [];
-        }
-        
-        // Process applications using field IDs
-        userApplications = userRecords.map(result => {
-            const createdDate = new Date(result.created_on);
-            const now = new Date();
-            const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
-            
-            let status = 'Pending';
-            if (minutesPassed >= 10) {
-                status = 'Approved';
-            } else if (minutesPassed >= 1) {
-                status = 'Processing';
-            }
-            
-            // Extract data using specific field IDs
-            const loanAmount = result[loanAmountFieldId] || 0;
-            const loanPurpose = result[loanPurposeFieldId] || 'General';
-            const loanTerm = result[loanTermFieldId] || 12;
-            const income = result[incomeFieldId] || 0;
-            const name = result[nameFieldId] || 'User';
-            
-            log('Extracted field data:', {
-                loanAmount,
-                loanPurpose,
-                loanTerm,
-                income,
-                name
-            });
-            
-            return {
-                id: result.id,
-                referenceNumber: generateReferenceNumber(result.id),
-                loanType: 'Personal', // Default type
-                loanAmount: loanAmount,
-                loanPurpose: loanPurpose,
-                loanTerm: loanTerm,
-                firstName: name,
-                lastName: '',
-                idNumber: result.idNo || result.id_number || result.IdNo || '',
-                email: result[emailFieldId] || email,
-                phone: result.Phonenumber || result.phone_number || result.phone || '',
-                employmentStatus: result.employ || result.employment || 'Employed',
-                monthlyIncome: income,
-                applicationDate: result.created_on || new Date().toISOString(),
-                status: status,
-                baserowId: result.id
-            };
-        });
-        
-        log(`Processed ${userApplications.length} applications with field data`);
-        
-        // Store in localStorage
-        localStorage.setItem('loanApplications', JSON.stringify(userApplications));
-        localStorage.setItem('userEmail', email);
-        
-        return userApplications;
-        
-    } catch (error) {
-        log('Error fetching applications:', error);
-        // Try localStorage fallback
-        const storedApps = localStorage.getItem('loanApplications');
-        if (storedApps) {
-            userApplications = JSON.parse(storedApps);
-            log(`Loaded ${userApplications.length} applications from localStorage`);
-            return userApplications;
-        }
-        return [];
-    }
-}
-        // Authentication functions
-        function isLoggedIn() {
-            return localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('userEmail');
+        // UI functions
+        function showDashboard() {
+            document.getElementById('emailPromptSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
         }
 
-        function login(email) {
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userEmail', email);
-            localStorage.setItem('lastLoginTime', new Date().toISOString());
-            log(`User logged in: ${email}`);
+        function showEmailPrompt() {
+            document.getElementById('emailPromptSection').style.display = 'flex';
+            document.getElementById('dashboardSection').style.display = 'none';
         }
-
+        
         function logout() {
-            localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('userEmail');
-            localStorage.removeItem('lastLoginTime');
-            currentUser = null;
+            localStorage.removeItem('loanApplications');
             userApplications = [];
-            log('User logged out');
             location.reload();
         }
 
-        // UI functions
-        function showDashboard() {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('dashboardSection').style.display = 'block';
-            log('Dashboard shown');
-        }
-
-        function showLogin() {
-            document.getElementById('loginSection').style.display = 'block';
-            document.getElementById('dashboardSection').style.display = 'none';
-            log('Login shown');
-        }
-
         function updateUserProfile() {
-            const email = localStorage.getItem('userEmail');
-            
             if (userApplications.length > 0) {
                 const firstApp = userApplications[0];
+                const fullName = firstApp.name || 'User';
                 const firstName = firstApp.firstName || 'User';
-                const lastName = firstApp.lastName || '';
-                const fullName = `${firstName} ${lastName}`.trim();
+                const email = firstApp.email;
                 
                 document.getElementById('userName').textContent = firstName;
                 document.getElementById('userFullName').textContent = fullName;
                 document.getElementById('userEmail').textContent = email;
-                
-                // Create avatar initials
-                const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-                document.getElementById('userAvatar').textContent = initials;
-                
-                log(`Updated user profile: ${fullName} (${email})`);
-            } else {
-                document.getElementById('userName').textContent = 'User';
-                document.getElementById('userFullName').textContent = 'User';
-                document.getElementById('userEmail').textContent = email;
-                document.getElementById('userAvatar').textContent = 'U';
+                document.getElementById('userAvatar').textContent = firstName.charAt(0).toUpperCase();
             }
         }
 
         function loadApplications() {
-            log(`Loading ${userApplications.length} applications`);
-            
             const applicationsList = document.getElementById('applicationsList');
-            
-            // Update summary cards
             const totalApps = userApplications.length;
             const approvedApps = userApplications.filter(app => app.status === 'Approved');
             const pendingApps = userApplications.filter(app => app.status === 'Pending' || app.status === 'Processing');
@@ -1330,81 +1099,71 @@ async function fetchUserApplicationsFromBaserow(email) {
             document.getElementById('approvedApplications').textContent = approvedApps.length;
             document.getElementById('pendingApplications').textContent = pendingApps.length;
             
-            if (totalApps > 0) {
-                const approvalRate = Math.round((approvedApps.length / totalApps) * 100);
-                document.getElementById('approvalRate').textContent = approvalRate;
-            }
-            
             if (userApplications.length === 0) {
                 applicationsList.innerHTML = `
                     <div class="no-applications">
                         <i class="fas fa-file-alt"></i>
-                        <p>No loan applications found.</p>
+                        <p>No loan applications found for this email.</p>
                         <a href="apply.html" class="action-btn btn-apply">
                             <i class="fas fa-plus"></i> Apply for a Loan
                         </a>
-                    </div>
-                `;
+                    </div>`;
                 return;
             }
             
             let html = '';
             userApplications.forEach(app => {
-                const amount = parseInt(app.loanAmount) || 0;
                 const statusClass = getStatusClass(app.status);
                 
                 html += `
                     <div class="application-card">
                         <div class="application-header">
-                            <div class="application-title">${app.loanType} Loan</div>
+                            <div class="application-title">${app.loanType}</div>
                             <div class="application-status ${statusClass}">${app.status}</div>
                         </div>
                         <div class="application-details">
                             <div class="detail-item">
-                                <div class="detail-label">Reference Number</div>
+                                <div class="detail-label">Reference</div>
                                 <div class="detail-value">${app.referenceNumber}</div>
                             </div>
                             <div class="detail-item">
-                                <div class="detail-label">Amount</div>
-                                <div class="detail-value">R${amount.toLocaleString()}</div>
+                                <div class="detail-label">Amount Applied For</div>
+                                <div class="detail-value">R${app.loanAmount.toLocaleString()}</div>
+                            </div>
+                             <div class="detail-item">
+                                <div class="detail-label">Monthly Installment</div>
+                                <div class="detail-value">R${app.monthlyInstallment}</div>
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Purpose</div>
                                 <div class="detail-value">${app.loanPurpose}</div>
                             </div>
                             <div class="detail-item">
-                                <div class="detail-label">Term</div>
+                                <div class="detail-label">Repayment Term</div>
                                 <div class="detail-value">${app.loanTerm} months</div>
                             </div>
                             <div class="detail-item">
                                 <div class="detail-label">Application Date</div>
                                 <div class="detail-value">${formatDate(new Date(app.applicationDate))}</div>
                             </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Monthly Income</div>
-                                <div class="detail-value">R${parseInt(app.monthlyIncome || 0).toLocaleString()}</div>
+                             <div class="detail-item">
+                                <div class="detail-label">SA ID Number</div>
+                                <div class="detail-value">${app.idNumber}</div>
                             </div>
                         </div>
                         <div class="application-actions">
-                            <button class="application-btn btn-view" onclick="viewApplication('${app.referenceNumber}')">
-                                <i class="fas fa-eye"></i> View Details
-                            </button>
                             ${app.status === 'Approved' ? 
                                 `<button class="application-btn btn-track" onclick="window.location.href='approval.html'">
-                                    <i class="fas fa-file-pdf"></i> View Letter
+                                    <i class="fas fa-file-pdf"></i> View Approval
                                 </button>` : 
-                                `<button class="application-btn btn-track" onclick="trackApplication('${app.referenceNumber}')">
+                                `<button class="application-btn btn-track" disabled>
                                     <i class="fas fa-search"></i> Track
                                 </button>`
                             }
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
-            
             applicationsList.innerHTML = html;
-            
-            // Load active loans
             loadActiveLoans(approvedApps);
         }
 
@@ -1419,441 +1178,133 @@ async function fetchUserApplicationsFromBaserow(email) {
 
         function loadActiveLoans(approvedLoans) {
             const activeLoansContent = document.getElementById('activeLoansContent');
-            
             if (!approvedLoans || approvedLoans.length === 0) {
-                document.getElementById('totalLoanAmount').textContent = 'R0';
-                document.getElementById('monthlyPayment').textContent = 'R0';
-                document.getElementById('outstandingBalance').textContent = 'R0';
-                
-                activeLoansContent.innerHTML = `
-                    <div class="no-applications">
-                        <i class="fas fa-info-circle"></i>
-                        <p>You don't have any active loans at the moment.</p>
-                    </div>
-                `;
+                activeLoansContent.innerHTML = `<div class="no-applications"><i class="fas fa-info-circle"></i><p>You don't have any active loans at the moment.</p></div>`;
                 return;
             }
-            
-            // Calculate totals
-            let totalAmount = 0;
-            let totalMonthlyPayment = 0;
-            let totalOutstanding = 0;
-            
-            approvedLoans.forEach(loan => {
-                const amount = parseInt(loan.loanAmount) || 0;
-                totalAmount += amount;
-                totalMonthlyPayment += Math.round(amount * 0.05); // 5% monthly payment estimate
-                totalOutstanding += amount * 0.9; // 90% outstanding estimate
-            });
-            
-            document.getElementById('totalLoanAmount').textContent = `R${totalAmount.toLocaleString()}`;
-            document.getElementById('monthlyPayment').textContent = `R${totalMonthlyPayment.toLocaleString()}`;
-            document.getElementById('outstandingBalance').textContent = `R${Math.round(totalOutstanding).toLocaleString()}`;
-            
-            // Generate loans HTML
-            let html = '';
-            approvedLoans.forEach(loan => {
-                const amount = parseInt(loan.loanAmount) || 0;
-                const monthlyPayment = Math.round(amount * 0.05);
-                const outstanding = amount * 0.9;
-                
-                html += `
-                    <div class="application-card">
-                        <div class="application-header">
-                            <div class="application-title">${loan.loanType} Loan</div>
-                            <div class="application-status status-approved">Active</div>
-                        </div>
-                        <div class="application-details">
-                            <div class="detail-item">
-                                <div class="detail-label">Reference Number</div>
-                                <div class="detail-value">${loan.referenceNumber}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Loan Amount</div>
-                                <div class="detail-value">R${amount.toLocaleString()}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Monthly Payment</div>
-                                <div class="detail-value">R${monthlyPayment.toLocaleString()}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Outstanding Balance</div>
-                                <div class="detail-value">R${Math.round(outstanding).toLocaleString()}</div>
-                            </div>
-                        </div>
-                        <div class="application-actions">
-                            <button class="application-btn btn-view" onclick="viewLoanDetails('${loan.referenceNumber}')">
-                                <i class="fas fa-eye"></i> View Details
-                            </button>
-                            <button class="application-btn btn-track" onclick="window.location.href='approval.html'">
-                                <i class="fas fa-file-pdf"></i> View Letter
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            activeLoansContent.innerHTML = html;
+            // Implementation for displaying active loans can be expanded here
+            activeLoansContent.innerHTML = `<div class="no-applications"><i class="fas fa-info-circle"></i><p>${approvedLoans.length} approved loan(s). Details above.</p></div>`;
+
         }
 
-        // Application tracking
-        // Application tracking with continuous animation
-function startApplicationTracking(application) {
-    log(`Starting tracking for application: ${application.referenceNumber}`);
-    
-    const createdDate = new Date(application.applicationDate);
-    const now = new Date();
-    const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
-    const secondsPassed = Math.floor((now - createdDate) / 1000);
-    
-    const progressBar = document.getElementById('trackingProgressBar');
-    const progressPercentage = document.getElementById('progressPercentage');
-    const steps = document.querySelectorAll('.tracking-step');
-    const trackingMessage = document.getElementById('trackingMessage');
-    const trackingActions = document.getElementById('trackingActions');
-    
-    // Reset
-    steps.forEach(step => step.classList.remove('active', 'completed'));
-    trackingActions.style.display = 'none';
-    
-    let progress = 0;
-    let message = '';
-    let targetProgress = 0;
-    
-    // Calculate target progress based on time
-    if (minutesPassed < 1) {
-        targetProgress = Math.min(30, 10 + (secondsPassed * 0.3)); // Slowly build to 30%
-        steps[0].classList.add('active');
-        message = 'Your application has been submitted and is now being processed. Please wait...';
-    } else if (minutesPassed < 3) {
-        targetProgress = Math.min(65, 30 + ((minutesPassed - 1) * 17.5)); // 30% to 65%
-        steps[0].classList.add('completed');
-        steps[1].classList.add('active');
-        message = 'Your application is being reviewed by our underwriting team...';
-    } else if (minutesPassed < 5) {
-        targetProgress = Math.min(85, 65 + ((minutesPassed - 3) * 10)); // 65% to 85%
-        steps[0].classList.add('completed');
-        steps[1].classList.add('completed');
-        steps[2].classList.add('active');
-        const firstName = application.firstName || 'Applicant';
-        const amount = parseInt(application.loanAmount).toLocaleString();
-        message = `<strong>Great news ${firstName}!</strong> You have qualified for the R${amount} loan application. Final approval in progress...`;
-    } else if (minutesPassed < 7) {
-        // 5-7 minutes: Build to 99.1%
-        const progressInRange = (minutesPassed - 5) / 2; // 0 to 1 over 2 minutes
-        targetProgress = 85 + (progressInRange * 14.1); // 85% to 99.1%
-        steps[0].classList.add('completed');
-        steps[1].classList.add('completed');
-        steps[2].classList.add('completed');
-        steps[3].classList.add('active');
-        message = `<strong>Final Review Stage...</strong> Your application is being finalized. Almost complete!`;
-    } else {
-        // 7+ minutes: 100% and approved
-        targetProgress = 100;
-        steps.forEach(step => step.classList.add('completed'));
-        message = `
-            <strong>Congratulations!</strong> Your loan application has been <strong>APPROVED</strong>.<br><br>
-            <strong>⚠️ Flagged for Low Credit Issue</strong><br>
-            A credit improvement and cover will be needed.<br>
-            <small style="color: #e74c3c; font-weight: bold;">Do not worry, we have the solution for you!</small><br><br>
-            <strong>Your approval letter is ready!</strong>
-        `;
-        trackingActions.style.display = 'block';
-    }
-    
-    // Animate progress bar with continuous movement
-    let currentProgress = parseFloat(progressBar.style.width) || 0;
-    
-    function animateProgress() {
-        if (currentProgress < targetProgress) {
-            // Smooth increment
-            const increment = (targetProgress - currentProgress) * 0.02; // Smooth acceleration
-            currentProgress += Math.max(increment, 0.1); // Minimum increment for continuous movement
-            
-            if (currentProgress > targetProgress) {
-                currentProgress = targetProgress;
-            }
-            
-            // Update progress bar
-            progressBar.style.width = currentProgress + '%';
-            progressPercentage.textContent = currentProgress.toFixed(1) + '%';
-            progressPercentage.style.right = (100 - currentProgress) + '%';
-            
-            // Continue animation
-            requestAnimationFrame(animateProgress);
-        } else {
-            // Add subtle pulsing animation when at target
-            if (minutesPassed >= 5 && minutesPassed < 7) {
-                // Pulse between 99.0% and 99.2% for processing effect
-                const pulse = Math.sin(Date.now() * 0.005) * 0.1;
-                const pulseProgress = Math.max(99.0, Math.min(99.2, 99.1 + pulse));
-                progressBar.style.width = pulseProgress + '%';
-                progressPercentage.textContent = pulseProgress.toFixed(1) + '%';
-                requestAnimationFrame(animateProgress);
-            }
-        }
-    }
-    
-    // Start animation
-    animateProgress();
-    
-    // Update message
-    trackingMessage.innerHTML = message;
-    
-    log(`Tracking updated: ${targetProgress.toFixed(1)}% progress`);
-    
-    // Auto-refresh every 10 seconds to update progress
-    setTimeout(() => {
-        if (document.getElementById('applicationTrackingSection').style.display !== 'none') {
-            startApplicationTracking(application);
-        }
-    }, 10000);
-}
+        function startApplicationTracking(application) {
+            if(!application) return;
 
-        // Event handlers
-        document.getElementById('emailForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const emailButton = document.getElementById('emailButton');
-            
-            if (!email) {
-                showError('Please enter your email address.');
-                return;
-            }
-            
-            // Show loading
-            const originalText = emailButton.innerHTML;
-            emailButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
-            emailButton.disabled = true;
-            
-            log(`=== EMAIL FORM SUBMISSION ===`);
-            log(`Email entered: ${email}`);
-            
-            try {
-                // Check email in Baserow
-                const userRecord = await checkEmailInBaserow(email);
-                
-                log(`Email check completed. Result:`, userRecord ? 'FOUND' : 'NOT FOUND');
-                
-                if (!userRecord) {
-                    log('Showing "no applications found" error');
-                    showError('No applications found with this email address. Please apply for a loan first.');
-                    emailButton.innerHTML = originalText;
-                    emailButton.disabled = false;
-                    return;
-                }
-                
-                log('User record found, proceeding to PIN check');
-                
-                // Check if PIN exists
-                const savedPin = localStorage.getItem(`pin_${email}`);
-                
-                if (!savedPin) {
-                    log('No PIN found, showing PIN creation form');
-                    document.getElementById('emailForm').style.display = 'none';
-                    document.getElementById('createPinForm').style.display = 'block';
-                    sessionStorage.setItem('tempEmail', email);
-                } else {
-                    log('PIN found, showing PIN entry form');
-                    document.getElementById('emailForm').style.display = 'none';
-                    document.getElementById('pinForm').style.display = 'block';
-                    sessionStorage.setItem('tempEmail', email);
-                }
-                
-                emailButton.innerHTML = originalText;
-                emailButton.disabled = false;
-                
-            } catch (error) {
-                log('=== ERROR IN EMAIL FORM ===');
-                log('Caught error:', error);
-                showError('Connection error. Please check your internet and try again.');
-                emailButton.innerHTML = originalText;
-                emailButton.disabled = false;
-            }
-        });
+            const createdDate = new Date(application.applicationDate);
+            const now = new Date();
+            const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
 
-        document.getElementById('pinForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+            const progressBar = document.getElementById('trackingProgressBar');
+            const progressPercentage = document.getElementById('progressPercentage');
+            const steps = document.querySelectorAll('.tracking-step');
+            const trackingMessage = document.getElementById('trackingMessage');
+            const trackingActions = document.getElementById('trackingActions');
             
-            const pin = document.getElementById('pin').value.trim();
-            const email = sessionStorage.getItem('tempEmail');
-            const pinButton = document.getElementById('pinButton');
-            
-            if (!pin) {
-                showError('Please enter your PIN.');
-                return;
+            steps.forEach(step => step.classList.remove('active', 'completed'));
+            trackingActions.style.display = 'none';
+
+            let targetProgress = 0;
+            let message = '';
+
+            if (minutesPassed < 1) {
+                targetProgress = 20;
+                steps[0].classList.add('active');
+                message = 'Your application has been submitted and is now being processed.';
+            } else if (minutesPassed < 3) {
+                targetProgress = 45;
+                steps[0].classList.add('completed');
+                steps[1].classList.add('active');
+                message = 'Your application is being reviewed by our underwriting team.';
+            } else if (minutesPassed < 5) {
+                targetProgress = 65;
+                steps[0].classList.add('completed');
+                steps[1].classList.add('completed');
+                steps[2].classList.add('active');
+                message = `<strong>Great news ${application.firstName}!</strong> You have qualified for the loan. Final approval is in progress.`;
+            } else if (minutesPassed < 7) {
+                targetProgress = 99;
+                steps[0].classList.add('completed');
+                steps[1].classList.add('completed');
+                steps[2].classList.add('completed');
+                steps[3].classList.add('active');
+                message = `<strong>Final Review Stage...</strong> Your application is being finalized. Almost complete!`;
+            } else {
+                targetProgress = 100;
+                steps.forEach(step => step.classList.add('completed'));
+                message = `<strong>Congratulations! Your loan is APPROVED.</strong><br>A credit improvement and cover may be needed due to a low credit score. Your approval letter is ready!`;
+                trackingActions.style.display = 'block';
             }
             
-            const originalText = pinButton.innerHTML;
-            pinButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
-            pinButton.disabled = true;
-            
-            try {
-                const savedPin = localStorage.getItem(`pin_${email}`);
-                
-                if (pin !== savedPin) {
-                    showError('Incorrect PIN. Please try again.');
-                    document.getElementById('pin').value = '';
-                    pinButton.innerHTML = originalText;
-                    pinButton.disabled = false;
-                    return;
-                }
-                
-                // Login successful
-                login(email);
-                await fetchUserApplicationsFromBaserow(email);
+            progressBar.style.width = targetProgress + '%';
+            progressPercentage.textContent = targetProgress + '%';
+            progressPercentage.style.right = (100 - targetProgress) + '%';
+            trackingMessage.innerHTML = message;
+        }
+
+        async function loadUserData(email) {
+            const button = document.getElementById('loadDataButton');
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            button.disabled = true;
+
+            const applications = await fetchUserApplicationsFromBaserow(email);
+
+            if (applications.length > 0) {
+                localStorage.setItem('userEmail', email);
                 showDashboard();
                 updateUserProfile();
                 loadApplications();
                 
-                // Start tracking for pending applications
-                const pendingApps = userApplications.filter(app => 
-                    app.status === 'Pending' || app.status === 'Processing'
-                );
-                
-                if (pendingApps.length > 0) {
-                    startApplicationTracking(pendingApps[0]);
+                const pendingApp = applications.find(app => app.status === 'Pending' || app.status === 'Processing') || applications[applications.length - 1];
+                if (pendingApp) {
+                     document.getElementById('applicationTrackingSection').style.display = 'block';
+                    startApplicationTracking(pendingApp);
                 } else {
                     document.getElementById('applicationTrackingSection').style.display = 'none';
                 }
-                
-                sessionStorage.removeItem('tempEmail');
-                
-            } catch (error) {
-                showError('Login failed. Please try again.');
-                pinButton.innerHTML = originalText;
-                pinButton.disabled = false;
-            }
-        });
 
-        document.getElementById('createPinForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const newPin = document.getElementById('newPin').value;
-            const confirmPin = document.getElementById('confirmPin').value;
-            const email = sessionStorage.getItem('tempEmail');
-            
-            if (newPin !== confirmPin) {
-                showError('PINs do not match. Please try again.');
-                return;
-            }
-            
-            if (newPin.length !== 4 || !/^\d+$/.test(newPin)) {
-                showError('PIN must be exactly 4 digits.');
-                return;
-            }
-            
-            // Save PIN and login
-            localStorage.setItem(`pin_${email}`, newPin);
-            login(email);
-            
-            await fetchUserApplicationsFromBaserow(email);
-            showDashboard();
-            updateUserProfile();
-            loadApplications();
-            
-            // Start tracking
-            const pendingApps = userApplications.filter(app => 
-                app.status === 'Pending' || app.status === 'Processing'
-            );
-            
-            if (pendingApps.length > 0) {
-                startApplicationTracking(pendingApps[0]);
             } else {
-                document.getElementById('applicationTrackingSection').style.display = 'none';
+                showError('No applications found for this email address.');
+                button.innerHTML = '<i class="fas fa-arrow-right"></i> Load My Data';
+                button.disabled = false;
             }
-            
-            sessionStorage.removeItem('tempEmail');
-            showSuccess('PIN created successfully! Welcome to your dashboard.');
+        }
+
+        // Event listeners
+        document.getElementById('emailPromptForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            if (email) {
+                loadUserData(email);
+            } else {
+                showError('Please enter a valid email address.');
+            }
         });
 
-        document.getElementById('backButton').addEventListener('click', function() {
-            document.getElementById('pinForm').style.display = 'none';
-            document.getElementById('emailForm').style.display = 'block';
-            document.getElementById('pin').value = '';
-        });
-
-        // Dashboard navigation
-        document.querySelectorAll('[data-tab]').forEach(link => {
+        document.querySelectorAll('.dashboard-menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                
                 const targetTab = this.getAttribute('data-tab');
-                
-                // Remove active class from all menu items
                 document.querySelectorAll('.dashboard-menu a').forEach(a => a.classList.remove('active'));
                 this.classList.add('active');
-                
-                // Hide all tabs
                 document.querySelectorAll('.dashboard-tab').forEach(tab => tab.classList.remove('active'));
-                
-                // Show target tab
                 document.getElementById(targetTab + 'Tab').classList.add('active');
             });
         });
 
-        // Logout
-        document.getElementById('logoutBtn').addEventListener('click', function() {
+        document.getElementById('logoutBtn').addEventListener('click', () => {
             if (confirm('Are you sure you want to logout?')) {
                 logout();
             }
         });
 
-        // Global functions
-        window.viewApplication = function(referenceNumber) {
-            alert(`Viewing application: ${referenceNumber}`);
-        };
-
-        window.trackApplication = function(referenceNumber) {
-            alert(`Tracking application: ${referenceNumber}`);
-        };
-
-        window.viewLoanDetails = function(referenceNumber) {
-            alert(`Viewing loan details: ${referenceNumber}`);
-        };
-
-        // Initialize
-        window.addEventListener('load', async function() {
-            log('Application starting...');
-            
-            if (isLoggedIn()) {
-                const userEmail = localStorage.getItem('userEmail');
-                log(`User already logged in: ${userEmail}`);
-                
-                try {
-                    // Verify email still exists
-                    const userRecord = await checkEmailInBaserow(userEmail);
-                    
-                    if (!userRecord) {
-                        log('User email no longer exists in Baserow, logging out');
-                        logout();
-                        return;
-                    }
-                    
-                    await fetchUserApplicationsFromBaserow(userEmail);
-                    showDashboard();
-                    updateUserProfile();
-                    loadApplications();
-                    
-                    // Start tracking
-                    const pendingApps = userApplications.filter(app => 
-                        app.status === 'Pending' || app.status === 'Processing'
-                    );
-                    
-                    if (pendingApps.length > 0) {
-                        startApplicationTracking(pendingApps[0]);
-                    } else {
-                        document.getElementById('applicationTrackingSection').style.display = 'none';
-                    }
-                    
-                } catch (error) {
-                    log('Error verifying user on load:', error);
-                    showLogin();
-                }
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            const savedEmail = localStorage.getItem('userEmail');
+            if (savedEmail) {
+                document.getElementById('email').value = savedEmail;
+                loadUserData(savedEmail);
             } else {
-                log('User not logged in, showing login form');
-                showLogin();
+                showEmailPrompt();
             }
         });
     </script>
