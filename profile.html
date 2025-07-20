@@ -621,118 +621,6 @@
                 font-size: 1rem;
             }
         }
-         /* Header - Smaller for mobile */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 0.5rem 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 1rem;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #e74c3c;
-        }
-
-        .logo img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-
-        .nav-menu {
-            display: none; /* Hidden on mobile by default */
-            list-style: none;
-            gap: 1.5rem;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-menu a:hover {
-            color: #ED1C24;
-            transform: translateY(-2px);
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #ED1C24;
-            transition: width 0.3s ease;
-        }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-
-        /* Mobile Navigation - Always visible */
-        .mobile-nav {
-            display: block;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem;
-            box-shadow: 0 -2px 20px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .mobile-nav-menu {
-            display: flex;
-            justify-content: space-around;
-            list-style: none;
-        }
-
-        .mobile-nav-menu a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #333;
-            font-size: 0.7rem;
-            transition: all 0.3s ease;
-            padding: 0.3rem;
-        }
-
-        .mobile-nav-menu a:hover {
-            color: #ED1C24;
-            transform: translateY(-2px);
-        }
-
-        .mobile-nav-menu i {
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
-        }
-
     </style>
 </head>
 <body>
@@ -740,31 +628,16 @@
     <header class="header">
         <nav class="nav-container">
             <div class="logo">
-                <img src="/placeholder.svg?height=30&width=30" alt="Oyster Personal Finance Logo">
-                <span>Oyster Finance</span>
+                <span>🦪 Oyster Finance</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="apply.html">Apply</a></li>
-                <li><a href="review.html">Reviews</a></li>
-                <li><a href="contact.html">Contact</a></li>
                 <li><a href="profile.html">Profile</a></li>
             </ul>
         </nav>
     </header>
-
-     <!-- Mobile Navigation -->
-    <nav class="mobile-nav">
-        <ul class="mobile-nav-menu">
-            <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="about.html"><i class="fas fa-info-circle"></i>About</a></li>
-            <li><a href="apply.html"><i class="fas fa-file-alt"></i>Apply</a></li>
-            <li><a href="review.html"><i class="fas fa-star"></i>Reviews</a></li>
-            <li><a href="contact.html"><i class="fas fa-phone"></i>Contact</a></li>
-            <li><a href="profile.html"><i class="fas fa-user"></i>Profile</a></li>
-        </ul>
-    </nav>
 
     <!-- Main Content -->
     <main class="main-content">
