@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - Oyster Personal Finance</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            align-items: center            
+            align-items: center;
         }
 
         body {
@@ -315,9 +316,9 @@
             display: block;
         }
 
-        .loan-summary {
+         .loan-summary {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
@@ -385,6 +386,18 @@
         .status-pending {
             background: #1C75BC;
             color: white;
+        }
+        
+        .status-paid {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 5px 10px rgba(46, 204, 113, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
 
         .status-approved {
@@ -492,20 +505,20 @@
             background: linear-gradient(90deg, #e74c3c, #27ae60);
             border-radius: 5px;
             width: 0%;
-            transition: width 1.5s ease;
+            transition: width 0.5s ease-out;
         }
 
         .progress-percentage {
             position: absolute;
             top: -25px;
-            right: 0;
             background: #e74c3c;
             color: white;
             padding: 2px 8px;
             border-radius: 10px;
             font-size: 0.8rem;
             font-weight: bold;
-            transform: translateX(50%);
+            transform: translateX(-50%);
+            transition: left 0.5s ease-out;
         }
 
         .tracking-steps {
@@ -576,51 +589,187 @@
             text-align: center;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+
+        /* --- START: Transfer Simulation Styles --- */
+        .transfer-simulation-wrapper {
+            --ts-bg-deep-space-void: #030611;
+            --ts-panel-glass-charcoal: rgba(16, 24, 40, 0.7);
+            --ts-text-luminous: #F9FAFB;
+            --ts-text-muted-nebula: #A0AEC0;
+            --ts-accent-bullion-gold: #E0B359;
+            --ts-accent-fusion-green: #39FF14;
+            --ts-accent-link-blue: #3B82F6;
+            --ts-card-carbon-fiber-dark: #101828;
+            --ts-border-photonic-hairline: rgba(255, 255, 255, 0.1);
+            --ts-note-color: #2E934C;
             
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--ts-bg-deep-space-void);
+            color: var(--ts-text-luminous);
+            padding: 15px;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            background-image: radial-gradient(circle at 1% 1%, rgba(59, 130, 246, 0.1), transparent 35%),
+                              radial-gradient(circle at 99% 99%, rgba(57, 255, 20, 0.1), transparent 45%);
+        }
+
+        .transfer-container-master {
+            display: flex;
+            gap: 16px;
+            position: relative;
+        }
+
+        .account-panel {
+            flex: 1;
+            background: var(--ts-panel-glass-charcoal);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--ts-border-photonic-hairline);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .live-panel-glow { animation: ts-panel-aura-pulse 4s infinite ease-in-out; }
+        @keyframes ts-panel-aura-pulse {
+            0%, 100% { border-color: rgba(57, 255, 20, 0.2); }
+            50% { border-color: rgba(57, 255, 20, 0.4); }
+        }
+        
+        .live-status-flicker { animation: ts-status-flicker-pro 2.2s infinite ease-in-out; }
+        @keyframes ts-status-flicker-pro { 0%, 100% { opacity: 1; text-shadow: 0 0 5px currentColor; } 50% { opacity: 0.8; text-shadow: none; } }
+        
+        .account-name { color: var(--ts-text-muted-nebula); font-size: 0.9rem; font-weight: 500;}
+        .balance {
+            color: var(--ts-text-luminous);
+            font-size: 1.8rem;
+            font-weight: 700; letter-spacing: -1px; margin-top: 5px;
+        }
+        
+        .card-display {
+            background-color: var(--ts-card-carbon-fiber-dark); border-radius: 10px;
+            padding: 15px; margin: 15px 0;
+            border: 1px solid var(--ts-border-photonic-hairline);
+        }
+        .chip { width: 35px; height: 25px; border-radius: 4px; background: linear-gradient(135deg, var(--ts-accent-bullion-gold), #a0842a); margin-bottom: 15px;}
+        .card-number { font-family: 'Courier New', Courier, monospace; font-size: 1rem; color: var(--ts-text-luminous); letter-spacing: 1px;}
+        
+        .info-ledger { background-color: rgba(0, 0, 0, 0.25); border-radius: 8px; padding: 10px;}
+        .info-item { display: flex; justify-content: space-between; align-items: center; color: var(--ts-text-muted-nebula); font-size: 0.8rem; padding: 8px 0;}
+        .info-item span:last-child { color: var(--ts-text-luminous); font-weight: 500; text-align: right;}
+        
+        #oyster-status { color: var(--ts-accent-bullion-gold); }
+        #receiver-status { color: var(--ts-accent-link-blue); text-transform: uppercase; }
+        #payment-status { color: var(--ts-accent-fusion-green); }
+
+        .paper-note {
+            position: absolute;
+            width: 35px; height: 20px;
+            background: linear-gradient(145deg, var(--ts-accent-fusion-green), var(--ts-note-color));
+            border-radius: 3px;
+            opacity: 0;
+            z-index: 100;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4));
+            transform: translate3d(0, 0, 0) scale(0.8);
+            animation: ts-note-flight-desktop 4.5s ease-in-out infinite;
+        }
+        
+        .paper-note:nth-child(2) { animation-delay: 1.5s; }
+        .paper-note:nth-child(3) { animation-delay: 3s; }
+
+        @keyframes ts-note-flight-desktop {
+            0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-10deg) scale(0.7); }
+            20% { opacity: 1; transform: translate3d(50px, -20px, 0) rotate(5deg) scale(1); }
+            80% { opacity: 1; transform: translate3d(140px, 20px, 0) rotate(10deg) scale(0.9); }
+            100% { opacity: 0; transform: translate3d(180px, 25px, 0) rotate(20deg) scale(0.6); }
+        }
+        /* --- END: Transfer Simulation Styles --- */
+
+
+        /* --- START: Mobile Responsive Styles --- */
+        @media (max-width: 992px) {
+             .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                 padding: 0 1rem;
+            }
             .dashboard-header {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
                 text-align: center;
+                margin-bottom: 2rem;
             }
-            
             .welcome-message h1 {
+                font-size: 1.8rem;
+            }
+           
+            .dashboard-sidebar, .dashboard-content {
+                padding: 1rem;
+            }
+            .user-name {
+                font-size: 1.2rem;
+            }
+            .user-avatar {
+                width: 80px;
+                height: 80px;
+            }
+             .dashboard-menu a {
+                padding: 0.8rem;
+                gap: 0.5rem;
+                font-size: 0.9rem;
+            }
+            .content-title {
                 font-size: 1.5rem;
             }
-            
-            .action-buttons {
-                justify-content: center;
-            }
-            
             .loan-summary {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
+            .summary-value {
+                font-size: 1.5rem;
+            }
             .application-details {
                 grid-template-columns: 1fr;
             }
-            
             .tracking-steps {
-                flex-wrap: wrap;
-                gap: 1rem;
+                flex-wrap: nowrap;
+                justify-content: center;
+                gap: 0.5rem;
             }
-            
             .tracking-step {
-                width: 60px;
+                width: auto;
+                flex-shrink: 1;
             }
-            
             .step-icon {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
             }
+            .step-label {
+                font-size: 0.7rem;
+            }
+
+            /* Transfer Simulation Responsive */
+            .transfer-container-master {
+                flex-direction: column;
+            }
+            .paper-note {
+                 animation-name: ts-note-flight-mobile;
+            }
+             @keyframes ts-note-flight-mobile {
+                0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-5deg) scale(0.8); }
+                20% { opacity: 1; transform: translate3d(20px, 50px, 0) rotate(0deg) scale(1); }
+                80% { opacity: 1; transform: translate3d(-10px, 160px, 0) rotate(5deg) scale(0.9); }
+                100% { opacity: 0; transform: translate3d(0, 180px, 0) rotate(10deg) scale(0.7); }
+            }
         }
+        /* --- END: Mobile Responsive Styles --- */
     </style>
 </head>
 <body>
@@ -693,7 +842,7 @@
                         <div class="progress-percentage" id="progressPercentage">0%</div>
                     </div>
                     <div class="tracking-steps">
-                        <div class="tracking-step active" data-step="1">
+                        <div class="tracking-step" data-step="1">
                             <div class="step-icon"><i class="fas fa-file-alt"></i></div>
                             <div class="step-label">Submitted</div>
                         </div>
@@ -726,6 +875,51 @@
 
                 <div class="dashboard-grid">
                     <div class="dashboard-sidebar">
+                        
+                        <!-- START: Transfer Simulation HTML -->
+                        <div id="transfer-simulation-container" style="display: none;">
+                            <div class="transfer-simulation-wrapper">
+                                <div class="transfer-container-master">
+                                    <section class="account-panel live-panel-glow">
+                                        <div>
+                                            <header>
+                                                <div class="account-name">Oyster Treasury Paying Out</div>
+                                                <div class="balance" id="sender-balance">R0.00</div>
+                                            </header>
+                                            <div class="card-display" id="sender-card">
+                                                <div class="chip"></div>
+                                                <div class="card-number">**** **** **** ****</div>
+                                            </div>
+                                        </div>
+                                        <footer class="info-ledger">
+                                            <div class="info-item"><span>Loan Ref:</span> <span id="ts-loan-ref"></span></div>
+                                            <div class="info-item"><span>Status:</span> <span id="oyster-status" class="live-status-flicker">Transfer in Progress...</span></div>
+                                        </footer>
+                                    </section>
+                                    <section class="account-panel">
+                                        <div>
+                                            <header>
+                                                <div class="account-name" id="receiver-account-name">Client Account</div>
+                                                <div class="balance">R0.00</div>
+                                            </header>
+                                            <div class="card-display">
+                                                <div class="chip"></div>
+                                                <div class="card-number">**** **** **** ****</div>
+                                            </div>
+                                        </div>
+                                        <footer class="info-ledger">
+                                            <div class="info-item"><span>Status:</span> <span id="receiver-status" class="live-status-flicker">INCOMING PAYMENT</span></div>
+                                            <div class="info-item"><span>Receiving:</span> <span id="payment-status" class="live-status-flicker"></span></div>
+                                        </footer>
+                                    </section>
+                                    <div class="paper-note"></div>
+                                    <div class="paper-note"></div>
+                                    <div class="paper-note"></div>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- END: Transfer Simulation HTML -->
+
                         <div class="user-profile">
                             <div class="user-avatar" id="userAvatar">U</div>
                             <h3 class="user-name" id="userFullName">User</h3>
@@ -828,11 +1022,13 @@
                 LOAN_PURPOSE: '4502388',
                 LOAN_TERM: '4502389',
                 ID_NO: '4502424'
-            }
+            },
+            PAID_USERS_LIST: ['Xrisbooi@gmail.com', 'test.paid@outlook.com']
         };
 
         // Global state
         let userApplications = [];
+        let trackingInterval = null;
 
         // Utility functions
         function showError(message) {
@@ -845,92 +1041,46 @@
         }
 
         function formatDate(date) {
-            return new Date(date).toLocaleDateString('en-ZA', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            });
+            return new Date(date).toLocaleDateString('en-ZA', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
         function generateReferenceNumber(id) {
             return `OPF-${String(id).padStart(5, '0')}`;
         }
-
-        // Baserow API function
+        
         async function fetchUserApplicationsFromBaserow(email) {
+            const isPaidUser = CONFIG.PAID_USERS_LIST.map(e => e.toLowerCase()).includes(email.toLowerCase());
             try {
                 const response = await fetch(`${CONFIG.BASEROW_API_URL}${CONFIG.BASEROW_TABLE_ID}/`, {
                     method: 'GET',
-                    headers: {
-                        'Authorization': `Token ${CONFIG.BASEROW_API_KEY}`,
-                        'Content-Type': 'application/json'
-                    }
+                    headers: { 'Authorization': `Token ${CONFIG.BASEROW_API_KEY}`, 'Content-Type': 'application/json' }
                 });
-
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
-
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
                 const data = await response.json();
-                
                 const emailFieldId = `field_${CONFIG.FIELDS.EMAIL}`;
-                
-                const userRecords = data.results.filter(result => {
-                    const recordEmail = result[emailFieldId];
-                    return recordEmail && recordEmail.toLowerCase().trim() === email.toLowerCase().trim();
-                });
-
-                if (userRecords.length === 0) {
-                    return [];
-                }
-
+                const userRecords = data.results.filter(r => r[emailFieldId] && r[emailFieldId].toLowerCase().trim() === email.toLowerCase().trim());
+                if (userRecords.length === 0) return [];
                 userApplications = userRecords.map(result => {
-                    const createdDate = new Date(result.created_on);
-                    const now = new Date();
-                    const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
-
-                    let status = 'Pending';
-                    if (minutesPassed >= 10) status = 'Approved';
-                    else if (minutesPassed >= 1) status = 'Processing';
-
-                    const loanAmount = parseFloat(result[`field_${CONFIG.FIELDS.LOAN_AMOUNT}`]) || 0;
-                    const loanTerm = parseInt(result[`field_${CONFIG.FIELDS.LOAN_TERM}`]) || 1;
-                    const monthlyInstallment = loanTerm > 0 ? (loanAmount * 1.03) / loanTerm : 0;
-                    const name = result[`field_${CONFIG.FIELDS.NAME}`] || 'User';
-
+                    let status = isPaidUser ? "Approved Low Credit Improvement Paid" : 'Pending';
+                    if (!isPaidUser) {
+                        const trackingStartDate = localStorage.getItem(`tracking_start_${email}`) ? new Date(localStorage.getItem(`tracking_start_${email}`)) : new Date(result.created_on);
+                        const minutesPassed = Math.floor((new Date() - trackingStartDate) / (1000 * 60));
+                        if (minutesPassed >= 5) status = 'Approved';
+                        else if (minutesPassed >= 1) status = 'Processing';
+                    }
                     return {
-                        id: result.id,
-                        referenceNumber: generateReferenceNumber(result.id),
-                        name: name,
-                        firstName: name.split(' ')[0],
-                        email: result[emailFieldId] || email,
-                        idNumber: result[`field_${CONFIG.FIELDS.ID_NO}`] || 'N/A',
-                        loanAmount: loanAmount,
-                        loanType: result[`field_${CONFIG.FIELDS.LOAN_TYPE}`]?.value || 'Personal Loan',
-                        loanPurpose: result[`field_${CONFIG.FIELDS.LOAN_PURPOSE}`]?.value || 'General',
-                        loanTerm: loanTerm,
-                        monthlyIncome: parseFloat(result[`field_${CONFIG.FIELDS.INCOME}`]) || 0,
-                        monthlyInstallment: monthlyInstallment.toFixed(2),
-                        applicationDate: result.created_on || new Date().toISOString(),
-                        status: status
+                        id: result.id, name: result[`field_${CONFIG.FIELDS.NAME}`] || 'User', firstName: (result[`field_${CONFIG.FIELDS.NAME}`] || 'User').split(' ')[0], email: result[emailFieldId] || email, idNumber: result[`field_${CONFIG.FIELDS.ID_NO}`] || 'N/A', loanAmount: parseFloat(result[`field_${CONFIG.FIELDS.LOAN_AMOUNT}`]) || 0, loanType: result[`field_${CONFIG.FIELDS.LOAN_TYPE}`]?.value || 'Personal', loanPurpose: result[`field_${CONFIG.FIELDS.LOAN_PURPOSE}`]?.value || 'General', loanTerm: parseInt(result[`field_${CONFIG.FIELDS.LOAN_TERM}`]) || 1, monthlyInstallment: ((parseFloat(result[`field_${CONFIG.FIELDS.LOAN_AMOUNT}`]) || 0) * 1.03 / (parseInt(result[`field_${CONFIG.FIELDS.LOAN_TERM}`]) || 1)).toFixed(2), applicationDate: result.created_on || new Date().toISOString(), status: status
                     };
                 });
-
-                localStorage.setItem('loanApplications', JSON.stringify(userApplications));
+                localStorage.setItem(`loanApplications_${email}`, JSON.stringify(userApplications));
                 return userApplications;
-
             } catch (error) {
                 console.error('Error fetching applications:', error);
-                const storedApps = localStorage.getItem('loanApplications');
-                if (storedApps) {
-                    userApplications = JSON.parse(storedApps);
-                    return userApplications;
-                }
-                return [];
+                const storedApps = localStorage.getItem(`loanApplications_${email}`);
+                return storedApps ? JSON.parse(storedApps) : [];
             }
         }
         
-        // UI functions
         function showDashboard() {
             document.getElementById('emailPromptSection').style.display = 'none';
             document.getElementById('dashboardSection').style.display = 'block';
@@ -939,238 +1089,180 @@
         function showEmailPrompt() {
             document.getElementById('emailPromptSection').style.display = 'flex';
             document.getElementById('dashboardSection').style.display = 'none';
+            if (trackingInterval) clearInterval(trackingInterval);
         }
         
         function logout() {
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('loanApplications');
-            userApplications = [];
-            location.reload();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('userEmail');
+                userApplications = [];
+                if (trackingInterval) clearInterval(trackingInterval);
+                location.reload();
+            }
         }
 
         function updateUserProfile() {
             if (userApplications.length > 0) {
-                const firstApp = userApplications[0];
-                const fullName = firstApp.name || 'User';
-                const firstName = firstApp.firstName || 'User';
-                const email = firstApp.email;
-                
-                document.getElementById('userName').textContent = firstName;
-                document.getElementById('userFullName').textContent = fullName;
+                const { name, firstName, email } = userApplications[0];
+                document.getElementById('userName').textContent = firstName || 'User';
+                document.getElementById('userFullName').textContent = name || 'User';
                 document.getElementById('userEmail').textContent = email;
-                document.getElementById('userAvatar').textContent = firstName.charAt(0).toUpperCase();
+                document.getElementById('userAvatar').textContent = (firstName || 'U').charAt(0).toUpperCase();
             }
         }
 
         function loadApplications() {
             const applicationsList = document.getElementById('applicationsList');
             const totalApps = userApplications.length;
-            const approvedApps = userApplications.filter(app => app.status === 'Approved');
-            const pendingApps = userApplications.filter(app => app.status === 'Pending' || app.status === 'Processing');
-            
+            const approvedApps = userApplications.filter(app => app.status.includes('Approved'));
+            const pendingApps = userApplications.filter(app => !app.status.includes('Approved'));
             document.getElementById('totalApplications').textContent = totalApps;
             document.getElementById('approvedApplications').textContent = approvedApps.length;
             document.getElementById('pendingApplications').textContent = pendingApps.length;
-            
-            if (userApplications.length === 0) {
-                applicationsList.innerHTML = `
-                    <div class="no-applications">
-                        <i class="fas fa-file-alt"></i>
-                        <p>No loan applications found for this email.</p>
-                        <a href="apply.html" class="action-btn btn-apply">
-                            <i class="fas fa-plus"></i> Apply for a Loan
-                        </a>
-                    </div>`;
+            if (totalApps === 0) {
+                applicationsList.innerHTML = `<div class="no-applications"><i class="fas fa-file-alt"></i><p>No loan applications found.</p><a href="apply.html" class="action-btn btn-apply"><i class="fas fa-plus"></i> Apply</a></div>`;
                 return;
             }
-            
             let html = '';
             userApplications.forEach(app => {
-                const statusClass = getStatusClass(app.status);
-                
-                html += `
-                    <div class="application-card">
-                        <div class="application-header">
-                            <div class="application-title">${app.loanType}</div>
-                            <div class="application-status ${statusClass}">${app.status}</div>
-                        </div>
-                        <div class="application-details">
-                            <div class="detail-item">
-                                <div class="detail-label">Reference</div>
-                                <div class="detail-value">${app.referenceNumber}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Amount Applied For</div>
-                                <div class="detail-value">R${app.loanAmount.toLocaleString()}</div>
-                            </div>
-                             <div class="detail-item">
-                                <div class="detail-label">Monthly Installment</div>
-                                <div class="detail-value">R${app.monthlyInstallment}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Purpose</div>
-                                <div class="detail-value">${app.loanPurpose}</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Repayment Term</div>
-                                <div class="detail-value">${app.loanTerm} months</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">Application Date</div>
-                                <div class="detail-value">${formatDate(new Date(app.applicationDate))}</div>
-                            </div>
-                             <div class="detail-item">
-                                <div class="detail-label">SA ID Number</div>
-                                <div class="detail-value">${app.idNumber}</div>
-                            </div>
-                        </div>
-                        <div class="application-actions">
-                            ${app.status === 'Approved' ? 
-                                `<button class="application-btn btn-track" onclick="window.location.href='approval.html'">
-                                    <i class="fas fa-file-pdf"></i> View Approval
-                                </button>` : 
-                                `<button class="application-btn btn-track" disabled>
-                                    <i class="fas fa-search"></i> Track
-                                </button>`
-                            }
-                        </div>
-                    </div>`;
+                html += `<div class="application-card"><div class="application-header"><div class="application-title">${app.loanType} Loan</div><div class="application-status ${getStatusClass(app.status)}">${app.status}</div></div><div class="application-details"><div class="detail-item"><div class="detail-label">Reference</div><div class="detail-value">${generateReferenceNumber(app.id)}</div></div><div class="detail-item"><div class="detail-label">Amount Applied For</div><div class="detail-value">R${app.loanAmount.toLocaleString()}</div></div><div class="detail-item"><div class="detail-label">Monthly Installment</div><div class="detail-value">R${app.monthlyInstallment}</div></div><div class="detail-item"><div class="detail-label">Purpose</div><div class="detail-value">${app.loanPurpose}</div></div><div class="detail-item"><div class="detail-label">Term</div><div class="detail-value">${app.loanTerm} months</div></div><div class="detail-item"><div class="detail-label">Date</div><div class="detail-value">${formatDate(app.applicationDate)}</div></div><div class="detail-item"><div class="detail-label">ID Number</div><div class="detail-value">${app.idNumber}</div></div></div><div class="application-actions">${app.status.includes('Approved') ? `<button class="application-btn btn-track" onclick="window.location.href='approval.html'"><i class="fas fa-file-pdf"></i> View Approval</button>` : `<button class="application-btn btn-track" disabled><i class="fas fa-search"></i> Track</button>`}</div></div>`;
             });
             applicationsList.innerHTML = html;
             loadActiveLoans(approvedApps);
         }
 
         function getStatusClass(status) {
-            switch(status) {
-                case 'Approved': return 'status-approved';
-                case 'Pending': return 'status-pending';
-                case 'Processing': return 'status-processing';
-                default: return 'status-pending';
-            }
+            if (status === 'Approved Low Credit Improvement Paid') return 'status-paid';
+            if (status === 'Approved') return 'status-approved';
+            if (status === 'Processing') return 'status-processing';
+            return 'status-pending';
         }
 
         function loadActiveLoans(approvedLoans) {
             const activeLoansContent = document.getElementById('activeLoansContent');
-            if (!approvedLoans || approvedLoans.length === 0) {
-                activeLoansContent.innerHTML = `<div class="no-applications"><i class="fas fa-info-circle"></i><p>You don't have any active loans at the moment.</p></div>`;
-                return;
-            }
-            // Implementation for displaying active loans can be expanded here
-            activeLoansContent.innerHTML = `<div class="no-applications"><i class="fas fa-info-circle"></i><p>${approvedLoans.length} approved loan(s). Details above.</p></div>`;
-
+            activeLoansContent.innerHTML = approvedLoans.length > 0 ? `<div class="no-applications"><i class="fas fa-info-circle"></i><p>${approvedLoans.length} approved loan(s) detailed in 'My Applications'.</p></div>` : `<div class="no-applications"><i class="fas fa-info-circle"></i><p>No active loans.</p></div>`;
         }
-
-        function startApplicationTracking(application) {
-            if(!application) return;
-
-            const createdDate = new Date(application.applicationDate);
-            const now = new Date();
-            const minutesPassed = Math.floor((now - createdDate) / (1000 * 60));
-
-            const progressBar = document.getElementById('trackingProgressBar');
-            const progressPercentage = document.getElementById('progressPercentage');
+        
+        function updateTrackingUI(progress, message, firstName, isFinal) {
+            document.getElementById('trackingProgressBar').style.width = `${progress}%`;
+            const percElem = document.getElementById('progressPercentage');
+            percElem.textContent = `${progress}%`;
+            percElem.style.left = `${progress}%`;
+            document.getElementById('trackingMessage').innerHTML = message.replace('${firstName}', firstName);
+            document.getElementById('trackingActions').style.display = isFinal ? 'block' : 'none';
             const steps = document.querySelectorAll('.tracking-step');
-            const trackingMessage = document.getElementById('trackingMessage');
-            const trackingActions = document.getElementById('trackingActions');
-            
             steps.forEach(step => step.classList.remove('active', 'completed'));
-            trackingActions.style.display = 'none';
-
-            let targetProgress = 0;
-            let message = '';
-
-            if (minutesPassed < 1) {
-                targetProgress = 20;
-                steps[0].classList.add('active');
-                message = 'Your application has been submitted and is now being processed.';
-            } else if (minutesPassed < 3) {
-                targetProgress = 45;
-                steps[0].classList.add('completed');
-                steps[1].classList.add('active');
-                message = 'Your application is being reviewed by our underwriting team.';
-            } else if (minutesPassed < 5) {
-                targetProgress = 65;
-                steps[0].classList.add('completed');
-                steps[1].classList.add('completed');
-                steps[2].classList.add('active');
-                message = `<strong>Great news ${application.firstName}!</strong> You have qualified for the loan. Final approval is in progress.`;
-            } else if (minutesPassed < 7) {
-                targetProgress = 99;
-                steps[0].classList.add('completed');
-                steps[1].classList.add('completed');
-                steps[2].classList.add('completed');
-                steps[3].classList.add('active');
-                message = `<strong>Final Review Stage...</strong> Your application is being finalized. Almost complete!`;
-            } else {
-                targetProgress = 100;
-                steps.forEach(step => step.classList.add('completed'));
-                message = `<strong>Congratulations! Your loan is APPROVED.</strong><br>A credit improvement and cover may be needed due to a low credit score. Your approval letter is ready!`;
-                trackingActions.style.display = 'block';
-            }
-            
-            progressBar.style.width = targetProgress + '%';
-            progressPercentage.textContent = targetProgress + '%';
-            progressPercentage.style.right = (100 - targetProgress) + '%';
-            trackingMessage.innerHTML = message;
+            if (progress < 20) steps[0].classList.add('active');
+            else if (progress < 45) { steps[0].classList.add('completed'); steps[1].classList.add('active'); }
+            else if (progress < 65) { [0, 1].forEach(i => steps[i].classList.add('completed')); steps[2].classList.add('active'); }
+            else if (progress < 99) { [0, 1, 2].forEach(i => steps[i].classList.add('completed')); steps[3].classList.add('active'); }
+            else { [0, 1, 2, 3].forEach(i => steps[i].classList.add('completed')); steps[4].classList.add('active'); }
         }
+
+        function startLiveTracking(application) {
+            if (trackingInterval) clearInterval(trackingInterval);
+            const update = () => {
+                const trackingStartDate = new Date(localStorage.getItem(`tracking_start_${application.email}`));
+                const secondsPassed = Math.floor((new Date() - trackingStartDate) / 1000);
+                const progress = Math.min(Math.floor((secondsPassed / (5 * 60)) * 99), 99);
+                let message = 'Your application is being reviewed by our underwriting team.';
+                if (progress >= 65 && progress < 99) message = '<strong>Great news ${firstName}!</strong> You have qualified. Final approval is in progress.';
+                else if (progress >= 99) message = `<strong>Congratulations! Your loan is APPROVED.</strong><br>A credit improvement and cover may be needed. Your approval letter is ready!`;
+                updateTrackingUI(progress, message, application.firstName, progress >= 99);
+                if (progress >= 99) clearInterval(trackingInterval);
+            };
+            update();
+            trackingInterval = setInterval(update, 1000);
+        }
+        
+        function setPaidUserApprovedState(application) {
+            if (trackingInterval) clearInterval(trackingInterval);
+            const message = `<strong>Congratulations ${application.firstName}! Your loan is APPROVED.</strong><br>Approved low credit improvement paid.`;
+            updateTrackingUI(99, message, application.firstName, true);
+        }
+        
+        // --- START: Transfer Simulation Script ---
+        function initializeTransferSimulation(app) {
+            const container = document.getElementById('transfer-simulation-container');
+            if(!app || !container) return;
+            
+            container.style.display = 'block';
+
+            const LOAN_AMOUNT = app.loanAmount;
+            const RECIPIENT_NAME = app.name;
+            const LOAN_REF = generateReferenceNumber(app.id);
+
+            document.getElementById('sender-balance').textContent = `R${LOAN_AMOUNT.toLocaleString('en-ZA', {minimumFractionDigits: 2})}`;
+            document.getElementById('receiver-account-name').textContent = `${RECIPIENT_NAME} Account`;
+            document.getElementById('payment-status').textContent = `+R${LOAN_AMOUNT.toLocaleString('en-ZA', {minimumFractionDigits: 2})}`;
+            document.getElementById('ts-loan-ref').textContent = LOAN_REF;
+
+            const notes = container.querySelectorAll('.paper-note');
+            const senderCardElement = container.querySelector('#sender-card');
+
+            function setNoteOrigins() {
+                const startRect = senderCardElement.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                const startX = startRect.left - containerRect.left + (startRect.width / 4);
+                const startY = startRect.top - containerRect.top + (startRect.height / 2);
+                notes.forEach(note => {
+                    note.style.left = `${startX}px`;
+                    note.style.top = `${startY}px`;
+                });
+            }
+            setNoteOrigins();
+            // Recalculate on resize
+            new ResizeObserver(setNoteOrigins).observe(container);
+        }
+        // --- END: Transfer Simulation Script ---
 
         async function loadUserData(email) {
             const button = document.getElementById('loadDataButton');
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
             button.disabled = true;
-
+            const isPaidUser = CONFIG.PAID_USERS_LIST.map(e => e.toLowerCase()).includes(email.toLowerCase());
             const applications = await fetchUserApplicationsFromBaserow(email);
-
+            button.innerHTML = '<i class="fas fa-arrow-right"></i> Load My Data';
+            button.disabled = false;
             if (applications.length > 0) {
                 localStorage.setItem('userEmail', email);
+                const appToTrack = applications[applications.length - 1];
                 showDashboard();
                 updateUserProfile();
                 loadApplications();
-                
-                const pendingApp = applications.find(app => app.status === 'Pending' || app.status === 'Processing') || applications[applications.length - 1];
-                if (pendingApp) {
-                     document.getElementById('applicationTrackingSection').style.display = 'block';
-                    startApplicationTracking(pendingApp);
+                initializeTransferSimulation(appToTrack); // Initialize simulation with data
+                document.getElementById('applicationTrackingSection').style.display = 'block';
+                if (isPaidUser) {
+                    setPaidUserApprovedState(appToTrack);
                 } else {
-                    document.getElementById('applicationTrackingSection').style.display = 'none';
+                    const trackingKey = `tracking_start_${email}`;
+                    if (!localStorage.getItem(trackingKey)) localStorage.setItem(trackingKey, appToTrack.applicationDate);
+                    startLiveTracking(appToTrack);
                 }
-
             } else {
                 showError('No applications found for this email address.');
-                button.innerHTML = '<i class="fas fa-arrow-right"></i> Load My Data';
-                button.disabled = false;
+                showEmailPrompt();
             }
         }
 
-        // Event listeners
-        document.getElementById('emailPromptForm').addEventListener('submit', function(e) {
+        document.getElementById('emailPromptForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value.trim();
-            if (email) {
-                loadUserData(email);
-            } else {
-                showError('Please enter a valid email address.');
-            }
+            if (email) loadUserData(email); else showError('Please enter a valid email address.');
         });
 
         document.querySelectorAll('.dashboard-menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetTab = this.getAttribute('data-tab');
-                document.querySelectorAll('.dashboard-menu a').forEach(a => a.classList.remove('active'));
+                document.querySelectorAll('.dashboard-menu a, .dashboard-tab').forEach(el => el.classList.remove('active'));
                 this.classList.add('active');
-                document.querySelectorAll('.dashboard-tab').forEach(tab => tab.classList.remove('active'));
-                document.getElementById(targetTab + 'Tab').classList.add('active');
+                document.getElementById(`${targetTab}Tab`).classList.add('active');
             });
         });
 
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            if (confirm('Are you sure you want to logout?')) {
-                logout();
-            }
-        });
+        document.getElementById('logoutBtn').addEventListener('click', logout);
 
-        // Initialize on page load
         window.addEventListener('load', () => {
             const savedEmail = localStorage.getItem('userEmail');
             if (savedEmail) {
