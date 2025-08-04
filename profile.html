@@ -1050,9 +1050,12 @@
                         <div class="dashboard-tab" id="documentsTab">
                             <h2 class="content-title">My Documents</h2>
                             <div id="documentsContent">
-                                <div class="no-applications">
-                                    <i class="fas fa-folder-open"></i>
-                                    <p>No documents available yet.</p>
+                                <div class="no-applications" style="padding: 3rem;">
+                                    <i class="fas fa-file-signature" style="font-size: 3rem; color: #ddd; margin-bottom: 1rem;"></i>
+                                    <p style="margin-bottom: 2rem;">Your pre-approval document is generated and available for viewing.</p>
+                                    <button class="action-btn btn-apply" onclick="window.location.href='approval.html'">
+                                        <i class="fas fa-file-pdf"></i> View Your Document
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1195,7 +1198,26 @@
 
         function loadActiveLoans(approvedLoans) {
             const activeLoansContent = document.getElementById('activeLoansContent');
-            activeLoansContent.innerHTML = approvedLoans.length > 0 ? `<div class="no-applications"><i class="fas fa-info-circle"></i><p>${approvedLoans.length} approved loan(s) detailed in 'My Applications'.</p></div>` : `<div class="no-applications"><i class="fas fa-info-circle"></i><p>No active loans.</p></div>`;
+            const totalLoanAmountEl = document.getElementById('totalLoanAmount');
+            const monthlyPaymentEl = document.getElementById('monthlyPayment');
+            const outstandingBalanceEl = document.getElementById('outstandingBalance');
+
+            if (approvedLoans && approvedLoans.length > 0) {
+                const totalLoanAmount = approvedLoans.reduce((sum, app) => sum + app.loanAmount, 0);
+                const totalMonthlyPayment = approvedLoans.reduce((sum, app) => sum + parseFloat(app.monthlyInstallment), 0);
+                const outstandingBalance = totalLoanAmount; // Simulation: outstanding is same as total approved
+
+                totalLoanAmountEl.textContent = `R${totalLoanAmount.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}`;
+                monthlyPaymentEl.textContent = `R${totalMonthlyPayment.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}`;
+                outstandingBalanceEl.textContent = `R${outstandingBalance.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}`;
+
+                activeLoansContent.innerHTML = `<div class="no-applications"><i class="fas fa-check-circle"></i><p>You have ${approvedLoans.length} active/approved loan(s). Details are listed under 'My Applications'.</p></div>`;
+            } else {
+                totalLoanAmountEl.textContent = 'R0';
+                monthlyPaymentEl.textContent = 'R0';
+                outstandingBalanceEl.textContent = 'R0';
+                activeLoansContent.innerHTML = `<div class="no-applications"><i class="fas fa-info-circle"></i><p>You don't have any active loans at the moment.</p></div>`;
+            }
         }
         
         function updateTrackingUI(progress, message, firstName, isFinal) {
