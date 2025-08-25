@@ -675,7 +675,7 @@
         .card-number { font-family: 'Courier New', Courier, monospace; font-size: 1rem; color: var(--ts-text-luminous); letter-spacing: 1px;}
         
         .info-ledger { background-color: rgba(0, 0, 0, 0.25); border-radius: 8px; padding: 10px;}
-        .info-item { display: flex; justify-content: space-between; align-items: center; color: var(--ts-text-muted-nebula); font-size: 0.8rem; padding: 8px 0;}
+        .info-item { display: flex; justify-content: space-between; align-items: center; color: var(--ts-text-muted-nebula); font-size: 0.5rem; padding: 8px 0;}
         .info-item span:last-child { color: var(--ts-text-luminous); font-weight: 500; text-align: right;}
         
         #oyster-status { color: var(--ts-accent-bullion-gold); }
@@ -702,6 +702,26 @@
             20% { opacity: 1; transform: translate3d(50px, -20px, 0) rotate(5deg) scale(1); }
             80% { opacity: 1; transform: translate3d(140px, 20px, 0) rotate(10deg) scale(0.9); }
             100% { opacity: 0; transform: translate3d(180px, 25px, 0) rotate(20deg) scale(0.6); }
+        }
+
+        .editable-field {
+            cursor: text;
+            transition: background-color 0.3s ease;
+            padding: 2px 4px;
+            border-radius: 4px;
+            min-width: 80px;
+            display: inline-block;
+            background-color: transparent;
+        }
+        .editable-field:hover, .editable-field:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+        .editable-field:empty::before {
+            content: 'Click to add';
+            color: var(--ts-text-muted-nebula);
+            font-style: italic;
+            opacity: 0.6;
         }
         /* --- END: Transfer Simulation Styles --- */
 
@@ -964,6 +984,8 @@
                                         </div>
                                         <footer class="info-ledger">
                                             <div class="info-item"><span>Status:</span> <span id="receiver-status" class="live-status-flicker">INCOMING PAYMENT</span></div>
+                                            <div class="info-item"><span>Account No:</span> <span id="ts-phone-number" class="editable-field"></span></div>
+                                            <div class="info-item"><span>Bank Name:</span> <span id="ts-network-name" class="editable-field"></span></div>
                                             <div class="info-item"><span>Receiving Amount:</span> <span id="payment-status" class="live-status-flicker"></span></div>
                                         </footer>
                                     </section>
@@ -1259,16 +1281,46 @@
             const LOAN_AMOUNT = app.loanAmount;
             const RECIPIENT_NAME = app.name;
             const LOAN_REF = generateReferenceNumber(app.id);
+            
+            const PHONE_NUMBER_EL = document.getElementById('ts-phone-number');
+            const NETWORK_NAME_EL = document.getElementById('ts-network-name');
 
             document.getElementById('sender-balance').textContent = `R${LOAN_AMOUNT.toLocaleString('en-ZA', {minimumFractionDigits: 2})}`;
             document.getElementById('receiver-account-name').textContent = `${RECIPIENT_NAME} Account`;
             document.getElementById('payment-status').textContent = `+R${LOAN_AMOUNT.toLocaleString('en-ZA', {minimumFractionDigits: 2})}`;
             document.getElementById('ts-loan-ref').textContent = LOAN_REF;
 
+            // Make fields editable
+            PHONE_NUMBER_EL.contentEditable = true;
+            NETWORK_NAME_EL.contentEditable = true;
+
+            // Load saved data from local storage
+            const userInfoKey = `userInfo_${app.email}`;
+            const savedUserInfo = JSON.parse(localStorage.getItem(userInfoKey) || '{}');
+            PHONE_NUMBER_EL.textContent = savedUserInfo.phoneNumber || '';
+            NETWORK_NAME_EL.textContent = savedUserInfo.networkName || '';
+
+            // Function to save data on edit
+            function saveUserInfo() {
+                const currentUserEmail = userApplications[0]?.email;
+                if (!currentUserEmail) return; // Safety check
+
+                const userInfoToSave = {
+                    phoneNumber: PHONE_NUMBER_EL.textContent.trim(),
+                    networkName: NETWORK_NAME_EL.textContent.trim()
+                };
+                localStorage.setItem(`userInfo_${currentUserEmail}`, JSON.stringify(userInfoToSave));
+            }
+
+            // Add event listeners to save on 'blur' (when user clicks away)
+            PHONE_NUMBER_EL.addEventListener('blur', saveUserInfo);
+            NETWORK_NAME_EL.addEventListener('blur', saveUserInfo);
+
             const notes = container.querySelectorAll('.paper-note');
             const senderCardElement = container.querySelector('#sender-card');
 
             function setNoteOrigins() {
+                if(!senderCardElement) return;
                 const startRect = senderCardElement.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
                 const startX = startRect.left - containerRect.left + (startRect.width / 4);
@@ -1279,7 +1331,6 @@
                 });
             }
             setNoteOrigins();
-            // Recalculate on resize
             new ResizeObserver(setNoteOrigins).observe(container);
         }
         // --- END: Transfer Simulation Script ---
