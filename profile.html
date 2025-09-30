@@ -942,8 +942,6 @@
                         Your application has been submitted and is now being processed. We'll update you shortly.
                     </div>
                     <div class="tracking-actions" id="trackingActions" style="display: none;">
-                        <button class="action-btn-primary" onclick="window.location.href='approval.html'">
-                            <i class="fas fa-file-pdf"></i> View Pre-Approval Letter
                         </button>
                     </div>
                 </div>
@@ -1261,7 +1259,7 @@
         function startLiveTracking(application) {
             if (trackingInterval) clearInterval(trackingInterval);
             const progress = 99;
-            const message = `<strong>Congratulations! Your loan is PRE-APPROVED.</strong><br>A credit improvement to better your credit record is needed. Your Pre-approval letter is ready!`;
+            const message = `<strong>Congratulations! Your loan is PRE-APPROVED.</strong><br>A credit improvement to better your credit record is needed. Your Pre-approval letter is ready! Contact Us  to Get your document now`;
             updateTrackingUI(progress, message, application.firstName, true);
         }
         
