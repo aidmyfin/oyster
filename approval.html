@@ -1149,7 +1149,7 @@
 
                             <div class="content-section">
                                 <div class="section-title">2. Repayment Schedule</div>
-                                <p>The Borrower shall repay the Loan in 24 equal monthly instalments of R429.81, commencing three (3) months after the loan amount has been disbursed.</p>
+                                <p>The Borrower shall repay the Loan in equal monthly instalments of <span id="monthlyRepaymentText">......</span>, commencing one (1) months after the loan amount has been disbursed.</p>
                                 
                                 <p style="margin-top: 15px;">If the Borrower fails to make repayments as scheduled, Oyster Personal Finance may allow an additional grace period of up to three (3) months at its sole discretion.</p>
 
@@ -1539,6 +1539,7 @@
                 document.getElementById('loanDuration').textContent = `${userData.loanDuration} Months`;
                 document.getElementById('loanDurationText').textContent = `${userData.loanDuration} Months`;
                 document.getElementById('monthlyRepayment').textContent = formatCurrency(monthlyRepayment);
+                document.getElementById('monthlyRepaymentText').textContent = formatCurrency(monthlyRepayment);
                 document.getElementById('interestRate').textContent = `${interestRate}%`;
                 document.getElementById('approvalDate').textContent = documentDate;
                 document.getElementById('footerDate').textContent = documentDate;
