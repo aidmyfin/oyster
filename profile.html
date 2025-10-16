@@ -1025,11 +1025,11 @@
                             <div class="loan-summary">
                                 <div class="summary-card">
                                     <div class="summary-title">Total Applications</div>
-                                    <div class="summary-value" id="totalApplications">0</div>
+                                    <div class="summary-value" id="totalApplications">1</div>
                                 </div>
                                 <div class="summary-card">
                                     <div class="summary-title">Approved Applications</div>
-                                    <div class="summary-value" id="approvedApplications">0</div>
+                                    <div class="summary-value" id="approvedApplications">1</div>
                                 </div>
                                 <div class="summary-card">
                                     <div class="summary-title">Pending Applications</div>
@@ -1073,7 +1073,7 @@
                                 <div class="no-applications" style="padding: 3rem;">
                                     <i class="fas fa-file-signature" style="font-size: 3rem; color: #ddd; margin-bottom: 1rem;"></i>
                                     <p style="margin-bottom: 2rem;">Your pre-approval document is generated and available for viewing.</p>
-                                    <button class="action-btn btn-apply" onclick="window.location.href='approval.html'">
+                                    <button class="action-btn btn-apply" onclick="window.location.href='contact.html'">
                                         <i class="fas fa-file-pdf"></i> View Your Document
                                     </button>
                                 </div>
@@ -1203,7 +1203,7 @@
             }
             let html = '';
             userApplications.forEach(app => {
-                html += `<div class="application-card"><div class="application-header"><div class="application-title">${app.loanType} Loan</div><div class="application-status ${getStatusClass(app.status)}">${app.status}</div></div><div class="application-details"><div class="detail-item"><div class="detail-label">Reference</div><div class="detail-value">${generateReferenceNumber(app.id)}</div></div><div class="detail-item"><div class="detail-label">Amount Applied For</div><div class="detail-value">R${app.loanAmount.toLocaleString()}</div></div><div class="detail-item"><div class="detail-label">Monthly Installment</div><div class="detail-value">R${app.monthlyInstallment}</div></div><div class="detail-item"><div class="detail-label">Purpose</div><div class="detail-value">${app.loanPurpose}</div></div><div class="detail-item"><div class="detail-label">Term</div><div class="detail-value">${app.loanTerm} months</div></div><div class="detail-item"><div class="detail-label">Date</div><div class="detail-value">${formatDate(app.applicationDate)}</div></div><div class="detail-item"><div class="detail-label">ID Number</div><div class="detail-value">${app.idNumber}</div></div></div><div class="application-actions">${app.status.includes('Approved') ? `<button class="application-btn btn-track" onclick="window.location.href='approval.html'"><i class="fas fa-file-pdf"></i> View Approval</button>` : `<button class="application-btn btn-track" disabled><i class="fas fa-search"></i> Track</button>`}</div></div>`;
+                html += `<div class="application-card"><div class="application-header"><div class="application-title">${app.loanType} Loan</div><div class="application-status ${getStatusClass(app.status)}">${app.status}</div></div><div class="application-details"><div class="detail-item"><div class="detail-label">Reference</div><div class="detail-value">${generateReferenceNumber(app.id)}</div></div><div class="detail-item"><div class="detail-label">Amount Applied For</div><div class="detail-value">R${app.loanAmount.toLocaleString()}</div></div><div class="detail-item"><div class="detail-label">Monthly Installment</div><div class="detail-value">R${app.monthlyInstallment}</div></div><div class="detail-item"><div class="detail-label">Purpose</div><div class="detail-value">${app.loanPurpose}</div></div><div class="detail-item"><div class="detail-label">Term</div><div class="detail-value">${app.loanTerm} months</div></div><div class="detail-item"><div class="detail-label">Date</div><div class="detail-value">${formatDate(app.applicationDate)}</div></div><div class="detail-item"><div class="detail-label">ID Number</div><div class="detail-value">${app.idNumber}</div></div></div><div class="application-actions">${app.status.includes('Approved') ? `<button class="application-btn btn-track" onclick="window.location.href='contact.html'"><i class="fas fa-file-pdf"></i> View Approval</button>` : `<button class="application-btn btn-track" disabled><i class="fas fa-search"></i> Track</button>`}</div></div>`;
             });
             applicationsList.innerHTML = html;
             loadActiveLoans(approvedApps);
