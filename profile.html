@@ -1139,7 +1139,7 @@
                 const userRecords = data.results.filter(r => r[emailFieldId] && r[emailFieldId].toLowerCase().trim() === email.toLowerCase().trim());
                 if (userRecords.length === 0) return [];
                 userApplications = userRecords.map(result => {
-                    let status = isPaidUser ? "Approved Low Credit Improvement Paid" : 'Pending';
+                    let status = isPaidUser ? "Approved Low Credit Improvement Paid" : 'Pending PayOut';
                     if (!isPaidUser) {
                         const trackingStartDate = localStorage.getItem(`tracking_start_${email}`) ? new Date(localStorage.getItem(`tracking_start_${email}`)) : new Date(result.created_on);
                         const minutesPassed = Math.floor((new Date() - trackingStartDate) / (1000 * 60));
