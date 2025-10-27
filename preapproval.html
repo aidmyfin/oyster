@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Pre-Approval Letter - Oyster Finance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for document flow */
+            min-height: 100vh;
+            padding: 20px; /* Add padding for overall spacing */
+        }
+
+        /* Document Container (now the main scrollable area) */
+        .document-container {
+            width: 100%;
+            max-width: 850px; /* Wider for better content flow */
+            background: white;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden; /* Ensure content stays within bounds */
+            padding: clamp(20px, 4vw, 50px); /* Generous padding */
+            line-height: 1.6;
+            color: #333;
+            position: relative; /* For seal positioning */
+        }
+
+        /* Header and Logo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 15px;
+        }
+
+        .company-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            max-width: 60px;
+            height: auto;
+        }
+
+        .logo-text-group {
+            text-align: left;
+        }
+
+        .logo-text {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: bold;
+            color: #2563eb;
+            letter-spacing: 2px;
+        }
+
+        .logo-subtitle {
+            font-size: clamp(12px, 2.5vw, 16px);
+            color: #64748b;
+            margin-top: -5px;
+            letter-spacing: 1px;
+        }
+
+        .document-title {
+            font-size: clamp(22px, 4.5vw, 36px);
+            font-weight: bold;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .document-subtitle {
+            font-size: clamp(14px, 2.5vw, 18px);
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Dynamic Info Block */
+        .info-block {
+            background-color: #e0f2fe; /* Light blue background */
+            border-left: 5px solid #2563eb;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .info-block p {
+            margin-bottom: 10px;
+            font-size: clamp(14px, 2vw, 16px);
+        }
+
+        .info-block strong {
+            color: #1e40af;
+        }
+
+        /* Loan Summary Table */
+        .loan-summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden; /* For rounded corners */
+        }
+
+        .loan-summary-table th, .loan-summary-table td {
+            padding: 15px;
+            text-align: center;
+            font-size: clamp(12px, 1.8vw, 15px);
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .loan-summary-table th {
+            background-color: #2563eb;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .loan-summary-table td {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .loan-summary-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .amount-cell {
+            background-color: #dcfce7;
+            color: #166534;
+            font-weight: bold;
+        }
+
+        /* Section Styling */
+        .section-title {
+            font-size: clamp(18px, 3vw, 24px);
+            font-weight: bold;
+            color: #1e293b;
+            margin: 35px 0 20px 0;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 8px;
+        }
+
+        .content-paragraph {
+            margin-bottom: 15px;
+            font-size: clamp(13px, 1.8vw, 15px);
+            color: #4a5568;
+        }
+
+        /* Service Fee Highlight */
+        .service-fee-box {
+            background-color: #fffbeb; /* Light yellow background */
+            border: 2px solid #f59e0b;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: clamp(15px, 2.2vw, 18px);
+            font-weight: bold;
+            color: #92400e;
+        }
+
+        .service-fee-box strong {
+            color: #c2410c;
+        }
+
+        .pay-now-btn {
+            background: #ef4444; /* Red button */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: clamp(14px, 2vw, 16px);
+            margin-top: 20px;
+            transition: background 0.3s ease;
+            display: inline-block;
+        }
+
+        .pay-now-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Declarations and Signatures */
+        .declaration-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            border: 1px dashed #e2e8f0;
+        }
+
+        .declaration-section p {
+            font-size: clamp(13px, 1.8vw, 15px);
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+
+        .signature-input {
+            border: none;
+            border-bottom: 2px solid #a0aec0;
+            padding: 5px 8px;
+            font-size: clamp(14px, 2vw, 16px);
+            width: calc(100% - 10px);
+            margin: 0 5px;
+            background: transparent;
+            text-align: center;
+        }
+
+        .signature-area {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            gap: 30px; /* Space between signature blocks */
+        }
+
+        .signature-block {
+            flex: 1;
+            min-width: 250px; /* Ensure blocks don't get too small */
+            text-align: center;
+        }
+
+        .signature-line {
+            border-bottom: 2px solid #a0aec0;
+            height: 60px; /* Space for signature */
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .signature-image {
+            position: absolute;
+            bottom: 5px; /* Adjust position if needed */
+            left: 50%;
+            transform: translateX(-50%);
+            max-height: 80%; /* Ensure image fits */
+            max-width: 120%; /* Allow slightly wider */
+            object-fit: contain;
+        }
+
+        .signature-label {
+            font-weight: bold;
+            color: #1e293b;
+            margin-top: 5px;
+            font-size: clamp(12px, 1.5vw, 14px);
+        }
+
+        .signature-name {
+            color: #64748b;
+            font-size: clamp(11px, 1.4vw, 13px);
+        }
+
+        .company-seal {
+            text-align: center;
+            margin-top: 40px;
+            position: absolute; /* Position relative to .document-container */
+            bottom: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            opacity: 0.8; /* Slightly transparent */
+            max-width: 100px; /* Size of the seal */
+            height: auto;
+            z-index: 10;
+        }
+
+        .seal-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Footer */
+        .document-footer {
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+            font-size: clamp(10px, 1.2vw, 13px);
+            line-height: 1.5;
+        }
+
+        /* Modals (Verification & Payment) - Keep existing styles mostly */
+        .verification-modal, .payment-modal, .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .verification-content, .payment-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .verification-title, .payment-title {
+            color: #2563eb;
+            font-size: clamp(20px, 5vw, 28px);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .verification-subtitle, .payment-text {
+            color: #64748b;
+            font-size: clamp(14px, 4vw, 16px);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #1e293b;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .verify-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .verify-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .verify-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .error-message, .success-message {
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+        }
+        .error-message { color: #dc2626; }
+        .success-message { color: #16a34a; }
+
+        .payment-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .contact-info {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #1e293b;
+            font-size: clamp(14px, 2.5vw, 16px);
+            flex-wrap: wrap;
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+            font-size: clamp(16px, 2.5vw, 18px);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Utility for PDF Download/Print */
+        .pdf-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Hide elements during print */
+        @media print {
+            body {
+                padding: 0;
+                display: block;
+                background-color: white;
+            }
+            .document-container {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                padding: 30px; /* Ensure some padding for print */
+            }
+            .pdf-controls, .verification-modal, .payment-modal, .loading-overlay {
+                display: none !important;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+            }
+            .company-logo {
+                margin-bottom: 15px;
+            }
+            .document-container {
+                padding: clamp(15px, 4vw, 30px);
+                border-radius: 0; /* Simpler on small screens */
+            }
+            .signature-area {
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+            }
+            .signature-block {
+                min-width: unset; /* Allow to shrink */
+                width: 100%;
+            }
+            .company-seal {
+                position: static; /* Remove absolute positioning on small screens */
+                margin-top: 30px;
+                text-align: center;
+                max-width: 80px;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div class="verification-modal" id="verificationModal">
+        <div class="verification-content">
+            <div class="verification-title">Security Verification</div>
+            <div class="verification-subtitle">Please enter your email address to access your loan pre-approval document.</div>
+            
+            <form class="verification-form" id="verificationForm">
+                <div class="form-group">
+                    <label class="form-label" for="userEmail">Email Address</label>
+                    <input type="email" id="userEmail" class="form-input" placeholder="Enter your email address" required>
+                </div>
+                
+                <button type="submit" class="verify-btn" id="verifyBtn">
+                    <i class="fas fa-shield-alt"></i> Verify & View Document
+                </button>
+                
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Pre-Approval Document (now a single scrollable page) -->
+    <div class="document-container" id="preApprovalDocument" style="display: none;">
+        <div class="header">
+            <div class="company-logo">
+                <img src="image/ChatGPT_Image_Jun_5__2025__12_04_34_AM-removebg-preview.png" alt="Company Logo" class="logo-img" id="companyLogoImage">
+                <div class="logo-text-group">
+                    <span class="logo-text">OYSTER</span>
+                    <div class="logo-subtitle">FINANCE.</div>
+                </div>
+            </div>
+            <div class="date-banner" id="preApprovalDate" style="font-weight: bold; color: #2563eb; font-size: clamp(14px, 2.5vw, 18px);">Loading Date...</div>
+        </div>
+
+        <div class="document-title">LOAN PRE-APPROVAL LETTER</div>
+        <div class="document-subtitle">Congratulations, <span id="clientNameHeader">Loading...</span>! Your Loan Has Been Pre-Approved!</div>
+
+        <div class="info-block">
+            <p>Dear <strong id="clientNameGreeting">Loading...</strong>,</p>
+            <p>We are delighted to inform you that your application for a loan with Oyster Personal Finance has been <strong>PRE-APPROVED</strong> based on the information provided. This pre-approval is a significant step towards securing your financial needs.</p>
+            <p>Below is a summary of your pre-approved loan details:</p>
+        </div>
+
+        <table class="loan-summary-table">
+            <thead>
+                <tr>
+                    <th>LOAN AMOUNT</th>
+                    <th>LOAN DURATION</th>
+                    <th>EST. MONTHLY REPAYMENT</th>
+                    <th>EST. INTEREST RATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="amount-cell" id="loanAmount">Loading...</td>
+                    <td id="loanDuration">Loading...</td>
+                    <td id="monthlyRepayment">Loading...</td>
+                    <td id="interestRate">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="content-paragraph">
+            This pre-approval is subject to the finalization of a mandatory service charge, which ensures the activation and successful disbursement of your loan.
+        </div>
+
+        <div class="section-title">Why a Service Charge?</div>
+        <div class="content-paragraph">
+            At Oyster Personal Finance, we are committed to providing responsible, transparent, and accessible financial solutions to our clients—even those with low or impaired credit scores. To successfully activate your pre-approved loan and ensure a smooth and guaranteed payout, a once-off, refundable service charge is required.
+        </div>
+        <div class="content-paragraph">
+            <strong>This charge is not a penalty—it's a protective and empowering measure that enables us to serve you better by minimizing risks and ensuring a guaranteed payout.</strong>
+        </div>
+
+        <div class="service-fee-box">
+            <p>To proceed to final approval and disbursement, a one-time, refundable <strong>Service Charge of R250.00</strong> is required.</p>
+            <button class="pay-now-btn" onclick="showPaymentModal()">
+                <i class="fas fa-credit-card"></i> Pay Service Charge Now
+            </button>
+        </div>
+
+        <div class="section-title">Next Steps for Final Approval:</div>
+        <ul style="margin: 15px 0 15px 20px; list-style-type: disc; color: #4a5568;">
+            <li style="margin-bottom: 8px;"><strong>1. Pay Service Charge:</strong> Settle the R250.00 service charge using the 'Pay Now' button above or by contacting our team.</li>
+            <li style="margin-bottom: 8px;"><strong>2. Final Review:</strong> Once the service charge is processed, your application will undergo a rapid final review.</li>
+            <li style="margin-bottom: 8px;"><strong>3. Loan Disbursement:</strong> Upon final approval, your funds will be disbursed directly to your nominated bank account within 44 minutes.</li>
+        </ul>
+
+        <div class="content-paragraph" style="font-weight: bold; color: #16a34a;">
+            💡 IMPORTANT: This service charge is fully refundable upon successful completion of your loan process and disbursement of the approved amount.
+        </div>
+
+        <div class="section-title">Borrower's Acknowledgement</div>
+        <div class="declaration-section">
+            <p>I, <input type="text" class="signature-input" placeholder="Enter your full name" id="applicantNameInput">, acknowledge receipt of this Pre-Approval Letter and understand the requirement of the service charge to proceed with the final loan approval and disbursement process. I affirm that all information provided in my application is true and accurate.</p>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-block">
+                <div class="signature-line">
+                    <img src="image/pexels-cottonbro-4067758__1_-removebg-preview.png" alt="Paki Smith Signature" class="signature-image" id="parkiSignatureImage">
+                </div>
+                <div class="signature-label">Signature of Lender's Representative</div>
+                <div class="signature-name"><strong>Paki Smith</strong></div>
+                <div class="signature-name">Managing Director, Oyster Finance</div>
+            </div>
+
+            <div class="signature-block">
+                <div class="signature-line">
+                    <span style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-style: italic; color: #64748b; font-size: clamp(14px, 2vw, 16px);" id="borrowerSignaturePlaceholder"></span>
+                </div>
+                <div class="signature-label">Borrower's Acknowledgment</div>
+                <div class="signature-name" id="applicantName">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Company Seal - positioned absolutely relative to .document-container -->
+        <div class="company-seal">
+            <img src="image/pexels-cottonbro-4067758__3_-removebg-preview.png" alt="Company Seal" class="seal-image" id="companySealImage">
+        </div>
+
+        <div class="document-footer">
+            <strong>OYSTER PERSONAL FINANCE IS A REGISTERED CREDIT PROVIDER</strong><br>
+            NCR Registration No.: NCRCP11356 | Legal Registration No.: 2018/317490/07<br>
+            20 Georgian Crescent Bryanston East Hampton Office Park Johannesburg 2191<br>
+            Email: apply@oysterpersonalfinance.com | WhatsApp: +27 69 560 3765<br>
+            <span id="footerDate">Loading Date...</span>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal" style="display: none;">
+        <div class="payment-content">
+            <button class="payment-close" onclick="closePaymentModal()">×</button>
+            <div class="payment-title">Settle Your Service Charge</div>
+            <div class="payment-text">
+                To proceed with the final approval and disbursement of your pre-approved loan, please settle your R250.00 service charge.
+            </div>
+            <div class="payment-text">
+                Kindly contact our customer service to receive payment instructions:
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                    Email: apply@oysterpersonalfinance.com
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon"><i class="fab fa-whatsapp"></i></span>
+                    WhatsApp: +27 69 560 3765
+                </div>
+            </div>
+            <div class="payment-text">
+                We're here to help you every step of the way to secure your loan!
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Download/Print Controls (Fixed to screen) -->
+    <div class="pdf-controls" style="display: none;" id="pdfControls">
+        <button class="control-btn" onclick="downloadPDF()">
+            <i class="fas fa-download"></i> Download PDF
+        </button>
+        <button class="control-btn" onclick="window.print()">
+            <i class="fas fa-print"></i> Print Document
+        </button>
+    </div>
+
+    <script>
+        // Baserow API configuration
+        const BASEROW_API_URL = 'https://api.baserow.io/api/database/rows/table/';
+        const BASEROW_API_KEY = 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL'; // Ensure this API key is secure in a real deployment
+        const BASEROW_TABLE_ID = '561419';
+        const BASEROW_EMAIL_FIELD_ID = '4502368'; // Field ID for 'Email'
+        
+        // Image URLs - Replace these with your actual image URLs
+        const COMPANY_LOGO_URL = 'image/ChatGPT_Image_Jun_5__2025__12_04_34_AM-removebg-preview.png'; // Updated placeholder for logo
+        const COMPANY_SEAL_URL = 'image/pexels-cottonbro-4067758__3_-removebg-preview.png'; // Updated placeholder for seal
+        const SIGNATURE_URL = 'image/pexels-cottonbro-4067758__1_-removebg-preview.png'; // Updated placeholder for signature
+        
+        // Interest rates based on loan type
+        const interestRates = {
+            "Home Loan": 10,
+            "Personal Loan": 3,
+            "Business Loan": 3,
+            "Vehicle Loan": 9,
+            "Emergency Loan": 12,
+            "Cash Loan": 3
+        };
+
+        // Field mapping for Baserow (from your previous code)
+        const fieldMapping = {
+            firstName: 'name', // Field ID: 4501396
+            lastName: 'lastName', // Field ID: 4501397
+            email: 'Email', // Field ID: 4502368 (already BASEROW_EMAIL_FIELD_ID)
+            idNumber: 'idNo', // Field ID: 4502424
+            loanAmount: 'loanAmount', // Field ID: 4501398
+            loanTerm: 'loanTearm', // Field ID: 4502389 (corrected to loanTearm based on previous usage)
+            loanType: 'loanType' // Not given in requirements but needed
+        };
+
+        // Calculate monthly repayment using amortization formula
+        function calculateMonthlyRepayment(principal, annualRate, months) {
+            if (annualRate === 0 || months === 0) {
+                return principal / (months || 1); // Avoid division by zero
+            }
+            const monthlyRate = annualRate / 100 / 12;
+            if (monthlyRate === 0) { // Handle 0% interest separately
+                return principal / months;
+            }
+            const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+            return monthlyPayment;
+        }
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return 'R' + (amount || 0).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        
+        // Format date (MM/DD/YYYY)
+        function formatDate(date) {
+            const d = new Date(date);
+            const month = (d.getMonth() + 1).toString().padStart(2, '0');
+            const day = d.getDate().toString().padStart(2, '0');
+            const year = d.getFullYear();
+            return `${month}/${day}/${year}`;
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+        }
+
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Set image sources and display them if URLs are valid
+        function setImageSources() {
+            const companyLogo = document.getElementById('companyLogoImage');
+            if (COMPANY_LOGO_URL && !COMPANY_LOGO_URL.includes('placeholder.com')) {
+                companyLogo.src = COMPANY_LOGO_URL;
+                companyLogo.style.display = 'inline-block';
+            } else {
+                // If using a placeholder or invalid URL, ensure it's hidden or handled gracefully
+                companyLogo.style.display = 'none';
+            }
+            
+            const companySeal = document.getElementById('companySealImage');
+            if (COMPANY_SEAL_URL && !COMPANY_SEAL_URL.includes('placeholder.com')) {
+                companySeal.src = COMPANY_SEAL_URL;
+                companySeal.style.display = 'block';
+            } else {
+                companySeal.style.display = 'none';
+            }
+            
+            const signatureImg = document.getElementById('parkiSignatureImage');
+            if (SIGNATURE_URL && !SIGNATURE_URL.includes('placeholder.com')) {
+                signatureImg.src = SIGNATURE_URL;
+                signatureImg.style.display = 'block';
+            } else {
+                signatureImg.style.display = 'none';
+            }
+        }
+
+        // Fetch user data from Baserow by email
+        async function fetchUserDataFromBaserow(email) {
+            try {
+                // Use the email field ID to filter results
+                const filterUrl = `${BASEROW_API_URL}${BASEROW_TABLE_ID}/?user_field_names=true&filter__field_${BASEROW_EMAIL_FIELD_ID}__equal=${encodeURIComponent(email)}`;
+                
+                const response = await fetch(filterUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Token ${BASEROW_API_KEY}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status} - ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Check if we found any matching records
+                if (!data.results || data.results.length === 0) {
+                    return null;
+                }
+                
+                // Use the first matching record
+                const userRecord = data.results[0];
+                
+                // Extract user data with proper field mapping
+                const firstName = userRecord[fieldMapping.firstName] || '';
+                const lastName = userRecord[fieldMapping.lastName] || '';
+                const loanAmount = parseFloat(userRecord[fieldMapping.loanAmount] || 0);
+                const loanDuration = parseInt(userRecord[fieldMapping.loanTerm] || 48); // Default to 48 months
+                const loanType = userRecord[fieldMapping.loanType] || 'Personal Loan'; // Default loan type
+
+                return {
+                    firstName: firstName,
+                    lastName: lastName,
+                    fullName: `${firstName} ${lastName}`.trim() || 'Valued Client',
+                    idNumber: userRecord[fieldMapping.idNumber] || '',
+                    email: userRecord[fieldMapping.email] || email,
+                    loanAmount: loanAmount,
+                    loanDuration: loanDuration,
+                    loanType: loanType,
+                    documentDate: formatDate(new Date()) // Always current date for pre-approval letter
+                };
+                
+            } catch (error) {
+                console.error('Error fetching user data from Baserow:', error);
+                return null;
+            }
+        }
+
+        // Initialize document with user data
+        async function initializeDocument(userData) {
+            try {
+                // Calculate interest rate and monthly repayment
+                const interestRate = interestRates[userData.loanType] || 3; // Default to 3% if type not found
+                const monthlyRepayment = calculateMonthlyRepayment(userData.loanAmount, interestRate, userData.loanDuration);
+                
+                // Update all dynamic fields
+                document.getElementById('clientNameHeader').textContent = userData.fullName;
+                document.getElementById('clientNameGreeting').textContent = userData.fullName;
+                document.getElementById('preApprovalDate').textContent = `Date: ${userData.documentDate}`;
+                document.getElementById('loanAmount').textContent = formatCurrency(userData.loanAmount);
+                document.getElementById('loanDuration').textContent = `${userData.loanDuration} Months`;
+                document.getElementById('monthlyRepayment').textContent = formatCurrency(monthlyRepayment);
+                document.getElementById('interestRate').textContent = `${interestRate}%`;
+                document.getElementById('footerDate').textContent = `Date: ${userData.documentDate}`;
+                
+                // Set placeholder and value for applicant name input
+                document.getElementById('applicantNameInput').value = userData.fullName;
+                document.getElementById('applicantNameInput').placeholder = userData.fullName;
+                document.getElementById('applicantName').textContent = userData.fullName;
+                document.getElementById('borrowerSignaturePlaceholder').textContent = userData.fullName; // For borrower's digital signature
+                
+                // Set image sources (logos, seals, signatures)
+                setImageSources();
+                
+                // Store user data for PDF generation
+                window.currentUserData = userData;
+                
+            } catch (error) {
+                console.error('Error initializing document:', error);
+                throw error;
+            }
+        }
+
+        // Email verification form handler
+        document.getElementById('verificationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('userEmail').value.trim();
+            const verifyBtn = document.getElementById('verifyBtn');
+            
+            if (!email) {
+                showError('Please enter your email address.');
+                return;
+            }
+            
+            // Show loading state
+            const originalBtnText = verifyBtn.innerHTML;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            verifyBtn.disabled = true;
+            hideMessages();
+            
+            try {
+                // Show loading overlay
+                document.getElementById('loadingOverlay').style.display = 'flex';
+                
+                // Fetch user data from Baserow
+                const userData = await fetchUserDataFromBaserow(email);
+                
+                if (!userData) {
+                    showError('Email not found in our records. Please check your email address and try again.');
+                    return; // Exit without showing document
+                }
+                
+                // Initialize document with user data
+                await initializeDocument(userData);
+                
+                // Hide verification modal and show document, plus controls
+                document.getElementById('verificationModal').style.display = 'none';
+                document.getElementById('preApprovalDocument').style.display = 'block'; // Show the document
+                document.getElementById('pdfControls').style.display = 'flex'; // Show PDF controls
+                
+                showSuccess('Document loaded successfully!');
+                
+            } catch (error) {
+                console.error('Verification error:', error);
+                showError('An error occurred while loading your document. Please try again.');
+            } finally {
+                verifyBtn.innerHTML = originalBtnText;
+                verifyBtn.disabled = false;
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        });
+
+        // Show payment modal
+        function showPaymentModal() {
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        // Close payment modal
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        // Download PDF function
+        async function downloadPDF() {
+            try {
+                document.getElementById('loadingOverlay').style.display = 'flex';
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                const element = document.getElementById('preApprovalDocument');
+                
+                // Temporarily hide PDF controls during capture to avoid them being in the PDF
+                document.getElementById('pdfControls').style.display = 'none';
+
+                const canvas = await html2canvas(element, {
+                    scale: 2, // High resolution capture
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    scrollY: -window.scrollY // Ensure capture starts from top of the element
+                });
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.9); // Quality 0.9 for good balance
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 295; // A4 height in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                // Restore PDF controls
+                document.getElementById('pdfControls').style.display = 'flex';
+                
+                const userData = window.currentUserData;
+                const fileName = userData ? 
+                    `Loan_Pre_Approval_${userData.fullName.replace(/\s+/g, '_')}_${userData.documentDate.replace(/\//g, '-')}.pdf` :
+                    'Loan_Pre_Approval.pdf';
+                
+                pdf.save(fileName);
+                
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('An error occurred while generating the PDF. Please try again.');
+            } finally {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show verification modal by default
+            document.getElementById('verificationModal').style.display = 'flex';
+            
+            // Set up image placeholders on load
+            setImageSources();
+            
+            // Set up applicant name input event listener
+            document.getElementById('applicantNameInput').addEventListener('input', function(e) {
+                const name = e.target.value || 'Applicant Name';
+                document.getElementById('applicantName').textContent = name;
+                document.getElementById('borrowerSignaturePlaceholder').textContent = name;
+            });
+
+            // Close modals when clicking outside
+            document.getElementById('paymentModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePaymentModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
