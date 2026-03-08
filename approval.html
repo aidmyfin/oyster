@@ -1370,11 +1370,11 @@
         
         // Interest rates based on loan type
         const interestRates = {
-            "Home Loan": 10,
+            "Home Loan": 3,
             "Personal Loan": 3,
             "Business Loan": 3,
-            "Vehicle Loan": 9,
-            "Emergency Loan": 12,
+            "Vehicle Loan": 3,
+            "Emergency Loan": 3,
             "Cash Loan": 3
         };
 
@@ -1391,13 +1391,11 @@
 
         // Calculate monthly repayment using amortization formula
         function calculateMonthlyRepayment(principal, annualRate, months) {
-            if (annualRate === 0) {
-                return principal / months;
-            }
-            const monthlyRate = annualRate / 100 / 12;
-            const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-            return monthlyPayment;
-        }
+    // This matches the File 1 logic: (Amount + 3%) divided by months
+    const totalWithInterest = principal * 1.03; 
+    const monthlyPayment = totalWithInterest / months;
+    return monthlyPayment;
+}
         
         // Format currency
         function formatCurrency(amount) {
