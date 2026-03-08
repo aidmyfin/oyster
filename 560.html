@@ -828,7 +828,7 @@
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            100% { transform: rotate(560deg); }
         }
 
         /* Zoom controls */
@@ -1200,8 +1200,8 @@
 
                             <div class="content-section">
                                 <div class="subsection-title">Contact Information:</div>
-                                <p><strong>Email:</strong> oysterfinanceltd@gmail.com</p>
-                                <p><strong>WhatsApp:</strong> +27 (0) 707356707</p>
+                                <p><strong>Email:</strong> apply@oysterpersonalfinance.com</p>
+                                <p><strong>WhatsApp:</strong> +27 69 560 3765</p>
                                 <p><strong>Address:</strong> 20 Georgian Crescent Bryanston East Hampton Office Park Johannesburg 2191</p>
                             </div>
                         </div>
@@ -1331,7 +1331,7 @@
             <button class="payment-close" onclick="closePaymentModal()">×</button>
             <div class="payment-title">Clear Your Service Fee</div>
             <div class="payment-text">
-                To proceed with the disbursement of your approved loan, please settle your R320 PROCESSING COST  and repair fee.
+                To proceed with the disbursement of your approved loan, please settle your R560 PROCESSING COST  and repair fee.
             </div>
             <div class="payment-text">
                 Kindly contact our customer service to receive payment instructions:
@@ -1339,11 +1339,11 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <span class="contact-icon"><i class="fas fa-envelope"></i></span>
-                    Email: oysterfinanceltd@gmail.com
+                    Email: apply@oysterpersonalfinance.com
                 </div>
                 <div class="contact-item">
                     <span class="contact-icon"><i class="fab fa-whatsapp"></i></span>
-                    WhatsApp: +27 (0) 707356707
+                    WhatsApp: +27 69 560 3765
                 </div>
             </div>
             <div class="payment-text">
@@ -1370,11 +1370,11 @@
         
         // Interest rates based on loan type
         const interestRates = {
-            "Home Loan": 10,
+            "Home Loan": 3,
             "Personal Loan": 3,
             "Business Loan": 3,
-            "Vehicle Loan": 9,
-            "Emergency Loan": 12,
+            "Vehicle Loan": 3,
+            "Emergency Loan": 3,
             "Cash Loan": 3
         };
 
@@ -1391,13 +1391,11 @@
 
         // Calculate monthly repayment using amortization formula
         function calculateMonthlyRepayment(principal, annualRate, months) {
-            if (annualRate === 0) {
-                return principal / months;
-            }
-            const monthlyRate = annualRate / 100 / 12;
-            const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-            return monthlyPayment;
-        }
+    // This matches the File 1 logic: (Amount + 3%) divided by months
+    const totalWithInterest = principal * 1.03; 
+    const monthlyPayment = totalWithInterest / months;
+    return monthlyPayment;
+}
         
         // Format currency
         function formatCurrency(amount) {
