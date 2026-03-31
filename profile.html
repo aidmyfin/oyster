@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Dashboard - Oyster Personal Finance</title>
+    <title>Dashboard - Oyster Personal Finance</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -15,14 +15,14 @@
             --text-main: #334155;
             --text-light: #64748b;
             --border: #e2e8f0;
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-        body { background-color: #f8fafc; color: var(--text-main); line-height: 1.5; }
+        body { background-color: #f1f5f9; color: var(--text-main); line-height: 1.5; }
 
-        /* Top Header */
+        /* Top Navigation */
         .top-nav {
             background: white; border-bottom: 1px solid var(--border);
             padding: 0.8rem 2rem; display: flex; justify-content: space-between;
@@ -30,84 +30,96 @@
         }
         .logo img { height: 35px; }
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        .logout-link { color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
-        .user-tag { background: #f1f5f9; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .nav-link:hover { color: var(--primary); }
+        .logout-link { color: var(--accent); }
+        .user-tag { background: #e0e7ff; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
 
         .main-content { margin-top: 80px; padding: 2rem 0; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* Auth Card */
+        /* Auth Screen */
         #loginSection { height: 70vh; display: flex; align-items: center; justify-content: center; }
         .auth-card { background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 100%; max-width: 420px; text-align: center; }
         .auth-card input { width: 100%; padding: 1rem; border: 1px solid var(--border); border-radius: 12px; margin: 1.5rem 0; font-size: 1rem; }
-        .btn-auth { background: var(--primary); color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; }
+        .btn-primary { background: var(--primary); color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; width: 100%; }
 
-        /* Progress Card */
-        .status-card { background: white; border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
-        .stepper { display: flex; justify-content: space-between; margin-top: 1.5rem; position: relative; }
+        /* Progress Tracker */
+        .status-card { background: white; border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
+        .stepper { display: flex; justify-content: space-between; margin-top: 1rem; position: relative; }
         .step { text-align: center; width: 100%; z-index: 2; }
-        .step-circle { width: 32px; height: 32px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 0.8rem; color: #94a3b8; transition: 0.4s; }
-        .step.active .step-circle { background: var(--accent); color: white; }
+        .step-circle { width: 30px; height: 30px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 0.75rem; color: #94a3b8; transition: 0.4s; }
+        .step.active .step-circle { background: var(--accent); color: white; box-shadow: 0 0 10px rgba(231, 76, 60, 0.3); }
         .step.completed .step-circle { background: var(--success); color: white; }
-        .step-label { font-size: 0.65rem; font-weight: 700; color: var(--text-light); }
-        .progress-line { position: absolute; top: 16px; left: 8%; right: 8%; height: 2px; background: #f1f5f9; z-index: 1; }
+        .step-label { font-size: 0.6rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; }
+        .progress-line { position: absolute; top: 15px; left: 10%; right: 10%; height: 2px; background: #f1f5f9; z-index: 1; }
         .progress-active { position: absolute; top: 0; left: 0; height: 100%; background: var(--success); width: 0%; transition: 1s ease; }
 
-        /* DASHBOARD GRID: 1/3 and 2/3 */
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; }
+        /* GRID: 1/3 and 2/3 */
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; align-items: start; }
 
-        /* 1/3 SIMULATION COLUMN */
+        /* Left: Simulation */
         .sim-box {
             background: var(--dark-bg); border-radius: 24px; padding: 1.5rem;
             color: white; position: relative; overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); height: 100%;
         }
-        .sim-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .sim-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.8rem; }
         .sim-header span { font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; }
-        .sys-ready { color: var(--success); font-size: 0.65rem; animation: blink 2s infinite; }
+        .sys-status { color: var(--success); font-size: 0.6rem; animation: blink 2s infinite; }
 
-        .panels-row { display: flex; justify-content: space-between; align-items: center; gap: 15px; position: relative; }
-        .panel { 
-            flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); 
-            border-radius: 16px; padding: 1rem; text-align: center; z-index: 5;
-        }
-        .p-label { font-size: 0.55rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
-        .p-val { font-size: 0.85rem; font-weight: 700; margin-bottom: 5px; }
-        .edit-in { color: #38bdf8; border-bottom: 1px dashed #334155; cursor: text; outline: none; font-size: 0.7rem; display: inline-block; margin-top: 5px; min-width: 60px; }
+        .panels-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; position: relative; }
+        .panel { flex: 1; background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 0.8rem; text-align: center; z-index: 5; }
+        .p-label { font-size: 0.5rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; }
+        .p-val { font-size: 0.8rem; font-weight: 700; }
+        .edit-field { color: #38bdf8; border-bottom: 1px dashed #334155; cursor: text; outline: none; font-size: 0.65rem; display: block; margin-top: 5px; }
 
-        /* Money Animation (Horizontal) */
-        .money { position: absolute; width: 30px; height: 15px; background: #22c55e; border-radius: 3px; z-index: 10; opacity: 0; }
-        @keyframes flow { 0% { left: 20%; opacity: 0; } 50% { opacity: 1; } 100% { left: 70%; opacity: 0; } }
+        .money { position: absolute; width: 25px; height: 12px; background: #22c55e; border-radius: 2px; z-index: 10; opacity: 0; }
+        @keyframes flow { 0% { left: 25%; opacity: 0; } 50% { opacity: 1; } 100% { left: 65%; opacity: 0; } }
 
-        /* 2/3 DATA COLUMN */
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .card { background: white; border-radius: 20px; padding: 1.5rem; border: 1px solid var(--border); }
-        .card-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 1.2rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        .info-row { display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.85rem; }
-        .info-label { color: var(--text-light); }
-        .info-val { font-weight: 600; color: #1e293b; }
+        /* Right: Content */
+        .card { background: white; border-radius: 20px; padding: 1.5rem; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+        .card-title { font-weight: 800; font-size: 0.85rem; margin-bottom: 1.2rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.8rem; }
+        .row-label { color: var(--text-light); }
+        .row-val { font-weight: 600; }
+
+        /* Active Log Section */
+        .log-container { display: flex; flex-direction: column; gap: 10px; }
+        .log-item { display: flex; align-items: center; gap: 15px; padding: 10px; background: #f8fafc; border-radius: 10px; border-left: 4px solid #cbd5e1; }
+        .log-item.done { border-left-color: var(--success); }
+        .log-icon { width: 24px; height: 24px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #64748b; }
+        .log-item.done .log-icon { color: var(--success); }
+        .log-text { font-size: 0.75rem; font-weight: 600; }
+
+        /* Footer Buttons */
+        .btn-group { display: flex; gap: 10px; margin-top: 1rem; }
+        .btn-secondary { background: white; color: var(--text-main); border: 1px solid var(--border); padding: 0.8rem; border-radius: 12px; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; display: block; flex: 1; font-size: 0.8rem; }
 
         /* Popup */
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 2000; }
-        .popup-box { background: white; padding: 2.5rem; border-radius: 24px; text-align: center; max-width: 350px; }
-        .wa-btn { background: #25D366; color: white; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; margin-top: 1.5rem; }
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .popup-box { background: white; padding: 2rem; border-radius: 24px; text-align: center; max-width: 320px; }
+        .wa-btn { background: #25D366; color: white; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; margin-top: 1rem; }
 
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         @media (max-width: 850px) {
             .dashboard-grid { grid-template-columns: 1fr; }
-            .data-grid { grid-template-columns: 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation -->
+    <!-- Nav -->
     <nav class="top-nav" id="topNav" style="display: none;">
         <div class="logo"><img src="image/ChatGPT_Image_Jun_5__2025__12_04_34_AM-removebg-preview.png" alt="Oyster"></div>
         <div class="nav-right">
-            <div class="user-tag" id="userNameTag">User</div>
-            <a class="logout-link" onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></a>
+            <a href="index.html" class="nav-link">Home</a>
+            <div class="user-tag" id="userBadge">User</div>
+            <a class="nav-link logout-link" onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></a>
         </div>
     </nav>
 
@@ -115,91 +127,105 @@
         <!-- Auth Section -->
         <section id="loginSection" class="container">
             <div class="auth-card">
-                <img src="image/ChatGPT_Image_Jun_5__2025__12_04_34_AM-removebg-preview.png" style="height: 40px; margin-bottom: 1rem;">
-                <h3>Sign In</h3>
-                <p style="font-size: 0.8rem; color: #64748b;">Enter email to access your loan dashboard</p>
-                <input type="email" id="emailInput" placeholder="your@email.com">
-                <button class="btn-auth" onclick="handleLogin()">Sign In <i class="fas fa-chevron-right"></i></button>
+                <h2 style="margin-bottom: 0.5rem;">Welcome</h2>
+                <p style="font-size: 0.8rem; color: #64748b;">Sign in to track your application</p>
+                <input type="email" id="emailInput" placeholder="Enter registered email">
+                <button class="btn-primary" onclick="handleLogin()">Access Dashboard</button>
+                <a href="index.html" style="display: block; margin-top: 1.5rem; font-size: 0.8rem; color: var(--primary); text-decoration: none;">&larr; Back to Home</a>
             </div>
         </section>
 
-        <!-- Dashboard -->
+        <!-- Dashboard Section -->
         <section id="dashboardSection" class="container" style="display: none;">
             
-            <!-- Progress Tracker -->
+            <!-- Progress Bar -->
             <div class="status-card">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h4 id="statusMsg" style="color: var(--accent); font-size: 0.9rem;">Initializing...</h4>
-                    <span id="percVal" style="font-weight: 700; font-size: 0.9rem;">0%</span>
+                    <h4 id="statusText" style="color: var(--accent); font-size: 0.85rem;">Initializing...</h4>
+                    <span id="percText" style="font-weight: 700; font-size: 0.85rem;">0%</span>
                 </div>
                 <div class="stepper">
                     <div class="progress-line"><div id="progressFill" class="progress-active"></div></div>
-                    <div class="step active" id="s1"><div class="step-circle"><i class="fas fa-check"></i></div><div class="step-label">Submitted</div></div>
+                    <div class="step active" id="s1"><div class="step-circle"><i class="fas fa-file-alt"></i></div><div class="step-label">Apply</div></div>
                     <div class="step" id="s2"><div class="step-circle"><i class="fas fa-sync-alt fa-spin"></i></div><div class="step-label">Process</div></div>
                     <div class="step" id="s3"><div class="step-circle"><i class="fas fa-award"></i></div><div class="step-label">Qualified</div></div>
                     <div class="step" id="s4"><div class="step-circle"><i class="fas fa-search"></i></div><div class="step-label">Review</div></div>
                     <div class="step" id="s5"><div class="step-circle"><i class="fas fa-check-double"></i></div><div class="step-label">Approved</div></div>
-                    <div class="step" id="s6" onclick="showPopup()"><div class="step-circle"><i class="fas fa-wallet"></i></div><div class="step-label">Payout</div></div>
+                    <div class="step" id="s6" onclick="showPopup()"><div class="step-circle"><i class="fas fa-hand-holding-usd"></i></div><div class="step-label">Payout</div></div>
                 </div>
             </div>
 
             <div class="dashboard-grid">
-                <!-- 1/3 SIDE: Simulation -->
-                <div class="sim-box">
-                    <div class="sim-header">
-                        <span>LIVE DISBURSEMENT</span>
-                        <span class="sys-ready"><i class="fas fa-circle"></i> SYSTEM READY</span>
-                    </div>
-                    <div class="panels-row">
-                        <!-- Panel A -->
-                        <div class="panel">
-                            <div class="p-label">Treasury</div>
-                            <div class="p-val" id="sim-amt" style="color:var(--success)">R0</div>
-                            <div style="font-size: 0.5rem; color: #475569;">REF: <span id="sim-id">---</span></div>
+                <!-- 1/3: Simulation -->
+                <aside>
+                    <div class="sim-box">
+                        <div class="sim-header">
+                            <span>LIVE PAYOUT</span>
+                            <span class="sys-status">ACTIVE</span>
                         </div>
-
-                        <!-- Flying notes container -->
-                        <div id="anim-zone"></div>
-
-                        <!-- Panel B -->
-                        <div class="panel" style="border-color: var(--primary);">
-                            <div class="p-label">Recipient</div>
-                            <div class="p-val" id="sim-name" style="font-size: 0.75rem;">Loading...</div>
-                            <div class="edit-in" id="edit-bank" contenteditable="true" oninput="saveBank()">Bank Name</div>
-                            <div class="edit-in" id="edit-acc" contenteditable="true" oninput="saveBank()">Acc Number</div>
+                        <div class="panels-row">
+                            <div class="panel">
+                                <div class="p-label">Treasury</div>
+                                <div class="p-val" id="sim-amt" style="color:var(--success)">R0</div>
+                                <div style="font-size: 0.45rem; color: #475569;">#<span id="sim-id">---</span></div>
+                            </div>
+                            <div id="anim-zone"></div>
+                            <div class="panel" style="border-color: var(--primary);">
+                                <div class="p-label">Recipient</div>
+                                <div class="p-val" id="sim-name" style="font-size: 0.7rem;">Loading...</div>
+                                <div class="edit-field" id="edit-bank" contenteditable="true" oninput="saveBank()">Bank Name</div>
+                                <div class="edit-field" id="edit-acc" contenteditable="true" oninput="saveBank()">Account Number</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- 2/3 SIDE: Information -->
-                <div class="data-grid">
-                    <div class="card">
-                        <div class="card-title"><i class="fas fa-file-contract"></i> Loan Details</div>
-                        <div class="info-row"><span class="info-label">Amount</span><span class="info-val" id="d-amt">R0</span></div>
-                        <div class="info-row"><span class="info-label">Term</span><span class="info-val" id="d-term">---</span></div>
-                        <div class="info-row"><span class="info-label">Monthly Repay</span><span class="info-val" id="d-repay" style="color:var(--accent)">R0</span></div>
-                        <div class="info-row"><span class="info-label">Purpose</span><span class="info-val" id="d-purpose">---</span></div>
+                    
+                    <div class="btn-group">
+                        <a href="index.html" class="btn-secondary">Exit to Home</a>
                     </div>
+                </aside>
+
+                <!-- 2/3: Details & Log -->
+                <div class="info-column">
                     <div class="card">
-                        <div class="card-title"><i class="fas fa-user-check"></i> Verified Identity</div>
-                        <div class="info-row"><span class="info-label">ID Number</span><span class="info-val" id="d-id">---</span></div>
-                        <div class="info-row"><span class="info-label">Mobile</span><span class="info-val" id="d-phone">---</span></div>
-                        <div class="info-row"><span class="info-label">Email</span><span class="info-val" id="d-email">---</span></div>
-                        <div class="info-row"><span class="info-label">Type</span><span class="info-val" id="d-type">---</span></div>
+                        <div class="card-title"><i class="fas fa-info-circle"></i> Loan Overview</div>
+                        <div class="info-grid">
+                            <div>
+                                <div class="row"><span class="row-label">Principal</span><span class="row-val" id="d-amt">R0</span></div>
+                                <div class="row"><span class="row-label">Term</span><span class="row-val" id="d-term">---</span></div>
+                                <div class="row"><span class="row-label">Repayment</span><span class="row-val" id="d-repay" style="color:var(--accent)">R0</span></div>
+                            </div>
+                            <div>
+                                <div class="row"><span class="row-label">ID Number</span><span class="row-val" id="d-id">---</span></div>
+                                <div class="row"><span class="row-label">Purpose</span><span class="row-val" id="d-purpose">---</span></div>
+                                <div class="row"><span class="row-label">Mobile</span><span class="row-val" id="d-phone">---</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Log History -->
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-history"></i> Active Activity Log</div>
+                        <div class="log-container">
+                            <div class="log-item done"><div class="log-icon"><i class="fas fa-check"></i></div><div class="log-text">Loan Application Submitted</div></div>
+                            <div class="log-item done"><div class="log-icon"><i class="fas fa-check"></i></div><div class="log-text">KYC Documentation Verified</div></div>
+                            <div class="log-item done"><div class="log-icon"><i class="fas fa-check"></i></div><div class="log-text">Credit Criteria Check Passed</div></div>
+                            <div class="log-item" id="log-review"><div class="log-icon"><i class="fas fa-clock"></i></div><div class="log-text">Treasury Release Authorization</div></div>
+                            <div class="log-item" id="log-approved"><div class="log-icon"><i class="fas fa-clock"></i></div><div class="log-text">Final Approval & Funds Release</div></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Payout Popup -->
+    <!-- Popup -->
     <div id="popupOverlay" class="popup-overlay">
         <div class="popup-box">
-            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success);"></i>
-            <h2 style="margin: 1.5rem 0; font-size: 1.4rem;">Funds Ready!</h2>
-            <p style="font-size: 0.85rem; color: #64748b;">The payout of <span id="pop-amt" style="font-weight: 700;">R0</span> is authorized. Contact Treasury to complete transfer.</p>
-            <a href="https://wa.me/27707356707" class="wa-btn"><i class="fab fa-whatsapp"></i> Chat Treasury Desk</a>
-            <p style="margin-top: 1.5rem; font-size: 0.7rem; color: #94a3b8; cursor:pointer;" onclick="hidePopup()">Close Window</p>
+            <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--success);"></i>
+            <h2 style="margin: 1.5rem 0; font-size: 1.3rem;">Disbursement Ready</h2>
+            <p style="font-size: 0.8rem; color: #64748b;">The authorized amount of <span id="pop-amt" style="font-weight: 700;">R0</span> is ready. Chat with Treasury to finalize.</p>
+            <a href="https://wa.me/27707356707" class="wa-btn"><i class="fab fa-whatsapp"></i> Chat Treasury Now</a>
+            <p style="margin-top: 1rem; font-size: 0.7rem; color: #94a3b8; cursor:pointer;" onclick="hidePopup()">Close</p>
         </div>
     </div>
 
@@ -207,25 +233,15 @@
         const CFG = {
             API: 'https://api.baserow.io/api/database/rows/table/561419/?user_field_names=true',
             KEY: 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL',
-            FIELDS: {
-                NAME: 'name',
-                AMT: 'loanAmount',
-                EMAIL: 'Email',
-                PHONE: 'Phonenumber',
-                TYPE: 'loanType',
-                PURPOSE: 'loanPurpose',
-                TERM: 'loanTearm',
-                ID_NO: 'idNo'
-            }
+            FIELDS: { NAME: 'name', AMT: 'loanAmount', EMAIL: 'Email', PHONE: 'Phonenumber', TYPE: 'loanType', PURPOSE: 'loanPurpose', TERM: 'loanTearm', ID_NO: 'idNo' }
         };
 
-        let currentActiveUser = null;
+        let userSession = null;
 
         async function handleLogin() {
             const email = document.getElementById('emailInput').value.trim().toLowerCase();
-            if(!email) return alert("Please enter email");
-
-            document.querySelector('.btn-auth').innerText = "Authenticating...";
+            if(!email) return alert("Email required");
+            document.querySelector('.btn-primary').innerText = "Verifying...";
 
             try {
                 const res = await fetch(CFG.API, { headers: { 'Authorization': `Token ${CFG.KEY}` } });
@@ -233,17 +249,17 @@
                 const user = data.results.find(u => u[CFG.FIELDS.EMAIL]?.toLowerCase().includes(email));
 
                 if(user) {
-                    currentActiveUser = user;
-                    localStorage.setItem('oyster_session', email);
-                    loadDashboard(user);
+                    userSession = user;
+                    localStorage.setItem('oyster_auth', email);
+                    initDashboard(user);
                 } else {
-                    alert("No record found for this email.");
-                    document.querySelector('.btn-auth').innerText = "Sign In";
+                    alert("No record found.");
+                    document.querySelector('.btn-primary').innerText = "Access Dashboard";
                 }
-            } catch (e) { alert("Network Error"); }
+            } catch (e) { alert("Error connecting"); }
         }
 
-        function loadDashboard(u) {
+        function initDashboard(u) {
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('dashboardSection').style.display = 'block';
             document.getElementById('topNav').style.display = 'flex';
@@ -252,8 +268,7 @@
             const term = parseInt(u[CFG.FIELDS.TERM]) || 1;
             const repay = ((rawAmt * 1.03) / term).toFixed(2);
 
-            // Filling UI
-            document.getElementById('userNameTag').innerText = u[CFG.FIELDS.NAME];
+            document.getElementById('userBadge').innerText = u[CFG.FIELDS.NAME];
             document.getElementById('sim-amt').innerText = `R${rawAmt.toLocaleString()}`;
             document.getElementById('sim-id').innerText = u.id;
             document.getElementById('sim-name').innerText = u[CFG.FIELDS.NAME];
@@ -265,39 +280,38 @@
             document.getElementById('d-purpose').innerText = u[CFG.FIELDS.PURPOSE];
             document.getElementById('d-id').innerText = u[CFG.FIELDS.ID_NO];
             document.getElementById('d-phone').innerText = u[CFG.FIELDS.PHONE];
-            document.getElementById('d-email').innerText = u[CFG.FIELDS.EMAIL];
-            document.getElementById('d-type').innerText = u[CFG.FIELDS.TYPE];
 
-            // Load saved Bank details
-            document.getElementById('edit-bank').innerText = localStorage.getItem(`b_${u.id}`) || 'Bank Name';
-            document.getElementById('edit-acc').innerText = localStorage.getItem(`a_${u.id}`) || 'Acc Number';
+            document.getElementById('edit-bank').innerText = localStorage.getItem(`bk_${u.id}`) || 'Bank Name';
+            document.getElementById('edit-acc').innerText = localStorage.getItem(`ac_${u.id}`) || 'Account Number';
 
-            runStepper();
-            runMoneyAnim();
+            animateSteps();
+            moneyRain();
         }
 
-        function runStepper() {
+        function animateSteps() {
             const steps = [
-                {p: 20, s: 's2', m: 'Processing Files...'},
-                {p: 45, s: 's3', m: 'Qualified for Funding'},
-                {p: 75, s: 's4', m: 'Treasury Audit...'},
-                {p: 99, s: 's5', m: 'APPROVED - RELEASE PENDING'}
+                {p: 20, s: 's2', m: 'Processing Data...'},
+                {p: 45, s: 's3', m: 'Criteria Qualified'},
+                {p: 75, s: 's4', m: 'Final Treasury Review'},
+                {p: 99, s: 's5', m: 'APPROVED - RELEASE FUND'}
             ];
             steps.forEach((st, i) => {
                 setTimeout(() => {
                     document.getElementById('progressFill').style.width = st.p + '%';
-                    document.getElementById('percVal').innerText = st.p + '%';
+                    document.getElementById('percText').innerText = st.p + '%';
                     document.getElementById(st.s).classList.add('completed');
-                    document.getElementById('statusMsg').innerText = st.m;
+                    document.getElementById('statusText').innerText = st.m;
+                    if(st.p > 70) document.getElementById('log-review').classList.add('done');
                     if(st.p === 99) {
                         document.getElementById('s6').classList.add('active');
-                        document.getElementById('statusMsg').style.color = "var(--success)";
+                        document.getElementById('statusText').style.color = "var(--success)";
+                        document.getElementById('log-approved').classList.add('done');
                     }
                 }, (i + 1) * 2000);
             });
         }
 
-        function runMoneyAnim() {
+        function moneyRain() {
             setInterval(() => {
                 const note = document.createElement('div');
                 note.className = 'money';
@@ -311,16 +325,16 @@
         function saveBank() {
             const b = document.getElementById('edit-bank').innerText;
             const a = document.getElementById('edit-acc').innerText;
-            if(currentActiveUser) {
-                localStorage.setItem(`b_${currentActiveUser.id}`, b);
-                localStorage.setItem(`a_${currentActiveUser.id}`, a);
+            if(userSession) {
+                localStorage.setItem(`bk_${userSession.id}`, b);
+                localStorage.setItem(`ac_${userSession.id}`, a);
             }
-            if(b.length > 3 && a.length > 5 && b !== 'Bank Name') setTimeout(showPopup, 3000);
+            if(b.length > 3 && a.length > 5 && b !== 'Bank Name') setTimeout(showPopup, 2000);
         }
 
         function logout() {
-            if(confirm("Logout from Dashboard?")) {
-                localStorage.removeItem('oyster_session');
+            if(confirm("Sign out?")) {
+                localStorage.removeItem('oyster_auth');
                 location.reload();
             }
         }
@@ -329,11 +343,8 @@
         function hidePopup() { document.getElementById('popupOverlay').style.display = 'none'; }
 
         window.onload = () => {
-            const saved = localStorage.getItem('oyster_session');
-            if(saved) {
-                document.getElementById('emailInput').value = saved;
-                handleLogin();
-            }
+            const s = localStorage.getItem('oyster_auth');
+            if(s) { document.getElementById('emailInput').value = s; handleLogin(); }
         };
     </script>
 </body>
