@@ -481,24 +481,6 @@
             margin: 2px 0;
         }
 
-        .pay-now-btn {
-            background: #dc2626;
-            color: white;
-            border: none;
-            padding: clamp(6px, 1.2vw, 8px) clamp(12px, 2vw, 16px);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin: 5px;
-            transition: background 0.3s;
-            font-size: clamp(10px, 1.2vw, 12px);
-            display: inline-block;
-        }
-
-        .pay-now-btn:hover {
-            background: #b91c1c;
-        }
-
         /* Content Section Styles */
         .content-section {
             margin: clamp(15px, 2.5vw, 25px) 0;
@@ -704,21 +686,6 @@
             object-fit: contain;
         }
 
-        .wax-seal-bottom {
-            width: clamp(60px, 10vw, 80px);
-            height: clamp(60px, 10vw, 80px);
-            background: ;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: clamp(10px, 2vw, 14px);
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            margin: 0 auto;
-        }
-
         .company-footer {
             margin-top: clamp(20px, 3vw, 30px);
             text-align: center;
@@ -727,80 +694,6 @@
             line-height: 1.4;
             border-top: 1px solid #e2e8f0;
             padding-top: clamp(10px, 1.5vw, 15px);
-        }
-
-        /* Payment Modal */
-        .payment-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .payment-content {
-            background: white;
-            padding: clamp(20px, 4vw, 40px);
-            border-radius: 15px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        .payment-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #64748b;
-        }
-
-        .payment-title {
-            color: #2563eb;
-            font-size: clamp(18px, 4vw, 24px);
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .payment-text {
-            color: #64748b;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            font-size: clamp(14px, 2.5vw, 16px);
-        }
-
-        .contact-info {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px 0;
-            font-weight: bold;
-            color: #1e293b;
-            font-size: clamp(14px, 2.5vw, 16px);
-            flex-wrap: wrap;
-        }
-
-        .contact-icon {
-            margin-right: 10px;
-            font-size: clamp(16px, 2.5vw, 18px);
         }
 
         /* Loading overlay */
@@ -901,16 +794,6 @@
             .signature-block {
                 max-width: 100%;
             }
-            
-            .fee-section {
-                text-align: center;
-            }
-            
-            .pay-now-btn {
-                display: block;
-                margin: 10px auto;
-                max-width: 200px;
-            }
 
             .document-page {
                 min-height: auto;
@@ -1000,12 +883,10 @@
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Email Verification Modal -->
     <div class="verification-modal" id="verificationModal">
         <div class="verification-content">
             <div class="verification-title">Security Verification</div>
@@ -1027,7 +908,6 @@
         </div>
     </div>
 
-    <!-- Main PDF Modal -->
     <div class="modal-overlay" id="documentModal">
         <div class="pdf-viewer">
             <div class="pdf-header">
@@ -1045,7 +925,6 @@
             
             <div class="pdf-content-wrapper">
                 <div class="pdf-content" id="pdfContent">
-                    <!-- Page 1: Cover Page -->
                     <div class="document-page cover-page">
                         <div class="page-content">
                             <div class="date-banner" id="approvalDate">Loading...</div>
@@ -1060,18 +939,13 @@
                                 <div>
                                     <span class="logo-text">OYSTER FINANCE.</span>
                                 </div>
-                                <div class="logo-subtitle"></div>
                             </div>
                             
                             <div class="document-title">
                                 <div class="main-title">LOAN AGREEMENT DOCUMENT</div>
-                                
                                 <div class="between-section">BETWEEN</div>
-                                
                                 <div class="company-name">OYSTER PERSONAL FINANCE (PTY) LTD</div>
-                                
                                 <div class="between-section">&</div>
-                                
                                 <div class="client-name" id="clientName">Loading...</div>
                             </div>
                             
@@ -1083,7 +957,6 @@
                         </div>
                     </div>
 
-                    <!-- Page 2: Loan Details -->
                     <div class="document-page">
                         <div class="page-content">
                             <div class="page-header">
@@ -1091,16 +964,13 @@
                                     <span class="logo-text" style="font-size: clamp(20px, 4vw, 28px);">OYSTER</span>
                                     <div class="logo-subtitle">FINANCE.</div>
                                 </div>
-                                
                                 <div class="page-title">LOAN FINALIZATION AGREEMENT DEED</div>
-                                
                                 <div style="text-align: center; margin: 15px 0;">
                                     <div class="page-subtitle">Between:</div>
                                     <div style="font-weight: bold; margin: 8px 0;">OYSTER PERSONAL FINANCE (PTY) LTD</div>
                                     <div class="page-subtitle">&</div>
                                     <div style="font-weight: bold; margin: 8px 0;" id="clientName2">Loading...</div>
                                 </div>
-                                
                                 <div style="text-align: center; margin: 20px 0; font-weight: bold; font-size: clamp(12px, 2vw, 14px);">
                                     RE-PAYMENT/PAYBACK SCHEDULE: <span id="loanAmountText">Loading...</span> RANDS for A TERM LOAN OF<br>
                                     (<span id="loanDurationText">Loading...</span>)
@@ -1128,15 +998,12 @@
 
                             <div class="content-section">
                                 <p><strong>Congratulations!</strong> Your loan application has been successfully approved. We are pleased to inform you that you qualify for the loan amount specified above.</p>
-                                
                                 <p style="margin-top: 15px;">This document outlines the terms and conditions of your approved loan, including repayment schedules, interest rates, and important procedural requirements.</p>
-                                
-                                <p style="margin-top: 15px;"><strong>Next Steps:</strong> Please review all terms carefully and proceed with the required  REMOVER process to activate your loan disbursement.</p>
+                                <p style="margin-top: 15px;"><strong>Next Steps:</strong> Please review all terms carefully and proceed with the <strong>Low Credit Initiation</strong> process to activate your loan disbursement.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Page 3: REMOVER Fee Information -->
                     <div class="document-page">
                         <div class="page-content">
                             <div class="page-header">
@@ -1151,30 +1018,30 @@
                                 <div class="section-title">2. Repayment Schedule</div>
                                 <p>The Borrower shall repay the Loan in equal monthly instalments of <span id="monthlyRepaymentText">......</span>, commencing one (1) months after the loan amount has been disbursed.</p>
                                 
-                                <p style="margin-top: 15px;">If the Borrower fails to make repayments as scheduled, Oyster Personal Finance may allow an additional grace period of up to three (3) months at its sole discretion.</p>
-
                                 <div class="section-title">3. Disbursement of Loan</div>
                                 <p>Loan funds will be deposited directly into the Borrower's nominated and verified bank account within 44 minutes of final confirmation of all requirements being met.</p>
 
-                                <div class="section-title">4. Service Fee Process (Special Condition)</div>
-                                <p>As part of this loan approval, the Borrower acknowledges and agrees to pay a one-time refundable Service Fee of R360.00 ("the Fee").</p>
+                                <div class="section-title">4. LOW CREDIT INITIATION FEE – R369</div>
+                                <p>To proceed with your application under our Low Credit Acceptance Program, a once-off R369 fee is required.</p>
+                                
+                                <p style="margin-top: 10px;">This fee allows us to accept and process applications from clients with low or poor credit, by covering the additional risk assessment and manual approval process. It helps activate your application, giving you access to funding that may not be available through standard lenders.</p>
+
+                                <div class="subsection-title">Why it matters:</div>
+                                <p>This process gives you a real opportunity to secure a loan and start improving your financial standing, as responsible repayment can positively support your credit profile over time.</p>
                                 
                                 <ul style="margin: 15px 0 15px 20px; padding-left: 10px;">
-                                    <li>The Fee is payable BEFORE disbursement of the loan.</li>
-                                    <li style="margin-top: 10px;">The Fee serves as a protective measure against credit risk associated with your profile.</li>
-                                    <li style="margin-top: 10px;">The Fee will be refunded in full upon the successful completion of the loan process and disbursement of the approved amount.</li>
-                                    <li style="margin-top: 10px;">The Borrower understands and accepts that this Fee cannot be deducted from the principal loan amount, and must be paid separately to Oyster Personal Finance.</li>
+                                    <li>The fee is <strong>Once-off and Refundable</strong>.</li>
+                                    <li>The fee <strong>Does not reduce</strong> your principal loan amount.</li>
+                                    <li>The fee must be paid separately to Oyster Personal Finance to initiate the disbursement protocol.</li>
                                 </ul>
                             </div>
 
                             <div class="fee-section">
-                                <p><strong>IMPORTANT: The one-time refundable <span class="fee-highlight">Service Fee of R360.00</span> 
-                                <button class="pay-now-btn" onclick="showPaymentModal()">Pay Now</button> must be paid before loan disbursement.</strong></p>
+                                <p><strong>IMPORTANT: The one-time refundable <span class="fee-highlight">Low Credit Initiation Fee of R369.00</span> must be settled to finalize your application.</strong></p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Page 4: Additional Terms -->
                     <div class="document-page">
                         <div class="page-content">
                             <div class="page-header">
@@ -1199,7 +1066,7 @@
                             </div>
 
                             <div class="content-section">
-                                <div class="subsection-title">Contact Information:</div>
+                                <div class="subsection-title">Contact Information for Fee Settlement:</div>
                                 <p><strong>Email:</strong> apply.oysterfinance@zohomail.com</p>
                                 <p><strong>WhatsApp:</strong> +27 707356707</p>
                                 <p><strong>Address:</strong> 20 Georgian Crescent Bryanston East Hampton Office Park Johannesburg 2191</p>
@@ -1207,7 +1074,6 @@
                         </div>
                     </div>
 
-                    <!-- Page 5: Signatures -->
                     <div class="document-page signature-page">
                         <div class="page-content">
                             <div class="page-header">
@@ -1250,7 +1116,6 @@
 
                             <div class="company-seal">
                                 <img src="image/pexels-cottonbro-4067758__3_-removebg-preview.png" alt="Company Seal" id="coverSealImage" class="seal-image" style="max-width: 590%; max-height: 590%;">
-                                <div class="" id="defaultSeal"></div>
                             </div>
 
                             <div class="company-footer">
@@ -1266,7 +1131,6 @@
                 </div>
             </div>
             
-            <!-- Zoom controls -->
             <div class="zoom-controls">
                 <button class="zoom-btn" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
                 <div class="zoom-level" id="zoomLevel">100%</div>
@@ -1275,181 +1139,72 @@
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div class="payment-modal" id="paymentModal">
-        <div class="payment-content">
-            <button class="payment-close" onclick="closePaymentModal()">×</button>
-            <div class="payment-title">Clear Your Service Fee</div>
-            <div class="payment-text">
-                To proceed with the disbursement of your approved loan, please settle your R360 PROCESSING COST  and repair fee.
-            </div>
-            <div class="payment-text">
-                Kindly contact our customer service to receive payment instructions:
-            </div>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
-                    Email: apply.oysterfinance@zohomail.com
-                </div>
-                <div class="contact-item">
-                    <span class="contact-icon"><i class="fab fa-whatsapp"></i></span>
-                    WhatsApp: +27 707356707
-                </div>
-            </div>
-            <div class="payment-text">
-                We're here to help you every step of the way.
-            </div>
-        </div>
-    </div>
-
-
     <script>
-        // Baserow API configuration
         const BASEROW_API_URL = 'https://api.baserow.io/api/database/rows/table/';
         const BASEROW_API_KEY = 'LG6hnTBxgBG78FueElsSwpHRd4Wep1oL';
         const BASEROW_TABLE_ID = '561419';
         const BASEROW_EMAIL_FIELD_ID = '4502368';
         
-        // Image URLs - Replace these with your actual image URLs
         const COMPANY_LOGO_URL = 'https://placeholder.com/logo.png';
         const COMPANY_SEAL_URL = 'https://placeholder.com/seal.png';
         const SIGNATURE_URL = 'https://placeholder.com/signature.png';
         
-        // Current zoom level
         let currentZoom = 1;
         
-        // Interest rates based on loan type
         const interestRates = {
-            "Home Loan": 3,
-            "Personal Loan": 3,
-            "Business Loan": 3,
-            "Vehicle Loan": 3,
-            "Emergency Loan": 3,
-            "Cash Loan": 3
+            "Home Loan": 3, "Personal Loan": 3, "Business Loan": 3,
+            "Vehicle Loan": 3, "Emergency Loan": 3, "Cash Loan": 3
         };
 
-        // Field mapping for Baserow
         const fieldMapping = {
-            firstName: 'name', // Field ID: 4501396
-            lastName: 'lastName', // Field ID: 4501397
-            email: 'Email', // Field ID: 4502368
-            idNumber: 'idNo', // Field ID: 4502424
-            loanAmount: 'loanAmount', // Field ID: 4501398
-            loanTerm: 'loanTearm', // Field ID: 4502389
-            loanType: 'loanType' // Not given in requirements but needed
+            firstName: 'name', lastName: 'lastName', email: 'Email',
+            idNumber: 'idNo', loanAmount: 'loanAmount', loanTerm: 'loanTearm', loanType: 'loanType'
         };
 
-        // Calculate monthly repayment using amortization formula
         function calculateMonthlyRepayment(principal, annualRate, months) {
-    // This matches the File 1 logic: (Amount + 3%) divided by months
-    const totalWithInterest = principal * 1.03; 
-    const monthlyPayment = totalWithInterest / months;
-    return monthlyPayment;
-}
+            const totalWithInterest = principal * 1.03; 
+            return totalWithInterest / months;
+        }
         
-        // Format currency
         function formatCurrency(amount) {
             return 'R' + amount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
         
-        // Format date
         function formatDate(dateString) {
             const date = new Date(dateString);
             return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
         }
 
-        // Show error message
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
-            const successDiv = document.getElementById('successMessage');
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
-            successDiv.style.display = 'none';
         }
 
-        // Show success message
-        function showSuccess(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            errorDiv.style.display = 'none';
-        }
-
-        // Hide messages
         function hideMessages() {
             document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
         }
 
-        // Set image sources and display them if URLs are valid
         function setImageSources() {
-            // Company logo images
-            const logoImages = document.querySelectorAll('#companyLogoImage, #headerLogoImage');
+            const logoImages = document.querySelectorAll('#companyLogoImage');
             logoImages.forEach(img => {
                 if (COMPANY_LOGO_URL && COMPANY_LOGO_URL !== 'https://placeholder.com/logo.png') {
                     img.src = COMPANY_LOGO_URL;
-                    img.style.display = 'block';
                 }
             });
-            
-            // Company seal images
-            const sealImages = document.querySelectorAll('#coverSealImage, #companySealImage');
-            sealImages.forEach(img => {
-                if (COMPANY_SEAL_URL && COMPANY_SEAL_URL !== 'https://placeholder.com/seal.png') {
-                    img.src = COMPANY_SEAL_URL;
-                    img.style.display = 'block';
-                    
-                    // Hide default seal if we have an image
-                    if (document.getElementById('defaultSeal')) {
-                        document.getElementById('defaultSeal').style.display = 'none';
-                    }
-                }
-            });
-            
-            // Signature image
-            const signatureImg = document.getElementById('parkiSignatureImage');
-            if (signatureImg && SIGNATURE_URL && SIGNATURE_URL !== 'https://placeholder.com/signature.png') {
-                signatureImg.src = SIGNATURE_URL;
-                signatureImg.style.display = 'block';
-                
-                // Hide text signature if we have an image
-                const signatureText = signatureImg.parentElement.textContent;
-                if (signatureText.includes('Paki Smith')) {
-                    signatureImg.parentElement.textContent = '';
-                    signatureImg.parentElement.appendChild(signatureImg);
-                }
-            }
         }
 
-        // Fetch user data from Baserow by email
         async function fetchUserDataFromBaserow(email) {
             try {
-                // Use the email field ID to filter results
                 const filterUrl = `${BASEROW_API_URL}${BASEROW_TABLE_ID}/?user_field_names=true&filter__field_${BASEROW_EMAIL_FIELD_ID}__contains=${encodeURIComponent(email)}`;
-                
                 const response = await fetch(filterUrl, {
                     method: 'GET',
-                    headers: {
-                        'Authorization': `Token ${BASEROW_API_KEY}`
-                    }
+                    headers: { 'Authorization': `Token ${BASEROW_API_KEY}` }
                 });
-                
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
                 const data = await response.json();
-                
-                // Check if we found any matching records
-                if (!data.results || data.results.length === 0) {
-                    return null;
-                }
-                
-                // Use the first matching record
+                if (!data.results || data.results.length === 0) return null;
                 const userRecord = data.results[0];
-                
-                // Extract user data with proper field mapping
                 return {
                     firstName: userRecord[fieldMapping.firstName] || '',
                     lastName: userRecord[fieldMapping.lastName] || '',
@@ -1459,101 +1214,61 @@
                     loanAmount: parseFloat(userRecord[fieldMapping.loanAmount] || 0),
                     loanDuration: parseInt(userRecord[fieldMapping.loanTerm] || 48),
                     loanType: userRecord[fieldMapping.loanType] || 'Personal Loan',
-                    approvalDate: formatDate(new Date()),
-                    applicationDate: formatDate(new Date())
+                    approvalDate: formatDate(new Date())
                 };
-                
             } catch (error) {
-                console.error('Error fetching user data from Baserow:', error);
+                console.error('Error fetching user data:', error);
                 return null;
             }
         }
 
-        // Initialize document with user data
         async function initializeDocument(userData) {
-            try {
-                // Calculate interest rate and monthly repayment
-                const interestRate = interestRates[userData.loanType] || 3;
-                const monthlyRepayment = calculateMonthlyRepayment(userData.loanAmount, interestRate, userData.loanDuration);
-                
-                // Use approval date or application date, ensuring persistence
-                const documentDate = userData.approvalDate || userData.applicationDate || formatDate(new Date());
-                
-                // Update all dynamic fields
-                document.getElementById('clientName').textContent = userData.fullName;
-                document.getElementById('clientName2').textContent = userData.fullName;
-                document.getElementById('loanAmount').textContent = formatCurrency(userData.loanAmount);
-                document.getElementById('loanAmountText').textContent = formatCurrency(userData.loanAmount);
-                document.getElementById('loanDuration').textContent = `${userData.loanDuration} Months`;
-                document.getElementById('loanDurationText').textContent = `${userData.loanDuration} Months`;
-                document.getElementById('monthlyRepayment').textContent = formatCurrency(monthlyRepayment);
-                document.getElementById('monthlyRepaymentText').textContent = formatCurrency(monthlyRepayment);
-                document.getElementById('interestRate').textContent = `${interestRate}%`;
-                document.getElementById('approvalDate').textContent = documentDate;
-                document.getElementById('footerDate').textContent = documentDate;
-                
-                // Set placeholder for applicant name input
-                document.getElementById('applicantNameInput').placeholder = userData.fullName;
-                document.getElementById('applicantNameInput').value = userData.fullName;
-                document.getElementById('applicantName').textContent = userData.fullName;
-                
-                // Set image sources
-                setImageSources();
-                
-                // Store user data for PDF generation
-                window.currentUserData = userData;
-                
-            } catch (error) {
-                console.error('Error initializing document:', error);
-                throw error;
-            }
+            const interestRate = interestRates[userData.loanType] || 3;
+            const monthlyRepayment = calculateMonthlyRepayment(userData.loanAmount, interestRate, userData.loanDuration);
+            const documentDate = userData.approvalDate || formatDate(new Date());
+            
+            document.getElementById('clientName').textContent = userData.fullName;
+            document.getElementById('clientName2').textContent = userData.fullName;
+            document.getElementById('loanAmount').textContent = formatCurrency(userData.loanAmount);
+            document.getElementById('loanAmountText').textContent = formatCurrency(userData.loanAmount);
+            document.getElementById('loanDuration').textContent = `${userData.loanDuration} Months`;
+            document.getElementById('loanDurationText').textContent = `${userData.loanDuration} Months`;
+            document.getElementById('monthlyRepayment').textContent = formatCurrency(monthlyRepayment);
+            document.getElementById('monthlyRepaymentText').textContent = formatCurrency(monthlyRepayment);
+            document.getElementById('interestRate').textContent = `${interestRate}%`;
+            document.getElementById('approvalDate').textContent = documentDate;
+            document.getElementById('footerDate').textContent = documentDate;
+            document.getElementById('applicantNameInput').value = userData.fullName;
+            document.getElementById('applicantName').textContent = userData.fullName;
+            
+            setImageSources();
+            window.currentUserData = userData;
         }
 
-        // Email verification form handler
         document.getElementById('verificationForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const email = document.getElementById('userEmail').value.trim();
             const verifyBtn = document.getElementById('verifyBtn');
-            
-            if (!email) {
-                showError('Please enter your email address.');
-                return;
-            }
-            
-            // Show loading state
             const originalBtnText = verifyBtn.innerHTML;
-            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            verifyBtn.innerHTML = 'Verifying...';
             verifyBtn.disabled = true;
             hideMessages();
             
             try {
-                // Show loading overlay
                 document.getElementById('loadingOverlay').style.display = 'flex';
-                
-                // Fetch user data from Baserow
                 const userData = await fetchUserDataFromBaserow(email);
-                
                 if (!userData) {
-                    showError('Email not found in our records. Please check your email address and try again.');
+                    showError('Email not found. Please check and try again.');
                     verifyBtn.innerHTML = originalBtnText;
                     verifyBtn.disabled = false;
                     document.getElementById('loadingOverlay').style.display = 'none';
                     return;
                 }
-                
-                // Initialize document with user data
                 await initializeDocument(userData);
-                
-                // Hide verification modal and show document
                 document.getElementById('verificationModal').style.display = 'none';
                 document.getElementById('documentModal').style.display = 'flex';
-                
-                showSuccess('Document loaded successfully!');
-                
             } catch (error) {
-                console.error('Verification error:', error);
-                showError('An error occurred while loading your document. Please try again.');
+                showError('An error occurred. Please try again.');
                 verifyBtn.innerHTML = originalBtnText;
                 verifyBtn.disabled = false;
             } finally {
@@ -1561,148 +1276,43 @@
             }
         });
 
-        // Show payment modal
-        function showPaymentModal() {
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
-
-        // Close payment modal
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-        }
-
-        // Close document and redirect to profile page
         function closeDocument() {
-            if (confirm('Are you sure you want to close the document?')) {
-                window.location.href = 'profile.html';
-            }
+            if (confirm('Are you sure you want to close?')) window.location.href = 'profile.html';
         }
 
-        // Zoom in function
-        function zoomIn() {
-            if (currentZoom < 2) {
-                currentZoom += 0.1;
-                applyZoom();
-            }
-        }
-
-        // Zoom out function
-        function zoomOut() {
-            if (currentZoom > 0.5) {
-                currentZoom -= 0.1;
-                applyZoom();
-            }
-        }
-
-        // Apply zoom level
+        function zoomIn() { if (currentZoom < 2) { currentZoom += 0.1; applyZoom(); } }
+        function zoomOut() { if (currentZoom > 0.5) { currentZoom -= 0.1; applyZoom(); } }
         function applyZoom() {
             const pages = document.querySelectorAll('.document-page');
-            pages.forEach(page => {
-                page.style.transform = `scale(${currentZoom})`;
-            });
-            
+            pages.forEach(page => page.style.transform = `scale(${currentZoom})`);
             document.getElementById('zoomLevel').textContent = `${Math.round(currentZoom * 100)}%`;
         }
 
-        // Download PDF function (OPTIMIZED)
         async function downloadPDF() {
-            try {
-                // Show loading overlay
-                document.getElementById('loadingOverlay').style.display = 'flex';
-                
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                
-                // Reset zoom for proper capture
-                const originalZoom = currentZoom;
-                currentZoom = 1;
-                applyZoom();
-                
-                const pages = document.querySelectorAll('.document-page');
-                
-                for (let i = 0; i < pages.length; i++) {
-                    if (i > 0) {
-                        pdf.addPage();
-                    }
-                    
-                    const canvas = await html2canvas(pages[i], {
-                        scale: 1.5, // OPTIMIZATION: Reduced scale
-                        useCORS: true,
-                        allowTaint: true,
-                        logging: false
-                    });
-                    
-                    // OPTIMIZATION: Use JPEG with quality setting for compression
-                    const imgData = canvas.toDataURL('image/jpeg', 0.95);
-                    const imgWidth = 210; // A4 width in mm
-                    const pageHeight = 295; // A4 height in mm
-                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                    
-                    // OPTIMIZATION: Add image as JPEG with FAST compression
-                    pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight, undefined, 'FAST');
-                }
-                
-                // Restore original zoom
-                currentZoom = originalZoom;
-                applyZoom();
-                
-                // Get user data for filename
-                const userData = window.currentUserData;
-                const fileName = userData ? 
-                    `Loan_Agreement_${userData.fullName.replace(/\s+/g, '_')}_${userData.approvalDate.replace(/\//g, '-')}.pdf` :
-                    'Loan_Agreement.pdf';
-                
-                pdf.save(fileName);
-                
-                // Hide loading overlay
-                document.getElementById('loadingOverlay').style.display = 'none';
-                
-            } catch (error) {
-                console.error('Error generating PDF:', error);
-                alert('An error occurred while generating the PDF. Please try again.');
-                document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const originalZoom = currentZoom;
+            currentZoom = 1;
+            applyZoom();
+            const pages = document.querySelectorAll('.document-page');
+            for (let i = 0; i < pages.length; i++) {
+                if (i > 0) pdf.addPage();
+                const canvas = await html2canvas(pages[i], { scale: 1.5, useCORS: true });
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                pdf.addImage(imgData, 'JPEG', 0, 0, 210, (canvas.height * 210) / canvas.width, undefined, 'FAST');
             }
+            currentZoom = originalZoom;
+            applyZoom();
+            const userData = window.currentUserData;
+            pdf.save(`Loan_Agreement_${userData ? userData.fullName.replace(/\s+/g, '_') : 'Doc'}.pdf`);
+            document.getElementById('loadingOverlay').style.display = 'none';
         }
 
-        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Show verification modal by default
-            document.getElementById('verificationModal').style.display = 'flex';
-            
-            // Set up image placeholders
-            setImageSources();
-            
-            // Set up applicant name input event listener
             document.getElementById('applicantNameInput').addEventListener('input', function(e) {
                 document.getElementById('applicantName').textContent = e.target.value || 'Applicant Name';
             });
-            
-            // Check if we're on a mobile device and adjust layout if needed
-            function checkMobileAndAdjust() {
-                if (window.innerWidth <= 480) {
-                    // For very small screens, adjust the document pages to be more readable
-                    document.querySelectorAll('.document-page').forEach(page => {
-                        page.style.minHeight = 'auto';
-                        page.style.height = 'auto';
-                    });
-                }
-            }
-            
-            // Run on load and resize
-            checkMobileAndAdjust();
-            window.addEventListener('resize', checkMobileAndAdjust);
-        });
-
-        // Close modals when clicking outside
-        document.getElementById('paymentModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePaymentModal();
-            }
-        });
-
-        // Prevent closing main modal when clicking outside
-        document.getElementById('documentModal').addEventListener('click', function(e) {
-            e.stopPropagation();
         });
     </script>
 </body>
